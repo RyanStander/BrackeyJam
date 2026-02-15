@@ -11,5 +11,13 @@ namespace Events
         }
     }
     
+    public class OutOfFuel : EventData
+    {
+        public OutOfFuel() : base(EventType.OutOfFuel)
+        {
+            
+        }
+    }
+    
     
 }

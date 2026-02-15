@@ -4,5 +4,11 @@ namespace Events
     public enum EventType
     {
         ReceiveDebug,
+
+        #region Train Navigation
+
+        OutOfFuel,
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using TrainNavigation;
+﻿using Events;
+using TrainNavigation;
 using UnityEngine;
 
 namespace PersistentManager
@@ -8,11 +9,13 @@ namespace PersistentManager
     /// </summary>
     public static class TrainDataHandler
     {
-        public static void ExpendFuel(float amount)
+        public static bool ExpendFuel(float amount)
         {
             PersistentManager.Instance.Fuel -= amount;
+
+            return PersistentManager.Instance.Fuel <= 0;
         }
-        
+
         public static void Refuel(float amount)
         {
             PersistentManager.Instance.Fuel += amount;
