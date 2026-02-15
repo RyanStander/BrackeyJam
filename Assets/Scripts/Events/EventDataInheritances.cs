@@ -10,6 +10,6 @@ namespace Events
             Debuglog = givenLog;
         }
     }
-
+    
     
 }

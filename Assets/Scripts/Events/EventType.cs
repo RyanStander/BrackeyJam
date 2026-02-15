@@ -4,6 +4,5 @@ namespace Events
     public enum EventType
     {
         ReceiveDebug,
-        
     }
 }
