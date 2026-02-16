@@ -12,12 +12,6 @@ public class Interaction : MonoBehaviour
     private readonly Collider2D[] _colliders = new Collider2D[3];
     [SerializeField] private int _numFoundColliders;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
