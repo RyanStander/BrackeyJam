@@ -11,11 +11,6 @@ using UnityEngine;
 
 public class InteractNPC : MonoBehaviour, IInteractable
 {
-    //[SerializeField]
-    //private string _prompt;
-    //public string InteractionPrompt => _prompt;
-    //public string InteractionPromptLines;
-
     [Header("NPC Dialogue Lines")]
     [Tooltip("Add dialogue lines here directly in the Inspector.")]
     [SerializeField] private string[] _dialogueLines;

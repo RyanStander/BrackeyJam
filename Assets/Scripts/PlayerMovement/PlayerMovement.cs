@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerMoveSpeed = PlayerWalkSpeed;
         }
-
     }
 
     private void FixedUpdate()

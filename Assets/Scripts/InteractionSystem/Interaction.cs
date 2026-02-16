@@ -38,6 +38,5 @@ public class Interaction : MonoBehaviour
     {
         Handles.color = Color.green;
         Handles.DrawWireDisc(_interactionPoint.position, Vector3.forward, _interactionRadius);
-        
     }
 }
