@@ -5,21 +5,19 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Settings")]
-    public float MoveSpeed;
-    public float Walkspeed = 2f;
-    public float SprintSpeedMultiplier = 1.5f;
-    public Rigidbody2D rb;
-    public Animator animator;
+    public float PlayerMoveSpeed;
+    public float PlayerWalkSpeed = 2f;
+    public float PlayerSprintSpeedMultiplier = 1.5f;
+    public Rigidbody2D PlayerRB;
 
     private Vector2 _movement;
-    private bool _jumpRequested;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (rb == null)
+        if (PlayerRB == null)
         {
-            rb = GetComponent<Rigidbody2D>();
+            PlayerRB = GetComponent<Rigidbody2D>();
         }
     }
 
@@ -29,30 +27,19 @@ public class PlayerMovement : MonoBehaviour
         _movement.x = Input.GetAxisRaw("Horizontal");
         //_movement.y = Input.GetAxisRaw("Vertical");
 
-        if (animator != null)
-        {
-            animator.SetFloat("Horizontal", _movement.x);
-            animator.SetFloat("Vertical", _movement.y);
-            animator.SetFloat("Speed", _movement.sqrMagnitude);
-        }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            MoveSpeed = Walkspeed * SprintSpeedMultiplier;
-
+            PlayerMoveSpeed = PlayerWalkSpeed * PlayerSprintSpeedMultiplier;
         }
         else
         {
-            MoveSpeed = Walkspeed;
-        }
-
-       
+            PlayerMoveSpeed = PlayerWalkSpeed;
+        }     
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + _movement * MoveSpeed * Time.fixedDeltaTime);
-
-  
+        PlayerRB.MovePosition(PlayerRB.position + _movement * PlayerWalkSpeed * Time.fixedDeltaTime);
     }
 }
