@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Stations
 {
-    public class TestStation : MonoBehaviour
+    public class StationResultHandler : MonoBehaviour
     {
         public void CompleteStation()
         {
