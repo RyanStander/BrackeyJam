@@ -2,6 +2,9 @@
 
 namespace TrainNavigation
 {
+    /// <summary>
+    /// This class holds all the data relating to the fuel cost of different events during train travel.
+    /// </summary>
     [CreateAssetMenu(fileName = "TravelCosts", menuName = "TrainNavigation/TravelCost", order = 0)]
     public class TravelCostData : ScriptableObject
     {

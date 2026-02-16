@@ -11,12 +11,11 @@ namespace TrainNavigation
     public class TrainNavigation : MonoBehaviour
     {
         [SerializeField] private StopsData _stopsData;
-        [SerializeField] private TravelCostData _travelCostData;
         
         //we assume we have enough fuel to always depart
         public void DepartToMandatoryStop()
         {
-            TrainDataHandler.ExpendFuel(_travelCostData.MandatoryStopFuelCost);
+            TrainDataHandler.ExpendFuel(TravelCost.MandatoryStopFuelCost);
             
             DetermineStopEncounter();
             

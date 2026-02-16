@@ -30,6 +30,7 @@ namespace PersistentManager
         #region Train Data
 
         [Header("Train Data")] public float Fuel;
+        public TravelCostData TravelCostData;
         public int RouteProgress;
         public PossibleStop CurrentStop;
         public Queue<PossibleStop> UpcomingStops = new();
