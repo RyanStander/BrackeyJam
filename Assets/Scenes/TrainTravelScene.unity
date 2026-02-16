@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dada63baaa7d4bbf88289110f3a21f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fuel: 100
+  Fuel: 5
   RouteProgress: 0
   CurrentStop: {fileID: 0}
 --- !u!114 &1246713755

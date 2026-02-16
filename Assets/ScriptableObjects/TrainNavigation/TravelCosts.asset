@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2646c624c9a44dc1a4ba91b1c95b5c17, type: 3}
   m_Name: TravelCosts
   m_EditorClassIdentifier: 
-  MandatoryStopFuelCost: 10
-  MandatoryStopFailureFuelCost: 10
-  FlagStopFuelCost: 5
-  FlagStopFailureFuelCost: 5
+  MandatoryStopFuelCost: 1
+  MandatoryStopSuccessFuelCost: -1
+  MandatoryStopFailureFuelCost: 0
+  FlagStopFuelCost: 2
+  FlagStopSuccessFuelCost: -4
+  FlagStopFailureFuelCost: 1
   ServiceDisruptionFuelCost: 0
+  ServiceDisruptionSuccessFuelCost: 0
   ServiceDisruptionFailureFuelCost: 1
