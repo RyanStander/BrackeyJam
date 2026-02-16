@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+// / <summary>
+// This script should be attached to the player character.
+// It checks for interactable objects within a certain radius and
+// allows the player to interact with them by pressing the "F" key.
+// </summary>
+
 public class Interaction : MonoBehaviour
 {
     [SerializeField] private Transform _interactionPoint;
@@ -32,7 +38,6 @@ public class Interaction : MonoBehaviour
     {
         Handles.color = Color.green;
         Handles.DrawWireDisc(_interactionPoint.position, Vector3.forward, _interactionRadius);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_interactionPoint.position, _interactionRadius);
+        
     }
 }

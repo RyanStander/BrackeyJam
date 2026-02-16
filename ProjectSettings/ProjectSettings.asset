@@ -676,11 +676,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 547332bc-9a5d-41eb-b1d1-e025052b9635
+  cloudProjectId: 61a72262-3c09-4337-9aae-0772d0ad7feb
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: BrackeysJam
-  organizationId: kitty_bot
+  projectName: BrackeyJamLocal
+  organizationId: gabebaeb
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

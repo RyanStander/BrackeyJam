@@ -25,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         _movement.x = Input.GetAxisRaw("Horizontal");
-        //_movement.y = Input.GetAxisRaw("Vertical");
+        _movement.y = Input.GetAxisRaw("Vertical");
+        _movement = _movement.normalized;
 
 
         if (Input.GetKey(KeyCode.LeftShift))
@@ -35,11 +36,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             PlayerMoveSpeed = PlayerWalkSpeed;
-        }     
+        }
+
     }
 
     private void FixedUpdate()
     {
-        PlayerRB.MovePosition(PlayerRB.position + _movement * PlayerWalkSpeed * Time.fixedDeltaTime);
+        PlayerRB.MovePosition(PlayerRB.position + _movement * PlayerMoveSpeed * Time.fixedDeltaTime);
     }
 }
