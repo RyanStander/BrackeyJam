@@ -1069,6 +1069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Fuel: 5
+  TravelCostData: {fileID: 11400000, guid: 402f65435afa33c47a211f0598a9434c, type: 2}
   RouteProgress: 0
   CurrentStop: {fileID: 0}
 --- !u!114 &1246713755
@@ -1128,7 +1129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stopsData: {fileID: 11400000, guid: cab3bf9b937e85c43b127258beae7bac, type: 2}
-  _travelCostData: {fileID: 11400000, guid: 402f65435afa33c47a211f0598a9434c, type: 2}
 --- !u!4 &1308311401
 Transform:
   m_ObjectHideFlags: 0

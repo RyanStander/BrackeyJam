@@ -15,13 +15,17 @@ namespace TrainNavigation
         //we assume we have enough fuel to always depart
         public void DepartToMandatoryStop()
         {
-            TrainDataHandler.ExpendFuel(TravelCost.MandatoryStopFuelCost);
+            if(!TrainDataHandler.HasUpcomingStops())
+            {
+                TrainDataHandler.ExpendFuel(TravelCost.MandatoryStopFuelCost);
+
+                DetermineStopEncounter();
+
+                TrainDataHandler.AddUpcomingStop(
+                    _stopsData.MandatoryStops[Random.Range(0, _stopsData.MandatoryStops.Count)]);
+            }
             
-            DetermineStopEncounter();
-            
-            TrainDataHandler.AddUpcomingStop(_stopsData.MandatoryStops[Random.Range(0, _stopsData.MandatoryStops.Count)]);
-            
-            TravelToStop();
+            SceneManager.LoadScene(TrainDataHandler.NextStop().SceneName);
         }
 
         private void DetermineStopEncounter()
@@ -36,11 +40,6 @@ namespace TrainNavigation
             {
                 TrainDataHandler.AddUpcomingStop(_stopsData.FlagStops[Random.Range(0, _stopsData.FlagStops.Count)]);
             }
-        }
-
-        private void TravelToStop()
-        {
-            SceneManager.LoadScene(TrainDataHandler.NextStop().SceneName);
         }
     }
 }
