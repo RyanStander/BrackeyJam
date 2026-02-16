@@ -1,6 +1,5 @@
 using Events;
 using PersistentManager;
-using TrainNavigation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,21 +7,20 @@ namespace Stations
 {
     public class TestStation : MonoBehaviour
     {
-        [SerializeField] private TravelCostData _travelCostData;
         public void CompleteStation()
         {
-            SceneManager.LoadScene("TrainTravelScene");
-            
-            //TODO: Reward for success
+            MiniGameDataHandler.CompletedMiniGame(TravelCost.MandatoryStopSuccessRefuel);
         }
         
         public void FailStation()
         {
-            //TODO: Game manager should trigger a failure after departure
-            if(!TrainDataHandler.ExpendFuel(_travelCostData.MandatoryStopFailureFuelCost))
-                EventManager.currentManager.AddEvent(new OutOfFuel());
-            
-            //TODO: Player has lost
+            MiniGameDataHandler.FailedMiniGame(TravelCost.MandatoryStopFailureFuelCost);
+        }
+
+        public void FinishStation()
+        {
+            //TODO: We perform the travel sequence start and then fade to black, from there we determine if the player has fuel to continue or not, if they do we load the travel scene, if not we load the game over screen
+            SceneManager.LoadScene(TrainDataHandler.CanContinue() ? "TrainTravelScene" : "FailureScene");
         }
     }
 }
