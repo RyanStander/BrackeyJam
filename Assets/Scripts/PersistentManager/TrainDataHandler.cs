@@ -9,16 +9,19 @@ namespace PersistentManager
     /// </summary>
     public static class TrainDataHandler
     {
-        public static bool ExpendFuel(float amount)
+        public static void ExpendFuel(int amount)
         {
             PersistentManager.Instance.Fuel -= amount;
-
-            return PersistentManager.Instance.Fuel <= 0;
         }
 
-        public static void Refuel(float amount)
+        public static void Refuel(int amount)
         {
             PersistentManager.Instance.Fuel += amount;
+        }
+
+        public static bool CanContinue()
+        {
+            return PersistentManager.Instance.Fuel > 0;
         }
         
         public static void AdvanceRouteProgress()
@@ -41,6 +44,11 @@ namespace PersistentManager
 
             Debug.LogError("No upcoming stops in queue.");
             return null;
+        }
+        
+        public static bool HasUpcomingStops()
+        {
+            return PersistentManager.Instance.UpcomingStops.Count > 0;
         }
     }
 }
