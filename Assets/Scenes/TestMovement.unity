@@ -629,7 +629,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed37283450af081449fec2246dceac29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prompt: This is a cube! You have interacted.
+  _dialogueLines: []
+  _currentLineIndex: 0
 --- !u!50 &1537459582 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 1087388258213332745, guid: 1df949363362da448b2b9a73e39a3fb8, type: 3}
