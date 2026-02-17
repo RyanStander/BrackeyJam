@@ -1,0 +1,56 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InteractMiniGame : MonoBehaviour, IInteractable
+{
+    [SerializeField] private BaseMinigame _minigamePrefab;
+    [SerializeField] private BaseMinigame _currentMinigameInstance;
+
+    public bool Interact(Interaction interaction)
+    {
+        return TrySpawnMinigame();
+    }
+
+    public bool TrySpawnMinigame()
+    {
+        if (_currentMinigameInstance != null && _currentMinigameInstance.gameObject.activeSelf)
+        {
+            Debug.LogWarning("Minigame already active.");
+            return false;
+        }
+
+        if (_currentMinigameInstance == null)
+        {
+            if (_minigamePrefab == null)
+            {
+                Debug.LogError("Minigame Prefab is missing on " + gameObject.name);
+                return false;
+            }
+
+            _currentMinigameInstance = Instantiate(_minigamePrefab);
+            _currentMinigameInstance.OnGameComplete.AddListener(OnMiniGameFinished);
+        }
+
+        _currentMinigameInstance.gameObject.SetActive(true);
+        _currentMinigameInstance.StartMinigame();
+
+        return true;
+    }
+
+    private void OnMiniGameFinished(bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            Debug.Log("Minigame completed successfully!");
+            // TODO reward the player???
+            // also, mark minigame object as completed so they can't try it again
+        }
+        else
+        {
+            Debug.Log("Minigame failed or exited.");
+            // TODO err... can someone re-do a minigame? is it even possible to fail a minigame like the wires lol.
+        }
+    }
+}
