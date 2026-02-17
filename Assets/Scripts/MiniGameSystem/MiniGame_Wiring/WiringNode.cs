@@ -14,7 +14,7 @@ public class WiringNode : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     private void Awake()
     {
-        _wireNodeImage = GetComponent<Image>();
+        _wireNodeImage = GetComponent<Image>(); //yes I know this is a bad way of doing this : ( 
     }
 
     public void Setup(WiringMinigame wiregame, int id, Color color)
