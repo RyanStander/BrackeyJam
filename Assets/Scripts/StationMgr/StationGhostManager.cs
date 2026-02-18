@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Station1 : BaseStationManager
+public class StationGhostManager : BaseStationManager
 {
     public bool HasFixedWires = false;
     public bool HasDoor1Key = false;
