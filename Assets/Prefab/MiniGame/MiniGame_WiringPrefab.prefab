@@ -50,7 +50,19 @@ MonoBehaviour:
   gameName: Wiring Minigame
   OnGameComplete:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5910163869756379155, guid: 207b21e6fae834acd915201ff11047fd, type: 3}
+        m_TargetAssemblyTypeName: Station1, Assembly-CSharp
+        m_MethodName: CompleteWireTask
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   wireCount: 6
   AvailableColors:
   - {r: 0, g: 1, b: 0.23785138, a: 1}

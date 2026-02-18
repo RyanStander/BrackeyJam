@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InteractMiniGame : MonoBehaviour, IInteractable
 {
     [SerializeField] private BaseMinigame _minigamePrefab;
     [SerializeField] private BaseMinigame _currentMinigameInstance;
+
+    public UnityEvent OnMiniGameComplete;
 
     public bool Interact(Interaction interaction)
     {
@@ -39,7 +42,7 @@ public class InteractMiniGame : MonoBehaviour, IInteractable
         return true;
     }
 
-    private void OnMiniGameFinished(bool isSuccess)
+    public void OnMiniGameFinished(bool isSuccess)
     {
         if (isSuccess)
         {
