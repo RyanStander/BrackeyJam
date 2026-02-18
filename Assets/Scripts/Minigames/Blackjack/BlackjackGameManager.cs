@@ -17,26 +17,38 @@ namespace Minigames.Blackjack
 
         private int _playerCurrentHealth;
         private int _dealerCurrentHealth;
-        private List<Card> _playerHand = new();
-        private List<Card> _dealerHand = new();
+        [SerializeField] private Hand _playerHand;
+        [SerializeField] private Hand _dealerHand;
+        [SerializeField] private CardData _playerCardData;
+        [SerializeField] private CardData _dealerCardData;
+        [SerializeField] private GameObject _bettingUI;
+        [SerializeField] private GameObject _hitStayUI;
 
-        private void SetHealth()
+        private void Start()
+        {
+            Initialise();
+            StartNewRound();
+        }
+
+        private void Initialise()
         {
             _playerCurrentHealth = _playerMaxHealth;
             _dealerCurrentHealth = _dealerMaxHealth;
+            _playerHand.SetCardData(_playerCardData);
+            _dealerHand.SetCardData(_dealerCardData);
         }
 
         private void StartNewRound()
         {
-            _playerHand.Clear();
-            _dealerHand.Clear();
+            _playerHand.ClearHand();
+            _dealerHand.ClearHand();
 
             int index = 0;
-            for (int suit = 0; suit < Enum.GetValues(typeof(CardSuit)).Length; suit++)
+            foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))
             {
-                for (int rank = 0; rank < Enum.GetValues(typeof(CardRank)).Length; rank++)
+                foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
                 {
-                    _deck[index] = new Card { Suit = (CardSuit)suit, Rank = (CardRank)rank };
+                    _deck[index] = new Card { Suit = suit, Rank = rank };
                     index++;
                 }
             }
@@ -47,6 +59,8 @@ namespace Minigames.Blackjack
                 int randomIndex = UnityEngine.Random.Range(0, _deck.Length);
                 (_deck[i], _deck[randomIndex]) = (_deck[randomIndex], _deck[i]);
             }
+
+            StartGame();
         }
 
         private void StartGame()
@@ -60,75 +74,132 @@ namespace Minigames.Blackjack
             FinalBetting();
         }
 
+        private void FinalBetting()
+        {
+            _bettingUI.SetActive(true);
+        }
+
+        public void IncreaseBet(int amount)
+        {
+            _playerBetThisRound += amount;
+            SecondDeal();
+            _bettingUI.SetActive(false);
+        }
+
         private void SecondDeal()
         {
             DealPlayerCard(_deck[_cardIndex++]);
             DealDealerCard(_deck[_cardIndex++], true);
+
+            PromptHitStay();
         }
 
-        private void FinalBetting()
+        private void PromptHitStay()
         {
-            //show button to bet or skip
-        }
-
-        private void PromptHitStays()
-        {
-            //show buttons for hit or stay, this continues until the player stays or busts
-        }
-
-        private void EvaluateWinner()
-        {
-            //compare player and dealer hand values, determine winner, update health, show results
-            //dont forget pushing if the hand values are tied
-        }
-
-        private void DealPlayerCard(Card card)
-        {
-            _playerHand.Add(card);
-        }
-
-        private void DealDealerCard(Card card, bool faceUp)
-        {
-            _dealerHand.Add(card);
+            _hitStayUI.SetActive(true);
         }
 
         public void Hit()
         {
+            DealPlayerCard(_deck[_cardIndex++]);
+            _hitStayUI.SetActive(false);
+
+            if (_playerHand.GetHandValue() > 21)
+            {
+                DealerWinsRound();
+            }
+            else
+                PromptHitStay();
         }
 
         public void Stay()
         {
+            _hitStayUI.SetActive(false);
             StartDealerTurn();
         }
 
         private void StartDealerTurn()
         {
-        }
-
-        public void IncreaseBet(int amount)
-        {
-        }
-
-        private int GetHandValue(List<Card> hand)
-        {
-            int value = 0;
-            int aceCount = 0;
-            foreach (Card card in hand)
+            _dealerHand.RevealHand();
+            while (true)
             {
-                if (card.Rank == CardRank.Ace)
-                    aceCount++;
-                else
-                    value += Math.Min((int)card.Rank, 10);
+                if (_dealerHand.GetHandValue() < 17)
+                {
+                    DealDealerCard(_deck[_cardIndex++], true);
+                    continue;
+                }
+
+                EvaluateWinner();
+
+                break;
             }
+        }
 
-            // Count all aces as 1 first
-            value += aceCount;
+        private void EvaluateWinner()
+        {
+            if (_dealerHand.GetHandValue() > 21)
+            {
+                PlayerWinsRound();
+                return;
+            }
+            
+            bool playerHasBlackjack = _playerHand.HasBlackjack();
+            bool dealerHasBlackjack = _dealerHand.HasBlackjack();
 
-            // Upgrade one ace to 11 if it doesn't bust
-            if (aceCount > 0 && value + 10 <= 21)
-                value += 10;
+            if (playerHasBlackjack && dealerHasBlackjack)
+                PushRound();
+            else if (playerHasBlackjack)
+                PlayerWinsRound();
+            else if (dealerHasBlackjack)
+                DealerWinsRound();
+            else if (_playerHand.GetHandValue() > _dealerHand.GetHandValue())
+                PlayerWinsRound();
+            else if (_playerHand.GetHandValue() < _dealerHand.GetHandValue())
+                DealerWinsRound();
+            else
+                PushRound();
+        }
 
-            return value;
+        private void DealPlayerCard(Card card)
+        {
+            _playerHand.ReceiveCard(card);
+        }
+
+        private void DealDealerCard(Card card, bool faceUp)
+        {
+            _dealerHand.ReceiveCard(card, faceUp);
+        }
+
+        private void PlayerWinsRound()
+        {
+            _dealerCurrentHealth -= _playerBetThisRound;
+            if (_dealerCurrentHealth <= 0)
+            {
+                //player wins the game
+            }
+            else
+                StartNewRound();
+
+            Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+
+        private void DealerWinsRound()
+        {
+            _playerCurrentHealth -= _playerBetThisRound;
+            if (_playerCurrentHealth <= 0)
+            {
+                //dealer wins the game
+            }
+            else
+                StartNewRound();
+
+            Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+
+        private void PushRound()
+        {
+            //show push results, then start new round
+            StartNewRound();
         }
     }
 }

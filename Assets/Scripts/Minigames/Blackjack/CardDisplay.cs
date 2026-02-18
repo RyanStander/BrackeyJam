@@ -7,36 +7,47 @@ namespace Minigames.Blackjack
     public class CardDisplay : MonoBehaviour
     {
         private Card _card;
+        private CardData _cardData;
         [SerializeField] private Image _cardFrontImage;
         [SerializeField] private Image _cardRankImage;
         [SerializeField] private Image _cardSuitImage;
 
-        //TODO: Remove
-        #region Temporary DELETE
-
-        [SerializeField] private CardData _cardData;
-
-        private void Update()
+        public void SetCard(CardData cardData, CardRank rank, CardSuit suit, bool showCard = true)
         {
-            if (!Input.GetKeyDown(KeyCode.Space)) return;
-            CardRank rank = (CardRank)UnityEngine.Random.Range(0, Enum.GetValues(typeof(CardRank)).Length);
-            CardSuit suit = (CardSuit)UnityEngine.Random.Range(0, Enum.GetValues(typeof(CardSuit)).Length);
-            SetCard(_cardData, rank, suit);
-        }
-
-        #endregion
-        
-        public void SetCard(CardData cardData, CardRank rank, CardSuit suit)
-        {
-            _cardFrontImage.sprite = cardData.CardFrontSprite;
-            _cardFrontImage.color = cardData.CardColor;
-            _cardRankImage.sprite = cardData.RankSprites[rank];
-            _cardRankImage.color = cardData.RankColor;
-            _cardSuitImage.sprite = cardData.SuitSprites[suit];
-            _cardSuitImage.color = cardData.SuitColor;
-            
             _card.Rank = rank;
             _card.Suit = suit;
+            _cardData = cardData;
+
+            if (showCard)
+                ShowCard();
         }
+
+        public void ShowCard()
+        {
+            if (_cardData == null)
+            {
+                Debug.LogError("CardData is not set for this CardDisplay.");
+                return;
+            }
+            
+            _cardFrontImage.sprite = _cardData.CardFrontSprite;
+            _cardFrontImage.color = _cardData.CardColor;
+            Debug.Log(_card.Rank + " as " + (int)_card.Rank);
+            _cardRankImage.sprite = _cardData.RankSprites[_card.Rank];
+            _cardRankImage.color = _cardData.RankColor;
+            _cardSuitImage.sprite = _cardData.SuitSprites[_card.Suit];
+            _cardSuitImage.color = _cardData.SuitColor;
+        }
+
+        public void Reset()
+        {
+            _card = default;
+            _cardData = null;
+            _cardFrontImage.sprite = null;
+            _cardRankImage.sprite = null;
+            _cardSuitImage.sprite = null;
+        }
+
+        public Card Card => _card;
     }
 }

@@ -2,7 +2,6 @@
 {
     public enum CardRank
     {
-        Ace,
         Two = 2,
         Three = 3,
         Four = 4,
@@ -12,8 +11,9 @@
         Eight = 8,
         Nine = 9,
         Ten = 10,
-        Jack,
-        Queen,
-        King,
+        Jack=11,
+        Queen=12,
+        King=13,
+        Ace=14,
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6711852940572253262}
   - component: {fileID: 3914486261038160957}
   - component: {fileID: 5536103914741403349}
-  - component: {fileID: 5722564916945625111}
+  - component: {fileID: 7529516135078361907}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5722564916945625111
+--- !u!114 &7529516135078361907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,15 +87,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3200694447043404655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e2ee8b36039794183950ea36a59531, type: 3}
+  m_Script: {fileID: 11500000, guid: 70e3516078344b9b8574f1d7e5815cd2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::uVegas.UI.UICard
-  baseImage: {fileID: 5536103914741403349}
-  rankImage: {fileID: 5591932629411164623}
-  suitImage: {fileID: 2586990453406420537}
-  currentCard:
-    suit: 0
-    rank: 0
+  m_EditorClassIdentifier: 
+  _cardFrontImage: {fileID: 5536103914741403349}
+  _cardRankImage: {fileID: 5591932629411164623}
+  _cardSuitImage: {fileID: 2586990453406420537}
+  _cardData: {fileID: 11400000, guid: 4e827b38c7e41e74a986c007b109d4c3, type: 2}
 --- !u!1 &5323047181356748486
 GameObject:
   m_ObjectHideFlags: 0
