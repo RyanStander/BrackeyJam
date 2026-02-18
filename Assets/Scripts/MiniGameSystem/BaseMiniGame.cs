@@ -14,7 +14,6 @@ public abstract class BaseMinigame : MonoBehaviour
 
     protected void FinishGame(bool isSuccess)
     {
-        gameObject.SetActive(false); 
         OnGameComplete?.Invoke(isSuccess);
     }
 

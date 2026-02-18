@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // <summary>
 // This script should be attached to any NPC GameObject that you want the player to interact with.
@@ -15,6 +16,8 @@ public class InteractNPC : MonoBehaviour, IInteractable
     [Tooltip("Add dialogue lines here directly in the Inspector.")]
     [SerializeField] private string[] _dialogueLines;
     [SerializeField] private int _currentLineIndex = 0;
+
+    public UnityEvent OnObjectiveComplete;
     public void Start()
     {
         if(_dialogueLines == null || _dialogueLines.Length == 0)

@@ -49,6 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minigamePrefab: {fileID: 0}
   _currentMinigameInstance: {fileID: 0}
+  OnMiniGameComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &2617970805861970369
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -131,7 +134,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6388039979237779415}
   - component: {fileID: 6488774920784079763}
-  - component: {fileID: 4564780657336566204}
   m_Layer: 6
   m_Name: Static Sprite
   m_TagString: Untagged
@@ -206,17 +208,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4564780657336566204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5702403585915540695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 512f663c214d00948aeee4afa8653dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minigamePrefab: {fileID: 563409985339471401, guid: c0da495a256007a4cac8103c8f13f316, type: 3}
-  _currentMinigameInstance: {fileID: 0}
