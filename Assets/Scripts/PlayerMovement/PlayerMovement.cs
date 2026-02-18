@@ -10,37 +10,35 @@ public class PlayerMovement : MonoBehaviour
     public float PlayerSprintSpeedMultiplier = 1.5f;
     public Rigidbody2D PlayerRB;
 
-    private Vector2 _movement;
+    public Vector2 CurrentMovement { get; private set; }
+    public bool IsSprinting { get; private set; }
 
-    // Start is called before the first frame update
     void Start()
     {
-        if (PlayerRB == null)
-        {
-            PlayerRB = GetComponent<Rigidbody2D>();
-        }
+        if (PlayerRB == null) PlayerRB = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        _movement.x = Input.GetAxisRaw("Horizontal");
-        _movement.y = Input.GetAxisRaw("Vertical");
-        _movement = _movement.normalized;
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
 
+        CurrentMovement = new Vector2(x, y).normalized;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             PlayerMoveSpeed = PlayerWalkSpeed * PlayerSprintSpeedMultiplier;
+            IsSprinting = true;
         }
         else
         {
             PlayerMoveSpeed = PlayerWalkSpeed;
+            IsSprinting = false;
         }
     }
 
     private void FixedUpdate()
     {
-        PlayerRB.MovePosition(PlayerRB.position + _movement * PlayerMoveSpeed * Time.fixedDeltaTime);
+        PlayerRB.MovePosition(PlayerRB.position + CurrentMovement * PlayerMoveSpeed * Time.fixedDeltaTime);
     }
 }
