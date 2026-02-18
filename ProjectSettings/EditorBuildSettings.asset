@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TrainTravelScene.unity
     guid: 04244c4e0205d9843bd3b490da68b4e5
   - enabled: 1
-    path: Assets/Scenes/Station1.unity
+    path: Assets/Scenes/StationGhost.unity
     guid: 9821acc777a4acd4ab55b07aeaeb4d4f
   - enabled: 1
     path: Assets/Scenes/TestStation.unity

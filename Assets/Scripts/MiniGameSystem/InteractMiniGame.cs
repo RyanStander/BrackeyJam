@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InteractMiniGame : MonoBehaviour, IInteractable
 {
     [SerializeField] private BaseMinigame _minigamePrefab;
     [SerializeField] private BaseMinigame _currentMinigameInstance;
+
+    public UnityEvent OnMiniGameComplete;
 
     public bool Interact(Interaction interaction)
     {
@@ -29,7 +32,8 @@ public class InteractMiniGame : MonoBehaviour, IInteractable
                 return false;
             }
 
-            _currentMinigameInstance = Instantiate(_minigamePrefab);
+            _minigamePrefab.gameObject.SetActive(true); // Ensure prefab is inactive
+            _currentMinigameInstance = _minigamePrefab;
             _currentMinigameInstance.OnGameComplete.AddListener(OnMiniGameFinished);
         }
 
@@ -39,11 +43,14 @@ public class InteractMiniGame : MonoBehaviour, IInteractable
         return true;
     }
 
-    private void OnMiniGameFinished(bool isSuccess)
+    public void OnMiniGameFinished(bool isSuccess)
     {
         if (isSuccess)
         {
+            OnMiniGameComplete?.Invoke();
             Debug.Log("Minigame completed successfully!");
+            Destroy(_minigamePrefab.gameObject);
+            _currentMinigameInstance = null;
             // TODO reward the player???
             // also, mark minigame object as completed so they can't try it again
         }

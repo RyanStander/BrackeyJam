@@ -17,8 +17,11 @@ public class SpineChracterController : MonoBehaviour
     public string IdleAnim = "Player_Idle";
     public string WalkAnim = "Player_Walk";
     public string RunAnim = "Player_Run";
+    public string SwimAnim = "Player_Swim";
 
     private string _currentAnimationState;
+
+    public bool IsWaterLevel;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,17 +44,25 @@ public class SpineChracterController : MonoBehaviour
             skeletonAnimation.skeleton.ScaleX = -1;
         }
 
-        if(playerMovement.CurrentMovement.magnitude == 0)
+        if (IsWaterLevel)
         {
-            ChangeAnimationState(IdleAnim);
-        }
-        else if (playerMovement.IsSprinting)
-        {
-            ChangeAnimationState(RunAnim);
+            ChangeAnimationState(SwimAnim);
+            return;
         }
         else
         {
-            ChangeAnimationState(WalkAnim);
+            if (playerMovement.CurrentMovement.magnitude == 0)
+            {
+                ChangeAnimationState(IdleAnim);
+            }
+            else if (playerMovement.IsSprinting)
+            {
+                ChangeAnimationState(RunAnim);
+            }
+            else
+            {
+                ChangeAnimationState(WalkAnim);
+            }
         }
     }
 
