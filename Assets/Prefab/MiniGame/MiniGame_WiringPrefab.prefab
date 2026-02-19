@@ -423,10 +423,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8019321751566045264, guid: ad1faa317e09b36489c5501de8ec5fa4, type: 3}
-      propertyPath: PupilImage
-      value: 
-      objectReference: {fileID: 6409828882889291350}
     - target: {fileID: 8745718105758044464, guid: ad1faa317e09b36489c5501de8ec5fa4, type: 3}
       propertyPath: m_Name
       value: WireNode
@@ -441,17 +437,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3402244706439490896, guid: ad1faa317e09b36489c5501de8ec5fa4, type: 3}
   m_PrefabInstance: {fileID: 378182590995832018}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6409828882889291350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6758735877266778756, guid: ad1faa317e09b36489c5501de8ec5fa4, type: 3}
-  m_PrefabInstance: {fileID: 378182590995832018}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7671259319540862082 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8019321751566045264, guid: ad1faa317e09b36489c5501de8ec5fa4, type: 3}
