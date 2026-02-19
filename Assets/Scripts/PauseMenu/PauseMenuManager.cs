@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 
 public class PauseMenuManager : MonoBehaviour
 {
     public Canvas PauseMenuCanvas;
-    void Start()
-    {
-        PauseMenuCanvas = FindObjectOfType<Canvas>();
-    }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Tab))
         {
             if (PauseMenuCanvas.gameObject.activeInHierarchy)
             {
@@ -30,6 +27,7 @@ public class PauseMenuManager : MonoBehaviour
     public void PauseGame()
     {
         PauseMenuCanvas.gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void ExitGame()
@@ -40,6 +38,7 @@ public class PauseMenuManager : MonoBehaviour
     public void ResumeGame()
     {
         PauseMenuCanvas.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void LoadMainMenu()
