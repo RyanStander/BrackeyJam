@@ -1,22 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 
 public class PauseMenuManager : MonoBehaviour
 {
     public Canvas PauseMenuCanvas;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Update()
     {
-        PauseMenuCanvas = FindObjectOfType<Canvas>();
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (PauseMenuCanvas.gameObject.activeInHierarchy)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PauseGame()
     {
-        
+        PauseMenuCanvas.gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
+
     public void ExitGame()
     {
         EditorApplication.isPlaying = false;
@@ -25,5 +38,11 @@ public class PauseMenuManager : MonoBehaviour
     public void ResumeGame()
     {
         PauseMenuCanvas.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
