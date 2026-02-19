@@ -26,6 +26,8 @@ namespace MiniGameSystem.MiniGame_Wiring
         public Transform WireParent;
         public Transform LeftContainer;
         public Transform RightContainer;
+        [SerializeField] private RectTransform _canvas;
+        [SerializeField] private float _lineThickness = 15f;
 
         private WiringNode _currentStartNode;
         private RectTransform _currentWire;
@@ -153,9 +155,12 @@ namespace MiniGameSystem.MiniGame_Wiring
         //i'm not gonna lie this was from a tutorial but it works so who cares, calculates stretchy lines from two points
         private void UpdateLineVisual(Vector3 startPos, Vector3 endPos)
         {
+            //setting the position
+            float distance = Vector3.Distance(startPos, endPos);
+            _currentWire.sizeDelta = new Vector2(distance/1.5f, _lineThickness);
+            
+            //setting the angle
             Vector3 direction = endPos - startPos;
-            float distance = direction.magnitude;
-            _currentWire.sizeDelta = new Vector2(distance, 15f);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             _currentWire.rotation = Quaternion.Euler(0, 0, angle);
         }
