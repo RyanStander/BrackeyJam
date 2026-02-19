@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/StationGhost.unity
     guid: 9821acc777a4acd4ab55b07aeaeb4d4f
   - enabled: 1
+    path: Assets/Scenes/StationMonster.unity
+    guid: f3b9fa8395c33ea479945a9ed11e68cb
+  - enabled: 1
+    path: Assets/Scenes/StationSubmarine.unity
+    guid: bf55af39dd26b0043af776a011cf459b
+  - enabled: 1
     path: Assets/Scenes/TestStation.unity
     guid: d4ac1bd6a521f0b44a41805941cc7244
   - enabled: 1
