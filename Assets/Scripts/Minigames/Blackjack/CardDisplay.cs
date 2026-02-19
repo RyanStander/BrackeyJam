@@ -20,6 +20,15 @@ namespace Minigames.Blackjack
 
             if (showCard)
                 ShowCard();
+            else
+            {
+                _cardFrontImage.sprite = _cardData.CardBackSprite;
+                _cardFrontImage.color = Color.white;
+                _cardRankImage.sprite = _cardData.CardBackSprite;
+                _cardRankImage.color = Color.white;
+                _cardSuitImage.sprite = _cardData.CardBackSprite;
+                _cardSuitImage.color = Color.white;
+            }
         }
 
         public void ShowCard()
@@ -29,7 +38,7 @@ namespace Minigames.Blackjack
                 Debug.LogError("CardData is not set for this CardDisplay.");
                 return;
             }
-            
+
             _cardFrontImage.sprite = _cardData.CardFrontSprite;
             _cardFrontImage.color = _cardData.CardColor;
             Debug.Log(_card.Rank + " as " + (int)_card.Rank);

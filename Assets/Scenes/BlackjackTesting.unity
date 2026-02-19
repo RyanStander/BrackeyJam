@@ -130,9 +130,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1466880083}
     m_Modifications:
+    - target: {fileID: 2586990453406420537, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3200694447043404655, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Name
       value: CardBack (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536103914741403349, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Sprite
@@ -140,15 +148,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 065a39e6335b8b34babf0e10db48006b, type: 3}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.b
-      value: 0.105882354
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.g
-      value: 0.101960786
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.r
-      value: 0.10980392
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6711852940572253262, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Pivot.x
@@ -1287,9 +1295,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1466880083}
     m_Modifications:
+    - target: {fileID: 2586990453406420537, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3200694447043404655, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Name
       value: CardBack (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536103914741403349, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Sprite
@@ -1297,15 +1313,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 065a39e6335b8b34babf0e10db48006b, type: 3}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.b
-      value: 0.105882354
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.g
-      value: 0.101960786
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.r
-      value: 0.10980392
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6711852940572253262, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Pivot.x
@@ -2419,9 +2435,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1466880083}
     m_Modifications:
+    - target: {fileID: 2586990453406420537, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3200694447043404655, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Name
       value: CardBack (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536103914741403349, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Sprite
@@ -2429,15 +2453,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 065a39e6335b8b34babf0e10db48006b, type: 3}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.b
-      value: 0.105882354
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.g
-      value: 0.101960786
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.r
-      value: 0.10980392
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6711852940572253262, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Pivot.x
@@ -6178,9 +6202,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1466880083}
     m_Modifications:
+    - target: {fileID: 2586990453406420537, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3200694447043404655, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Name
       value: CardBack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536103914741403349, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Sprite
@@ -6188,15 +6220,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 065a39e6335b8b34babf0e10db48006b, type: 3}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.b
-      value: 0.105882354
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.g
-      value: 0.101960786
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5591932629411164623, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Color.r
-      value: 0.10980392
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6711852940572253262, guid: 4aba20674c6d46a44945706d51eb36d6, type: 3}
       propertyPath: m_Pivot.x
