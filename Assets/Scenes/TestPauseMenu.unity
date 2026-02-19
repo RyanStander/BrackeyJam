@@ -442,13 +442,59 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1650220865728862307, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650220865728862307, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650220865728862307, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1136171061}
+    - target: {fileID: 1650220865728862307, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650220865728862307, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650220865728862307, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650220865728862307, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1661658811277544333, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1136171061}
+    - target: {fileID: 4527107398837709378, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -34
+      objectReference: {fileID: 0}
     - target: {fileID: 6268938066188942567, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544449638573414214, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_text
+      value: 'Main Menu
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383901388571944266, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_Name
+      value: Main Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8339532340409590124, guid: 1e6f3ec2db2f84f4094f2bcb6ca6f880, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -86
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
