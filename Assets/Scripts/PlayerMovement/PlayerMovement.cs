@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 

@@ -47,7 +47,17 @@ public class SpineChracterController : MonoBehaviour
         if (IsWaterLevel)
         {
             ChangeAnimationState(SwimAnim);
-            return;
+
+            if(IsWaterLevel && playerMovement.IsSprinting)
+            {
+                skeletonAnimation.timeScale = 2.5f; 
+            }
+
+            else
+            {
+                skeletonAnimation.timeScale = 1f;
+            }
+                return;
         }
         else
         {

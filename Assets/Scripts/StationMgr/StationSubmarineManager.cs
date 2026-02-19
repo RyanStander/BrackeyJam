@@ -4,31 +4,66 @@ using UnityEngine;
 
 public class StationSubmarineManager : BaseStationManager
 {
-    public bool HasFixedWires = false;
-    public bool HasDoor1Key = false;
-    public bool HasDoor2Key = false;
+    public bool HasFixedPipes = false;
     public bool isLevelComplete = false;
 
-    public void CompleteWireTask()
+    public int CurrentWaterLevel = 0;
+
+    public GameObject Block1;
+    public GameObject Block2;
+    public GameObject CurrentBlock;
+
+    public GameObject BarrierWall1;
+    public GameObject BarrierWall2;
+    public GameObject BarrierWall3;
+    public GameObject CurrentWall;
+
+    private void Awake()
     {
-        HasFixedWires = true;
-        Debug.Log("Wires fixed!");
+        CurrentWaterLevel = 0;
+        CurrentBlock = Block1;
+        CurrentWall = BarrierWall1;
+    }
+
+    public void CompleteFirstFloorPuzzle()
+    {
+        HasFixedPipes = true;
+        CurrentWaterLevel = 1;
+
+        CurrentWall.SetActive(false);
+        CurrentWall = BarrierWall2;
+
+        CurrentBlock.gameObject.SetActive(false);
+        CurrentBlock = Block2;
+
+        Debug.Log("Water Raised!");
         OnObjectiveUpdate();
     }
 
-    public void CollectDoor1Key()
+    public void CompleteSecondFloorPuzzle()
     {
-        HasDoor1Key = true;
-        Debug.Log("Door 1 key collected!");
+        CurrentWaterLevel = 1;
+
+        CurrentWall.SetActive(false);
+        CurrentWall = BarrierWall3;
+        CurrentWall.SetActive(false);
+
+        CurrentBlock.gameObject.SetActive(false);
+
         OnObjectiveUpdate();
+    }
+
+    public void RemoveCurrentBlock()
+    {
+
     }
 
     protected override void CheckObjectives()
     {
-        if(HasFixedWires && HasDoor1Key)
+        if(HasFixedPipes)
         {
             isLevelComplete = true;
-            Debug.Log("Station One complete!");
+            Debug.Log("Submarine Station complete!");
             OnStationComplete.Invoke();
         }
     }

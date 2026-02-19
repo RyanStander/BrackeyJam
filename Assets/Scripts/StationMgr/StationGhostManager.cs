@@ -9,6 +9,10 @@ public class StationGhostManager : BaseStationManager
     public bool HasDoor2Key = false;
     public bool isLevelComplete = false;
 
+    public GameObject BarrierWall1;
+    public GameObject BarrierWall2;
+    public GameObject BarrierWall3;
+
     public void CompleteWireTask()
     {
         HasFixedWires = true;
