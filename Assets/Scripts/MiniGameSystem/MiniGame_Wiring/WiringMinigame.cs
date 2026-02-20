@@ -13,15 +13,12 @@ namespace MiniGameSystem.MiniGame_Wiring
     /// - if you release it anywhere else, it should just disappear and reset the state so you can try again
     /// - once all nodes are connected, it should trigger the win condition
     /// </summary>
-
     public class WiringMinigame : BaseMinigame
     {
-        [Header("configuration")]
-        public int wireCount = 6;
+        [Header("configuration")] public int wireCount = 6;
         public List<Color> AvailableColors;
 
-        [Header("references")]
-        public GameObject WirePrefab;
+        [Header("references")] public GameObject WirePrefab;
         public GameObject NodePrefab;
         public Transform WireParent;
         public Transform LeftContainer;
@@ -54,7 +51,7 @@ namespace MiniGameSystem.MiniGame_Wiring
             List<int> selectedColors = allColorIndices.GetRange(0, count);
 
             //based on the amount we defined, spawn nodes on left side with colors from our shuffled list
-            for (int i = 0; i < count; i++) 
+            for (int i = 0; i < count; i++)
             {
                 int id = selectedColors[i];
                 WiringNode node = Instantiate(NodePrefab, LeftContainer).GetComponent<WiringNode>();
@@ -77,7 +74,7 @@ namespace MiniGameSystem.MiniGame_Wiring
         }
 
         //called during onpointerdown from WiringNode, spawn a wire, grab it's node color
-        public void AttemptConnectionStart(WiringNode node) 
+        public void AttemptConnectionStart(WiringNode node)
         {
             if (_currentStartNode != null) return;
 
@@ -114,7 +111,7 @@ namespace MiniGameSystem.MiniGame_Wiring
             _currentStartNode = null;
             _currentWire = null;
             _matchesMade++;
-        
+
 
             if (_matchesMade >= Mathf.Min(wireCount, AvailableColors.Count))
             {
@@ -130,6 +127,7 @@ namespace MiniGameSystem.MiniGame_Wiring
                 {
                     AttemptConnectionEnd(_currentHoveredNode);
                 }
+
                 if (_currentStartNode != null)
                 {
                     Destroy(_currentWire.gameObject);
@@ -139,11 +137,18 @@ namespace MiniGameSystem.MiniGame_Wiring
             }
         }
 
+        //Captains log 1453: the harsh storms of whatever the original of this was has caused many sailors to lose their lives,
+        //but we have managed to push through, it is currently 2am and I have work in 4 hours, but at least no more lives
+        //will be lost to a line rendered...
         private void Update()
         {
             if (_currentStartNode != null && _currentWire != null)
             {
-                UpdateLineVisual(_currentStartNode.transform.position, Input.mousePosition);
+                // convert screen mouse to world position in the canvas
+                RectTransformUtility.ScreenPointToWorldPointInRectangle(_canvas, Input.mousePosition,
+                    null, out Vector3 mouseWorldPos);
+
+                UpdateLineVisual(_currentStartNode.transform.position, mouseWorldPos);
             }
         }
 
@@ -152,17 +157,22 @@ namespace MiniGameSystem.MiniGame_Wiring
             _currentHoveredNode = node;
         }
 
-        //i'm not gonna lie this was from a tutorial but it works so who cares, calculates stretchy lines from two points
+        //i'm not gonna lie this was from a tutorial but it works so who cares, calculates stretchy lines from two points 
+        //edit to the above: I hate whoever gave you this tutorial.
         private void UpdateLineVisual(Vector3 startPos, Vector3 endPos)
         {
-            //setting the position
-            float distance = Vector3.Distance(startPos, endPos);
-            _currentWire.sizeDelta = new Vector2(distance/1.5f, _lineThickness);
+            Vector3 startLocal = WireParent.InverseTransformPoint(startPos);
+            Vector3 endLocal = WireParent.InverseTransformPoint(endPos);
             
-            //setting the angle
-            Vector3 direction = endPos - startPos;
+            _currentWire.localPosition = startLocal;
+            
+            Vector3 direction = endLocal - startLocal;
+            
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            _currentWire.rotation = Quaternion.Euler(0, 0, angle);
+            _currentWire.localRotation = Quaternion.Euler(0, 0, angle);
+
+            // scale the width along local x-axis
+            _currentWire.sizeDelta = new Vector2(direction.magnitude, _lineThickness);
         }
 
         //fisher-yates shuffle, also from a tutorial
@@ -176,6 +186,7 @@ namespace MiniGameSystem.MiniGame_Wiring
                 list[rnd] = temp;
             }
         }
+
         IEnumerator WinSequence()
         {
             yield return new WaitForSeconds(2f);

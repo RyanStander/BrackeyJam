@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 // / <summary>
 // / each node is a connection point for a wire. 
@@ -15,29 +17,33 @@ namespace MiniGameSystem.MiniGame_Wiring
         [Header("State")]
         public int ColorID;
         public bool IsLeftSide;
-        public bool IsConnected;
-
-        private WiringMinigame _wiregame;
-        public Image PupilImage;
-        //private Image PupilImage;
-
-        public float FlickerInterval = 3.0f;
-        public float FlickerDuration = 0.5f;
-
+        [SerializeField] private bool _isConnected;
+        [SerializeField] private Image _pupilImage;
+        [SerializeField] private WireNodePupilFollow _pupilFollow;
+        [SerializeField] private float _flickerInterval = 3.0f;
+        [SerializeField] private float _flickerDuration = 0.5f;
+        
+        private WiringMinigame _wireGame;
         private Color _realColor;
         private Coroutine _flickerCoroutine;
 
+        private void OnValidate()
+        {
+            if (_pupilImage == null) 
+                _pupilImage = GetComponentInChildren<Image>();
+        }
+
         public void Setup(WiringMinigame wiregame, int id, Color color)
         {
-            _wiregame = wiregame;
+            _wireGame = wiregame;
             ColorID = id;
             _realColor = color;
-            IsConnected = false;
+            _isConnected = false;
 
-            if (PupilImage == null) 
-                PupilImage = GetComponent<Image>();
+            if (_pupilImage == null) 
+                _pupilImage = GetComponent<Image>();
 
-            PupilImage.color = Color.white;
+            _pupilImage.color = Color.white;
 
             if (_flickerCoroutine != null) 
                 StopCoroutine(_flickerCoroutine);
@@ -49,52 +55,52 @@ namespace MiniGameSystem.MiniGame_Wiring
         {
             yield return new WaitForSeconds(Random.Range(0f, 3f));
 
-            while (!IsConnected)
+            while (!_isConnected)
             {
-                PupilImage.color = _realColor;
-                yield return new WaitForSeconds(FlickerDuration);
+                _pupilImage.color = _realColor;
+                yield return new WaitForSeconds(_flickerDuration);
 
-                if (IsConnected) break;
+                if (_isConnected) break;
 
-                PupilImage.color = Color.white;
-                yield return new WaitForSeconds(FlickerInterval + Random.Range(0f, 3f));
+                _pupilImage.color = Color.white;
+                yield return new WaitForSeconds(_flickerInterval + Random.Range(0f, 3f));
             }
-            PupilImage.color = _realColor;
+            _pupilImage.color = _realColor;
         }
 
         //a bit hacky but I wanted to make sure the node color is set right once you connect it
         public void SetConnected()
         {
-            IsConnected = true;
+            _isConnected = true;
             if (_flickerCoroutine != null) StopCoroutine(_flickerCoroutine);
-            PupilImage.color = _realColor;
+            _pupilImage.color = _realColor;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!IsConnected) _wiregame.SetHoveredNode(this);
+            if (!_isConnected) _wireGame.SetHoveredNode(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _wiregame.SetHoveredNode(null);
+            _wireGame.SetHoveredNode(null);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (!IsConnected)
+            if (!_isConnected)
             {
-                PupilImage.color = Color.white; //wanted it to immediately turn to white when released to stop cheating
+                _pupilImage.color = Color.white; //wanted it to immediately turn to white when released to stop cheating
             }
-            _wiregame.EndDrag();
+            _wireGame.EndDrag();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!IsConnected)
+            if (!_isConnected)
             {
-                _wiregame.AttemptConnectionStart(this);
-                PupilImage.color = _realColor;
+                _wireGame.AttemptConnectionStart(this);
+                _pupilImage.color = _realColor;
             }
         }
     }

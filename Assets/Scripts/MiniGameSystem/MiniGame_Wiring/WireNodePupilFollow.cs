@@ -8,6 +8,8 @@ namespace MiniGameSystem.MiniGame_Wiring
     {
         [SerializeField] private float _maxDistancePercent = 0.4f; // 40% of parent width
         [SerializeField] private float _followSpeed = 10f;
+        private bool _followMouse = true;
+        private Transform _eyeTarget;
 
         private RectTransform _parentRect;
 
@@ -18,21 +20,36 @@ namespace MiniGameSystem.MiniGame_Wiring
 
         private void FixedUpdate()
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _parentRect,
-                Input.mousePosition,
-                null,
-                out Vector2 localMousePos
-            );
+            Vector2 targetPosition;
+
+            if (_followMouse)
+            {
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    _parentRect,
+                    Input.mousePosition,
+                    null,
+                    out targetPosition
+                );
+            }
+            else
+            {
+                targetPosition = _eyeTarget.position;
+            }
 
             // Max distance based on parent's width (in canvas units)
             float maxDistance = _parentRect.rect.width * _maxDistancePercent;
 
-            Vector2 offset = localMousePos;
+            Vector2 offset = targetPosition;
             Vector2 clampedOffset = Vector2.ClampMagnitude(offset, maxDistance);
 
             transform.localPosition =
                 Vector2.MoveTowards(transform.localPosition, clampedOffset, _followSpeed * Time.deltaTime);
+        }
+        
+        public void FollowEyeTarget(Transform target)
+        {
+            _eyeTarget = target;
+            _followMouse = false;
         }
     }
 }
