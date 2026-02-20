@@ -15,9 +15,15 @@ public class InteractNPC : MonoBehaviour, IInteractable
     [Header("NPC Dialogue Lines")]
     [Tooltip("Add dialogue lines here directly in the Inspector.")]
     [SerializeField] private string[] _dialogueLines;
+    [SerializeField] private string[] _dialogueLines2;//maybe for alternate dialogue on objectives
+    [SerializeField] private string[] _dialogueLines3;
+
     [SerializeField] private int _currentLineIndex = 0;
 
+    public DialogueController dialogueController;
+
     public UnityEvent OnObjectiveComplete;
+
     public void Start()
     {
         if(_dialogueLines == null || _dialogueLines.Length == 0)
@@ -30,7 +36,7 @@ public class InteractNPC : MonoBehaviour, IInteractable
     private void ShowCurrentDialogueLine()
     {
         if (_dialogueLines.Length == 0) return;
-        Debug.Log(_dialogueLines[_currentLineIndex]);
+        dialogueController.DisplayDialogue(new string[] { _dialogueLines[_currentLineIndex] });
     }
 
     public void ShowNextDialogueLine()
@@ -39,6 +45,8 @@ public class InteractNPC : MonoBehaviour, IInteractable
         ShowCurrentDialogueLine();
         _currentLineIndex = (_currentLineIndex + 1) % _dialogueLines.Length;
     }
+
+    
 
     public bool Interact(Interaction interaction)
     {
