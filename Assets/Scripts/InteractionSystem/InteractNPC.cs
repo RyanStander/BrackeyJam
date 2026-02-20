@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 // <summary>
 // This script should be attached to any NPC GameObject that you want the player to interact with.
@@ -20,7 +21,7 @@ public class InteractNPC : MonoBehaviour, IInteractable
 
     [SerializeField] private int _currentLineIndex = 0;
 
-    public DialogueController dialogueController;
+    [SerializeField] private DialogueController _dialogueController;
 
     public UnityEvent OnObjectiveComplete;
 
@@ -36,7 +37,7 @@ public class InteractNPC : MonoBehaviour, IInteractable
     private void ShowCurrentDialogueLine()
     {
         if (_dialogueLines.Length == 0) return;
-        dialogueController.DisplayDialogue(new string[] { _dialogueLines[_currentLineIndex] });
+        _dialogueController.DisplayDialogue(new string[] { _dialogueLines[_currentLineIndex] });
     }
 
     public void ShowNextDialogueLine()
@@ -50,7 +51,14 @@ public class InteractNPC : MonoBehaviour, IInteractable
 
     public bool Interact(Interaction interaction)
     {
+        if (_dialogueController.IsTyping)
+        {
+            _dialogueController.SkipDialogueToEnd();
+            return true;
+        }
         ShowNextDialogueLine();
+        
         return true;
+
     }   
 }
