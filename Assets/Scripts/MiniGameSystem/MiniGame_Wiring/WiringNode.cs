@@ -110,7 +110,8 @@ namespace MiniGameSystem.MiniGame_Wiring
             if (!_isConnected)
             {
                 _wireGame.AttemptConnectionStart(this);
-                _pupilImage.color = _realColor;
+                //open eye
+                _eyelidAnimator.Play("EyesOpen", 0, 1);
             }
         }
     }

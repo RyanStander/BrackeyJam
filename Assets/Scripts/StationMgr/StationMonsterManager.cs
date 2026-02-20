@@ -14,7 +14,7 @@ namespace StationMgr
 
         #region Second wire actions
         [Header("Second Wire Completion Actions")]
-        [SerializeField] private GameObject _tentacleDoor;
+        [SerializeField] private Animator _tentacleDoorAnimator;
         [SerializeField] private GameObject _tentacleDoorInteractable;
 
         #endregion
@@ -33,7 +33,7 @@ namespace StationMgr
 
         public void SecondWireFixed()
         {
-            _tentacleDoor.SetActive(false);
+            _tentacleDoorAnimator.Play("TentacleOpen");
             _tentacleDoorInteractable.SetActive(true);
         }
     
