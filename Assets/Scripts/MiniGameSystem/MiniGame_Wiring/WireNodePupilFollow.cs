@@ -33,7 +33,7 @@ namespace MiniGameSystem.MiniGame_Wiring
             }
             else
             {
-                targetPosition = _eyeTarget.position;
+                targetPosition = _parentRect.InverseTransformPoint(_eyeTarget.position);
             }
 
             // Max distance based on parent's width (in canvas units)

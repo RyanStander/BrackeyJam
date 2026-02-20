@@ -20,8 +20,8 @@ namespace MiniGameSystem.MiniGame_Wiring
         [SerializeField] private bool _isConnected;
         [SerializeField] private Image _pupilImage;
         [SerializeField] private WireNodePupilFollow _pupilFollow;
-        [SerializeField] private float _flickerInterval = 3.0f;
-        [SerializeField] private float _flickerDuration = 0.5f;
+        private float _blinkInterval = 3.0f;
+        private float _blinkDuration = 0.5f;
         
         private WiringMinigame _wireGame;
         private Color _realColor;
@@ -29,11 +29,11 @@ namespace MiniGameSystem.MiniGame_Wiring
 
         private void OnValidate()
         {
-            if (_pupilImage == null) 
-                _pupilImage = GetComponentInChildren<Image>();
+            if (_pupilFollow == null) 
+                _pupilFollow = GetComponentInChildren<WireNodePupilFollow>();
         }
 
-        public void Setup(WiringMinigame wiregame, int id, Color color)
+        public void Setup(WiringMinigame wiregame, int id, Color color, float blinkInterval = -1, float blinkDuration = 0)
         {
             _wireGame = wiregame;
             ColorID = id;
@@ -43,12 +43,19 @@ namespace MiniGameSystem.MiniGame_Wiring
             if (_pupilImage == null) 
                 _pupilImage = GetComponent<Image>();
 
-            _pupilImage.color = Color.white;
+            _pupilImage.color = color;
 
-            if (_flickerCoroutine != null) 
-                StopCoroutine(_flickerCoroutine);
-
-            _flickerCoroutine = StartCoroutine(FlickerRoutine());
+            _blinkInterval = blinkInterval;
+            _blinkDuration = blinkDuration;
+            
+            if (_blinkInterval > 0 && _blinkDuration > 0)
+            {
+                _pupilImage.color = Color.white;
+                if (_flickerCoroutine != null)
+                    StopCoroutine(_flickerCoroutine);
+                
+                _flickerCoroutine = StartCoroutine(FlickerRoutine());
+            }
         }
 
         IEnumerator FlickerRoutine()
@@ -58,22 +65,23 @@ namespace MiniGameSystem.MiniGame_Wiring
             while (!_isConnected)
             {
                 _pupilImage.color = _realColor;
-                yield return new WaitForSeconds(_flickerDuration);
+                yield return new WaitForSeconds(_blinkDuration);
 
                 if (_isConnected) break;
 
                 _pupilImage.color = Color.white;
-                yield return new WaitForSeconds(_flickerInterval + Random.Range(0f, 3f));
+                yield return new WaitForSeconds(_blinkInterval + Random.Range(0f, 3f));
             }
             _pupilImage.color = _realColor;
         }
 
         //a bit hacky but I wanted to make sure the node color is set right once you connect it
-        public void SetConnected()
+        public void SetConnected(Transform eyeTarget)
         {
             _isConnected = true;
             if (_flickerCoroutine != null) StopCoroutine(_flickerCoroutine);
             _pupilImage.color = _realColor;
+            _pupilFollow.FollowEyeTarget(eyeTarget);
         }
 
         public void OnPointerEnter(PointerEventData eventData)

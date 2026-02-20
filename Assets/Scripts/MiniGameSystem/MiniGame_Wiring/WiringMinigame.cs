@@ -15,16 +15,19 @@ namespace MiniGameSystem.MiniGame_Wiring
     /// </summary>
     public class WiringMinigame : BaseMinigame
     {
-        [Header("configuration")] public int wireCount = 6;
-        public List<Color> AvailableColors;
-
-        [Header("references")] public GameObject WirePrefab;
-        public GameObject NodePrefab;
-        public Transform WireParent;
-        public Transform LeftContainer;
-        public Transform RightContainer;
-        [SerializeField] private RectTransform _canvas;
+        [Header("configuration")] [SerializeField] private int _wireCount = 6;
+        [SerializeField] private List<Color> _availableColors;
+        [SerializeField] private float _nodeBlinkInterval = 3f;
+        [SerializeField] private float _nodeBlinkSpeedMultiplier = 1f;
         [SerializeField] private float _lineThickness = 15f;
+        
+        [Header("references")] public GameObject WirePrefab;
+        [SerializeField] private GameObject _nodePrefab;
+        [SerializeField] private Transform _wireParent;
+        [SerializeField] private Transform _leftContainer;
+        [SerializeField] private Transform _rightContainer;
+        [SerializeField] private RectTransform _canvas;
+        
 
         private WiringNode _currentStartNode;
         private RectTransform _currentWire;
@@ -42,20 +45,20 @@ namespace MiniGameSystem.MiniGame_Wiring
             _currentWire = null;
 
             List<int> allColorIndices = new List<int>();
-            for (int i = 0; i < AvailableColors.Count; i++) allColorIndices.Add(i);
+            for (int i = 0; i < _availableColors.Count; i++) allColorIndices.Add(i);
 
             ShuffleList(allColorIndices);
             //grab all colors from our list we defined in inspector, then shuffle it
 
-            int count = Mathf.Min(wireCount, AvailableColors.Count);
+            int count = Mathf.Min(_wireCount, _availableColors.Count);
             List<int> selectedColors = allColorIndices.GetRange(0, count);
 
             //based on the amount we defined, spawn nodes on left side with colors from our shuffled list
             for (int i = 0; i < count; i++)
             {
                 int id = selectedColors[i];
-                WiringNode node = Instantiate(NodePrefab, LeftContainer).GetComponent<WiringNode>();
-                node.Setup(this, id, AvailableColors[id]);
+                WiringNode node = Instantiate(_nodePrefab, _leftContainer).GetComponent<WiringNode>();
+                node.Setup(this, id, _availableColors[id], _nodeBlinkInterval, _nodeBlinkSpeedMultiplier);
                 node.IsLeftSide = true;
                 node.transform.localScale = new Vector3(-1, 1, 1);
             }
@@ -67,8 +70,8 @@ namespace MiniGameSystem.MiniGame_Wiring
             for (int i = 0; i < count; i++)
             {
                 int id = selectedColors[i];
-                WiringNode node = Instantiate(NodePrefab, RightContainer).GetComponent<WiringNode>();
-                node.Setup(this, id, AvailableColors[id]);
+                WiringNode node = Instantiate(_nodePrefab, _rightContainer).GetComponent<WiringNode>();
+                node.Setup(this, id, _availableColors[id], _nodeBlinkInterval, _nodeBlinkSpeedMultiplier);
                 node.IsLeftSide = false;
             }
         }
@@ -80,10 +83,10 @@ namespace MiniGameSystem.MiniGame_Wiring
 
             _currentStartNode = node;
 
-            GameObject newLine = Instantiate(WirePrefab, WireParent);
+            GameObject newLine = Instantiate(WirePrefab, _wireParent);
             _currentWire = newLine.GetComponent<RectTransform>();
             _currentWire.position = node.transform.position;
-            newLine.GetComponent<Image>().color = AvailableColors[node.ColorID];
+            newLine.GetComponent<Image>().color = _availableColors[node.ColorID];
 
             newLine.GetComponent<Image>().raycastTarget = false;
         }
@@ -105,15 +108,15 @@ namespace MiniGameSystem.MiniGame_Wiring
         {
             UpdateLineVisual(_currentStartNode.transform.position, endNode.transform.position);
 
-            _currentStartNode.SetConnected();
-            endNode.SetConnected();
+            _currentStartNode.SetConnected(endNode.transform);
+            endNode.SetConnected(_currentStartNode.transform);
 
             _currentStartNode = null;
             _currentWire = null;
             _matchesMade++;
 
 
-            if (_matchesMade >= Mathf.Min(wireCount, AvailableColors.Count))
+            if (_matchesMade >= Mathf.Min(_wireCount, _availableColors.Count))
             {
                 StartCoroutine(WinSequence());
             }
@@ -161,8 +164,8 @@ namespace MiniGameSystem.MiniGame_Wiring
         //edit to the above: I hate whoever gave you this tutorial.
         private void UpdateLineVisual(Vector3 startPos, Vector3 endPos)
         {
-            Vector3 startLocal = WireParent.InverseTransformPoint(startPos);
-            Vector3 endLocal = WireParent.InverseTransformPoint(endPos);
+            Vector3 startLocal = _wireParent.InverseTransformPoint(startPos);
+            Vector3 endLocal = _wireParent.InverseTransformPoint(endPos);
             
             _currentWire.localPosition = startLocal;
             
