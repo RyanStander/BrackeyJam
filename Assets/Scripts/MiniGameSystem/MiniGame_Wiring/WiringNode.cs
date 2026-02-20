@@ -14,73 +14,79 @@ namespace MiniGameSystem.MiniGame_Wiring
 {
     public class WiringNode : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler
     {
-        [Header("State")]
-        public int ColorID;
+        [Header("State")] public int ColorID;
         public bool IsLeftSide;
         [SerializeField] private bool _isConnected;
         [SerializeField] private Image _pupilImage;
         [SerializeField] private WireNodePupilFollow _pupilFollow;
+        [SerializeField] private Animator _eyelidAnimator;
+        [SerializeField] private float _blinkSpeedRange = 1.25f;
         private float _blinkInterval = 3.0f;
-        private float _blinkDuration = 0.5f;
-        
+        private float _blinkSpeedMultiplier = 0.5f;
+
         private WiringMinigame _wireGame;
         private Color _realColor;
-        private Coroutine _flickerCoroutine;
+        private Coroutine _blinkCoroutine;
 
         private void OnValidate()
         {
-            if (_pupilFollow == null) 
+            if (_pupilFollow == null)
                 _pupilFollow = GetComponentInChildren<WireNodePupilFollow>();
+
+            if (_eyelidAnimator == null)
+                _eyelidAnimator = GetComponentInChildren<Animator>();
         }
 
-        public void Setup(WiringMinigame wiregame, int id, Color color, float blinkInterval = -1, float blinkDuration = 0)
+        public void Setup(WiringMinigame wiregame, int id, Color color, float blinkInterval = -1,
+            float blinkDuration = 0)
         {
             _wireGame = wiregame;
             ColorID = id;
             _realColor = color;
             _isConnected = false;
 
-            if (_pupilImage == null) 
+            if (_pupilImage == null)
                 _pupilImage = GetComponent<Image>();
 
             _pupilImage.color = color;
 
             _blinkInterval = blinkInterval;
-            _blinkDuration = blinkDuration;
-            
-            if (_blinkInterval > 0 && _blinkDuration > 0)
+            _blinkSpeedMultiplier = blinkDuration;
+
+            if (_blinkInterval > 0 && _blinkSpeedMultiplier > 0)
             {
-                _pupilImage.color = Color.white;
-                if (_flickerCoroutine != null)
-                    StopCoroutine(_flickerCoroutine);
-                
-                _flickerCoroutine = StartCoroutine(FlickerRoutine());
+                if (_blinkCoroutine != null)
+                    StopCoroutine(_blinkCoroutine);
+
+                _blinkCoroutine = StartCoroutine(FlickerRoutine());
             }
         }
 
         IEnumerator FlickerRoutine()
         {
-            yield return new WaitForSeconds(Random.Range(0f, 3f));
+            yield return new WaitForSeconds(Random.Range(0f, _blinkInterval));
 
             while (!_isConnected)
             {
-                _pupilImage.color = _realColor;
-                yield return new WaitForSeconds(_blinkDuration);
+                _eyelidAnimator.Play("EyeBlink", 0,
+                    _blinkSpeedMultiplier +
+                    Random.Range(_blinkSpeedMultiplier / _blinkSpeedRange, _blinkSpeedMultiplier * _blinkSpeedRange));
+                yield return new WaitForSeconds(_blinkSpeedMultiplier *
+                                                _eyelidAnimator.GetCurrentAnimatorStateInfo(0).length);
 
                 if (_isConnected) break;
-
-                _pupilImage.color = Color.white;
-                yield return new WaitForSeconds(_blinkInterval + Random.Range(0f, 3f));
+                
+                yield return new WaitForSeconds(_blinkInterval + Random.Range(0f, _blinkInterval));
             }
-            _pupilImage.color = _realColor;
         }
 
         //a bit hacky but I wanted to make sure the node color is set right once you connect it
         public void SetConnected(Transform eyeTarget)
         {
             _isConnected = true;
-            if (_flickerCoroutine != null) StopCoroutine(_flickerCoroutine);
-            _pupilImage.color = _realColor;
+            if (_blinkCoroutine != null) StopCoroutine(_blinkCoroutine);
+            //stop animation
+            _eyelidAnimator.Play("EyesOpen", 0, 1);
             _pupilFollow.FollowEyeTarget(eyeTarget);
         }
 
@@ -96,10 +102,6 @@ namespace MiniGameSystem.MiniGame_Wiring
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (!_isConnected)
-            {
-                _pupilImage.color = Color.white; //wanted it to immediately turn to white when released to stop cheating
-            }
             _wireGame.EndDrag();
         }
 

@@ -15,19 +15,21 @@ namespace MiniGameSystem.MiniGame_Wiring
     /// </summary>
     public class WiringMinigame : BaseMinigame
     {
-        [Header("configuration")] [SerializeField] private int _wireCount = 6;
+        [Header("configuration")] [SerializeField]
+        private int _wireCount = 6;
+
         [SerializeField] private List<Color> _availableColors;
         [SerializeField] private float _nodeBlinkInterval = 3f;
         [SerializeField] private float _nodeBlinkSpeedMultiplier = 1f;
         [SerializeField] private float _lineThickness = 15f;
-        
+
         [Header("references")] public GameObject WirePrefab;
         [SerializeField] private GameObject _nodePrefab;
         [SerializeField] private Transform _wireParent;
         [SerializeField] private Transform _leftContainer;
         [SerializeField] private Transform _rightContainer;
         [SerializeField] private RectTransform _canvas;
-        
+
 
         private WiringNode _currentStartNode;
         private RectTransform _currentWire;
@@ -81,6 +83,10 @@ namespace MiniGameSystem.MiniGame_Wiring
         {
             if (_currentStartNode != null) return;
 
+            //we dont want player to touch right side
+            if (!node.IsLeftSide)
+                return;
+            
             _currentStartNode = node;
 
             GameObject newLine = Instantiate(WirePrefab, _wireParent);
@@ -166,11 +172,11 @@ namespace MiniGameSystem.MiniGame_Wiring
         {
             Vector3 startLocal = _wireParent.InverseTransformPoint(startPos);
             Vector3 endLocal = _wireParent.InverseTransformPoint(endPos);
-            
+
             _currentWire.localPosition = startLocal;
-            
+
             Vector3 direction = endLocal - startLocal;
-            
+
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             _currentWire.localRotation = Quaternion.Euler(0, 0, angle);
 
