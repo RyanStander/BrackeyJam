@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.7, y: 2.2}
-  m_SizeDelta: {x: -42.7888, y: -36.5356}
+  m_AnchoredPosition: {x: -4.9168, y: 2.3238}
+  m_SizeDelta: {x: -41.7361, y: -34.9255}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6149491850068859133
 CanvasRenderer:
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 7848210781934012812}
   - component: {fileID: 4565925185414538990}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Eyelid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,8 +199,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.1, y: 4.2}
-  m_SizeDelta: {x: 59.7285, y: 59.7285}
+  m_AnchoredPosition: {x: -5.7, y: 4.3}
+  m_SizeDelta: {x: 59.361, y: 59.5244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7848210781934012812
 CanvasRenderer:
@@ -230,9 +230,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4ff327dfbe2f16148ab2912cc6e7e24d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4c8bcc13eaecae14db8c07b3ac7c9994, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -374,8 +374,6 @@ MonoBehaviour:
   _isConnected: 0
   _pupilImage: {fileID: 3780435536594881502}
   _pupilFollow: {fileID: 1235322309296105850}
-  _flickerInterval: 3
-  _flickerDuration: 0.5
 --- !u!222 &6680856418704444683
 CanvasRenderer:
   m_ObjectHideFlags: 0
