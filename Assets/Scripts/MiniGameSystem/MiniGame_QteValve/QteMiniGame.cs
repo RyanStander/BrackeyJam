@@ -48,7 +48,7 @@ public class QteMiniGame : BaseMinigame
         DrainPressure();
         HighlightValveEKey();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.E))
         {
 
             OnPress();
