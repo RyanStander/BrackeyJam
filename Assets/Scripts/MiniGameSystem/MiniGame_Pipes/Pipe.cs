@@ -4,14 +4,16 @@ using UnityEngine.EventSystems;
 
 public class Pipe : MonoBehaviour, IPointerClickHandler
 {
-    public enum PipeType { Empty, Start, End, PipeI, PipeL, PipeT, PipeX }
+    public enum PipeType { Empty, StartUpDown, EndUpDown, StartLeftRight,EndLeftRight, PipeI, PipeL, PipeT, PipeX }
 
     [Header("Level Editor")]
     public PipeType currentType;
 
     public Sprite emptySprite;
-    public Sprite startSprite;
-    public Sprite endSprite;
+    public Sprite startUpDownSprite;
+    public Sprite endUpDownSprite;
+    public Sprite startLeftRightSprite;
+    public Sprite endLeftRightSprite;
     public Sprite iSprite;
     public Sprite lSprite;
     public Sprite tSprite;
@@ -43,15 +45,25 @@ public class Pipe : MonoBehaviour, IPointerClickHandler
             case PipeType.Empty:
                 pipeImage.sprite = emptySprite;
                 break;
-            case PipeType.Start:
+            case PipeType.StartUpDown:
                 isStartNode = true;
-                down = true; 
-                pipeImage.sprite = startSprite;
+                down = true; up = true;
+                pipeImage.sprite = startUpDownSprite;
                 break;
-            case PipeType.End:
+            case PipeType.EndUpDown:
                 isEndNode = true;
-                down = true; 
-                pipeImage.sprite = endSprite;
+                down = true; up = true; 
+                pipeImage.sprite = endUpDownSprite;
+                break;
+            case PipeType.StartLeftRight:
+                isStartNode = true;
+                right = true; left = true;
+                pipeImage.sprite = startLeftRightSprite;
+                break;
+            case PipeType.EndLeftRight:
+                isEndNode = true;
+                right = true; left = true;
+                pipeImage.sprite = endLeftRightSprite;
                 break;
             case PipeType.PipeI:
                 up = true; down = true;
@@ -76,7 +88,26 @@ public class Pipe : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left && currentType != PipeType.Empty)
         {
+            if(isStartNode || isEndNode) return; //can't rotate start and end nodes
             RotatePipe();
+        }
+    }
+
+    public void RandomizeRotation()
+    {
+        if (isStartNode || isEndNode || currentType == PipeType.Empty) return;
+
+        int randomSpins = Random.Range(0, 4); 
+
+        for (int i = 0; i < randomSpins; i++)
+        {
+            transform.Rotate(0, 0, -90f);
+
+            bool temp = up;
+            up = left;
+            left = down;
+            down = right;
+            right = temp;
         }
     }
 
