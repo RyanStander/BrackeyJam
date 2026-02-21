@@ -6,6 +6,7 @@ namespace TrainNavigation
 {
     public class TravelUIHandler : MonoBehaviour
     {
+        [SerializeField] private float _warmupTime = 3f;
         [SerializeField] private Animator _trainAnimator;
         [SerializeField] private FadeToBlack _fadeToBlack;
         private Coroutine _travelCoroutine;
@@ -22,12 +23,12 @@ namespace TrainNavigation
 
         private IEnumerator TravelAnimationCoroutine()
         {
-            // Start the train animation
+            yield return new WaitForSeconds(_warmupTime);
+            
             _trainAnimator.Play("TrainJump");
             
             yield return new WaitUntil(() => _trainAnimator.GetCurrentAnimatorStateInfo(0).IsName("NewState"));
-
-            // Start fade to white
+            
             _fadeToBlack.StartFadeToBlack();
 
             yield return new WaitUntil(() => !_fadeToBlack.IsFading());

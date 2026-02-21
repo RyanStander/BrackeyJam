@@ -12,11 +12,17 @@ namespace PersistentManager
         public static void ExpendFuel(int amount)
         {
             PersistentManager.Instance.Fuel -= amount;
+            EventManager.currentManager.AddEvent(new FuelChanged());
         }
 
         public static void Refuel(int amount)
         {
             PersistentManager.Instance.Fuel += amount;
+        }
+        
+        public static int GetFuelLevel()
+        {
+            return PersistentManager.Instance.Fuel;
         }
 
         public static bool CanContinue()
