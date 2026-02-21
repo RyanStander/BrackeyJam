@@ -172,12 +172,17 @@ public class QteMiniGame : BaseMinigame
         currentPressure += 10f;
         currentPressure = Mathf.Clamp(currentPressure, MinPressure, MaxPressure);
     }
+    IEnumerator WinSequence()
+    {
+        yield return new WaitForSeconds(2f);
+        FinishGame(true);
+    }
 
     public void EndGame()
     {
         if(!isGameActive) return;
         isGameActive = false;
-        FinishGame(true);
+        StartCoroutine(WinSequence());
         Debug.Log("Game Ended");
     }
 }
