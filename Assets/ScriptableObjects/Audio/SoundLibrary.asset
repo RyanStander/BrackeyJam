@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerSoundLibrary: {fileID: 11400000, guid: c5513a67b703d51489bc6136e226de8a, type: 2}
   UISoundLibrary: {fileID: 11400000, guid: f12744621498d454c834cbd7cb0e16fd, type: 2}
+  StationMonsterSoundLibrary: {fileID: 11400000, guid: c0c7f83be3bc4ee43b466506fd41dd3f, type: 2}
+  StationUnderwaterSoundLibrary: {fileID: 11400000, guid: f57f5368cf36fa247ac89d904b9ed365, type: 2}
   MinigameBlackjackSoundLibrary: {fileID: 11400000, guid: 014f73a09c0430d45a8153d7382bc28f, type: 2}
   MinigameValveSoundLibrary: {fileID: 11400000, guid: 4d75edc359196bd4b940148381419b96, type: 2}
   MinigamePipesSoundLibrary: {fileID: 11400000, guid: 24626153e4c896a4583aafd39750467f, type: 2}

@@ -1,3 +1,5 @@
+using AudioManagement;
+using PersistentManager;
 using UnityEngine;
 
 namespace StationMgr
@@ -29,12 +31,14 @@ namespace StationMgr
         public void FirstWireFixed()
         {
             _largeTentacleMonster.SetActive(false);
+            AudioManager.Play(AudioDataHandler.StationMonster.Growl());
         }
 
         public void SecondWireFixed()
         {
             _tentacleDoorAnimator.Play("TentacleOpen");
             _tentacleDoorInteractable.SetActive(true);
+            AudioManager.Play(AudioDataHandler.StationMonster.Growl());
         }
     
         public void ThirdWireFixed()
