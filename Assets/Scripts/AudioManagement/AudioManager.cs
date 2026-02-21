@@ -23,6 +23,51 @@ namespace AudioManagement
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        
+        #region Static Wrappers
+
+        /// <summary>
+        /// Plays a one-shot sound effect. Use this for sounds that don't need to be stopped or have parameters changed after being played.
+        /// </summary>
+        /// <param name="sound">Use AudioDataHandler.[LIBRARY].soundName</param>
+        public static void PlayOneShot(EventReference sound)
+        {
+            RuntimeManager.PlayOneShot(sound);
+        }
+
+        /// <summary>
+        ///  Plays music. If the same music is already playing, it won't restart. If different music is playing, it will stop the current music and start the new one.
+        /// </summary>
+        /// <param name="music">Use AudioDataHandler.[LIBRARY].musicName</param>
+        public static void PlayMusic(EventReference music)
+        {
+            if (Instance == null) return;
+            Instance.PlayMusicInstance(music);
+        }
+
+        /// <summary>
+        /// Stops the currently playing music. If fadeOut is true, the music will fade out instead of stopping immediately.
+        /// </summary>
+        /// <param name="fadeOut">Whether to allow the music to fade out or stop it immediately.</param>
+        public static void StopMusic(bool fadeOut = true)
+        {
+            if (Instance == null) return;
+            Instance.StopMusicInstance(fadeOut);
+        }
+        
+        /// <summary>
+        /// Plays a sound effect with optional parameters. Use this for sounds that need to have parameters set or changed after being played. Parameters should be passed as tuples of (parameterName, parameterValue).
+        /// </summary>
+        /// <param name="sound">Use AudioDataHandler.[LIBRARY].soundName</param>
+        /// <param name="parameters">Tuples of (parameterName, parameterValue) to set on the sound instance. For example: ("Intensity", 0.5f), ("IsAlert", 1f)</param>
+        public static void Play(EventReference sound, params (string name, float value)[] parameters)
+        {
+            if (Instance == null) return;
+         
+            Instance.PlayInstance(sound, parameters);
+        }
+
+        #endregion
 
         #region Instance Methods
 
@@ -53,28 +98,21 @@ namespace AudioManagement
             _currentMusic.release();
         }
 
-        #endregion
-
-        #region Static Wrappers
-
-        /// <param name="sound">Use AudioDataHandler.[LIBRARY].soundName</param>
-        public static void PlayOneShot(EventReference sound)
+        private void PlayInstance(EventReference sound, params (string name, float value)[] parameters)
         {
-            RuntimeManager.PlayOneShot(sound);
-        }
+            EventInstance instance = RuntimeManager.CreateInstance(sound);
 
-        public static void PlayMusic(EventReference music)
-        {
-            if (Instance == null) return;
-            Instance.PlayMusicInstance(music);
-        }
+            foreach ((string name, float value) parameter in parameters)
+            {
+                instance.setParameterByName(parameter.name, parameter.value);
+            }
 
-        public static void StopMusic(bool fadeOut = true)
-        {
-            if (Instance == null) return;
-            Instance.StopMusicInstance(fadeOut);
+            instance.start();
+            instance.release();
         }
 
         #endregion
+
+        
     }
 }
