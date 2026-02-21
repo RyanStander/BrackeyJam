@@ -36,7 +36,11 @@ public class Interaction : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        #if UNITY_EDITOR
+        
         Handles.color = Color.green;
         Handles.DrawWireDisc(_interactionPoint.position, Vector3.forward, _interactionRadius);
+        
+        #endif
     }
 }

@@ -71,4 +71,9 @@ public class DialogueController : MonoBehaviour
         _textComponent.maxVisibleCharacters = _textComponent.textInfo.characterCount;
         IsTyping = false;
     }
+    
+    public void CloseDialogue()
+    {
+        _dialogueBox.SetActive(false);
+    }
 }

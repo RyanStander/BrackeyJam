@@ -13,7 +13,7 @@ namespace PauseMenu
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
                 if (_pauseMenuCanvas.gameObject.activeInHierarchy)
                 {
@@ -36,7 +36,7 @@ namespace PauseMenu
 
         public void ExitGame()
         {
-            EditorApplication.isPlaying = false;
+            Application.Quit();
         }
 
         public void ResumeGame()
