@@ -57,6 +57,7 @@ namespace AudioManagement
         
         /// <summary>
         /// Plays a sound effect with optional parameters. Use this for sounds that need to have parameters set or changed after being played. Parameters should be passed as tuples of (parameterName, parameterValue).
+        /// You can view parameters by opening FMOD top left where the File button is in unity editor->event browser->events and then you can navigate through there, if you click on sounds, some may have params at the bottom, you can change it to preview the effect.
         /// </summary>
         /// <param name="sound">Use AudioDataHandler.[LIBRARY].soundName</param>
         /// <param name="parameters">Tuples of (parameterName, parameterValue) to set on the sound instance. For example: ("Intensity", 0.5f), ("IsAlert", 1f)</param>

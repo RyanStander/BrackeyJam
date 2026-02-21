@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using AudioManagement;
+using PersistentManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -88,6 +90,8 @@ namespace MiniGameSystem.MiniGame_Wiring
                 return;
             
             _currentStartNode = node;
+            AudioManager.Play(AudioDataHandler.MinigameWiring.WireCircuit(),("OpenOrClose",0f));
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameWiring.EyeStretchLong());
 
             GameObject newLine = Instantiate(WirePrefab, _wireParent);
             _currentWire = newLine.GetComponent<RectTransform>();
@@ -106,6 +110,7 @@ namespace MiniGameSystem.MiniGame_Wiring
 
             if (_currentStartNode.ColorID == endNode.ColorID)
             {
+                AudioManager.Play(AudioDataHandler.MinigameWiring.WireCircuit(),("OpenOrClose",1f));
                 FinishConnection(endNode);
             }
         }
