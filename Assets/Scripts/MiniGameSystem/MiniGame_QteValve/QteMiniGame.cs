@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QteMiniGame : MonoBehaviour
+public class QteMiniGame : BaseMinigame
 {
     public Transform needle;
+    public Transform ValveWheel;
+
+    public SpriteRenderer ValveEKey;
     //public Image PressureBarImage;
     public float NeedleSpeed = 100f;
     public float CurrentNeedleAngle = 0f;
@@ -24,11 +28,13 @@ public class QteMiniGame : MonoBehaviour
     public float dialMaxAngle = 180f;
     public float visualMultiplier = 2.1f;
     public bool isIncrease  = true;
-    
+    private bool isRotating;
+    private Coroutine activeRotationCoroutine;
 
     // Start is called before the first frame update
     void Start()
     {
+        ValveEKey = ValveEKey.GetComponent<SpriteRenderer>();
         CurrentNeedleAngle = TargetMinAngle;
         currentPressure = 20f;
         isGameActive = true;
@@ -40,8 +46,9 @@ public class QteMiniGame : MonoBehaviour
         if (!isGameActive) return;
         MoveNeedle();
         DrainPressure();
+        HighlightValveEKey();
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
 
             OnPress();
@@ -55,7 +62,7 @@ public class QteMiniGame : MonoBehaviour
         //pressureBarImage.fillAmount = currentPressure / MaxPressure; fill this in later with some bar or something
         if(currentPressure <= MinPressure)
         {
-            Debug.Log("Game Over! Pressure dropped to zero.");
+            Debug.Log("Pressure dropped to zero, you lose");
             EndGame();
         }
     }
@@ -83,16 +90,31 @@ public class QteMiniGame : MonoBehaviour
         needle.localRotation = Quaternion.Euler(0f, 0f, -(CurrentNeedleAngle * visualMultiplier));
     }
 
+
+    public void HighlightValveEKey()
+    {
+        if(CurrentNeedleAngle >= TargetMinAngle && CurrentNeedleAngle <= TargetMaxAngle)
+        {
+            ValveEKey.color = Color.green;
+        }
+        else
+        {
+            ValveEKey.color = Color.red;
+        }
+    }
+
     public void OnPress()
     {
         if (CurrentNeedleAngle >= TargetMinAngle && CurrentNeedleAngle <= TargetMaxAngle)
         {
             SuccessfulPress();
-            Debug.Log("Success! Current pressure " + currentPressure);
+            Debug.Log("success! current pressure " + currentPressure);
+            SpinValveWheel(-180f, 1.5f);
             if(currentPressure >= MaxPressure)
             {
+                SpinValveWheel(-360f, 1f);
                 EndGame();
-                Debug.Log("You Win! Pressure reached maximum.");
+                Debug.Log("Win!");
             }
         }
         else
@@ -102,10 +124,47 @@ public class QteMiniGame : MonoBehaviour
         }
     }
 
+    private void SpinValveWheel(float amountToAdd, float time)
+    {
+        if (activeRotationCoroutine != null)
+        {
+            StopCoroutine(activeRotationCoroutine);
+        }
+        activeRotationCoroutine = StartCoroutine(RotateWheelOverTime(amountToAdd, time));
+    }
+
+    private IEnumerator RotateWheelOverTime(float amountToAdd, float duration)
+    {
+        isRotating = true;
+
+        float startZAngle = ValveWheel.localEulerAngles.z;
+
+        float targetZAngle = startZAngle + amountToAdd;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+
+            float currentZAngle = Mathf.Lerp(startZAngle, targetZAngle, t);
+
+            ValveWheel.localRotation = Quaternion.Euler(0f, 0f, currentZAngle);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        ValveWheel.localRotation = Quaternion.Euler(0f, 0f, targetZAngle);
+
+        isRotating = false;
+    }
+
     private void FailedPress()
     {
         currentPressure -= 10f;
         currentPressure = Mathf.Clamp(currentPressure, MinPressure, MaxPressure);
+        SpinValveWheel(180f, 1.5f);
     }
 
     private void SuccessfulPress()
@@ -118,6 +177,7 @@ public class QteMiniGame : MonoBehaviour
     {
         if(!isGameActive) return;
         isGameActive = false;
+        FinishGame(true);
         Debug.Log("Game Ended");
     }
 }
