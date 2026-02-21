@@ -42,9 +42,20 @@ public class InteractNPC : MonoBehaviour, IInteractable
 
     public void ShowNextDialogueLine()
     {
-        if(_dialogueLines.Length == 0) return;
-        ShowCurrentDialogueLine();
-        _currentLineIndex = (_currentLineIndex + 1) % _dialogueLines.Length;
+        if (_dialogueLines.Length == 0) return;
+
+        // If we've reached the end, close and reset
+        if (_currentLineIndex >= _dialogueLines.Length)
+        {
+            _dialogueController.CloseDialogue();
+            _currentLineIndex = 0;
+            return;
+        }
+        
+        _dialogueController.DisplayDialogue(
+            new string[] { _dialogueLines[_currentLineIndex] });
+
+        _currentLineIndex++;
     }
 
     
