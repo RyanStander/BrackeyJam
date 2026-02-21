@@ -1,35 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StationMonsterManager : BaseStationManager
+namespace StationMgr
 {
-    public bool HasFixedWires = false;
-    public bool HasDoor1Key = false;
-    public bool HasDoor2Key = false;
-    public bool isLevelComplete = false;
-
-    public void CompleteWireTask()
+    public class StationMonsterManager : BaseStationManager
     {
-        HasFixedWires = true;
-        Debug.Log("Wires fixed!");
-        OnObjectiveUpdate();
-    }
+        #region First wire actions
+        
+        //todo, make the tentacle monster thank instead and then disappear
+        [Header("First Wire Completion Actions")]
+        [SerializeField] private GameObject _largeTentacleMonster;
 
-    public void CollectDoor1Key()
-    {
-        HasDoor1Key = true;
-        Debug.Log("Door 1 key collected!");
-        OnObjectiveUpdate();
-    }
+        #endregion
 
-    protected override void CheckObjectives()
-    {
-        if(HasFixedWires && HasDoor1Key)
+        #region Second wire actions
+        [Header("Second Wire Completion Actions")]
+        [SerializeField] private Animator _tentacleDoorAnimator;
+        [SerializeField] private GameObject _tentacleDoorInteractable;
+
+        #endregion
+        //not sure what onobjectiveupdate does, but keeping this here for later
+        /*public void CompleteWireTask()
         {
-            isLevelComplete = true;
-            Debug.Log("Station One complete!");
-            OnStationComplete.Invoke();
+            HasFixedWires = true;
+            Debug.Log("Wires fixed!");
+            OnObjectiveUpdate();
+        }*/
+
+        public void FirstWireFixed()
+        {
+            _largeTentacleMonster.SetActive(false);
+        }
+
+        public void SecondWireFixed()
+        {
+            _tentacleDoorAnimator.Play("TentacleOpen");
+            _tentacleDoorInteractable.SetActive(true);
+        }
+    
+        public void ThirdWireFixed()
+        {
+        
+        }
+
+        protected override void CheckObjectives()
+        {
+            /*if(HasFixedWires && HasDoor1Key)
+            {
+                isLevelComplete = true;
+                Debug.Log("Station One complete!");
+                OnStationComplete.Invoke();
+            }*/
         }
     }
 }

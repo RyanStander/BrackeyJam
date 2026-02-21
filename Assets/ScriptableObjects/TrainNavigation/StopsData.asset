@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: StopsData
   m_EditorClassIdentifier: 
   MandatoryStops:
-  - {fileID: 11400000, guid: 0412a3a8d974070419b2b7fd16359130, type: 2}
+  - {fileID: 11400000, guid: a3e2c52209f2ac9478787ce961618c2e, type: 2}
+  - {fileID: 11400000, guid: 259697f2fb08d7d4fa30d3b1a6de0c40, type: 2}
+  - {fileID: 11400000, guid: e8a8243f1e49d6a4dad250de75c24140, type: 2}
   FlagStops: []
   ServiceDisruptions: []
   FlagStopEncounterChance: 0.2
