@@ -8,6 +8,9 @@ namespace AudioManagement
         public PlayerSoundLibrary PlayerSoundLibrary;
         public UISoundLibrary UISoundLibrary;
         
+        public StationMonsterSoundLibrary StationMonsterSoundLibrary;
+        public StationUnderwaterSoundLibrary StationUnderwaterSoundLibrary;
+        
         public MinigameBlackjackSoundLibrary MinigameBlackjackSoundLibrary;
         public MinigameValveSoundLibrary MinigameValveSoundLibrary;
         public MinigamePipesSoundLibrary MinigamePipesSoundLibrary;
