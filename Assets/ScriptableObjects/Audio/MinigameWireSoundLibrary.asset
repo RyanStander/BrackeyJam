@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22acc6f2366947a58a8ff9dee0d2d9b2, type: 3}
+  m_Name: MinigameWireSoundLibrary
+  m_EditorClassIdentifier: 
+  EyeStretchLong:
+    Guid:
+      Data1: 546652615
+      Data2: 1309870406
+      Data3: 1144522152
+      Data4: -678270187
+    Path: event:/SFX/Minigames/Wires/EyeStretchLong
+  EyeStretchShort:
+    Guid:
+      Data1: 620198634
+      Data2: 1161825820
+      Data3: 1816725169
+      Data4: -638965961
+    Path: event:/SFX/Minigames/Wires/EyeStretchShort
+  WireCircuit:
+    Guid:
+      Data1: -446588086
+      Data2: 1160743999
+      Data3: -2060620914
+      Data4: 2034492179
+    Path: event:/SFX/Minigames/Wires/WireCircuit

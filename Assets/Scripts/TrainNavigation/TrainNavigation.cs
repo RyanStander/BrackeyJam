@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using AudioManagement;
 using PersistentManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -58,6 +59,8 @@ namespace TrainNavigation
         private IEnumerator InitiateWarp()
         {
             _travelUIHandler.StartTravelAnimation();
+            AudioManager.PlayOneShot(AudioDataHandler.TrainTravel.Departure());
+            AudioManager.PlayOneShot(AudioDataHandler.TrainTravel.FuelSpend());
             
             //wait until ready to warp then load the next scene
             yield return new WaitUntil(() => _travelUIHandler.ReadyToWarp());

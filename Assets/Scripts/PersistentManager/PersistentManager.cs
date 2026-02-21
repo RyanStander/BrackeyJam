@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AudioManagement;
 using TrainNavigation;
 using UnityEngine;
 
@@ -32,8 +33,15 @@ namespace PersistentManager
         [Header("Train Data")] public int Fuel;
         public TravelCostData TravelCostData;
         public int RouteProgress;
-        public PossibleStop CurrentStop;
+        [HideInInspector]public PossibleStop CurrentStop;
         public Queue<PossibleStop> UpcomingStops = new();
+        #endregion
+
+        #region Sound Library
+
+        [Header("Sound Library")]
+        public SoundLibrary SoundLibrary;
+
         #endregion
     }
 }

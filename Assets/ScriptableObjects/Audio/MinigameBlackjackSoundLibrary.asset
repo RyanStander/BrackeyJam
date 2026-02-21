@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d31b80c43b14b888dfd6e2ea36c5404, type: 3}
+  m_Name: MinigameBlackjackSoundLibrary
+  m_EditorClassIdentifier: 
+  Deal:
+    Guid:
+      Data1: 1224054591
+      Data2: 1195035679
+      Data3: -997718365
+      Data4: -927825050
+    Path: event:/SFX/Minigames/Blackjack/Deal
+  Hit:
+    Guid:
+      Data1: -541303210
+      Data2: 1333892694
+      Data3: -1610799444
+      Data4: 1808429968
+    Path: event:/SFX/Minigames/Blackjack/Hit
+  Stab:
+    Guid:
+      Data1: -1120163058
+      Data2: 1164039675
+      Data3: -1939335017
+      Data4: 519743131
+    Path: event:/SFX/Minigames/Blackjack/Stab
