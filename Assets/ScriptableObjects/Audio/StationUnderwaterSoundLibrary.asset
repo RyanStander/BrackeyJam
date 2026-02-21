@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ce58e066824bf08f33e619aa20b50a, type: 3}
+  m_Name: StationUnderwaterSoundLibrary
+  m_EditorClassIdentifier: 
+  UnderwaterMusic:
+    Guid:
+      Data1: 1317625127
+      Data2: 1221570407
+      Data3: -1348529007
+      Data4: -887835587
+    Path: event:/Music/UnderwaterStation/UnderwaterMusic
+  UnderwaterAmbience:
+    Guid:
+      Data1: 1858215352
+      Data2: 1079665079
+      Data3: -1880208987
+      Data4: -156753772
+    Path: event:/SFX/Environment/UnderwaterStation/UnderwaterAmbience
+  MiscWaterMove:
+    Guid:
+      Data1: -1283244706
+      Data2: 1112665525
+      Data3: 594578080
+      Data4: -1112724621
+    Path: event:/SFX/Environment/UnderwaterStation/MiscWaterMove
+  PrawnsScatter:
+    Guid:
+      Data1: 738953233
+      Data2: 1238780270
+      Data3: -2043381376
+      Data4: -1502197810
+    Path: event:/SFX/Environment/UnderwaterStation/SprawnsScatter
+  WaterLevelRises:
+    Guid:
+      Data1: -1309379552
+      Data2: 1282688159
+      Data3: -1226442340
+      Data4: -1890313752
+    Path: event:/SFX/Environment/UnderwaterStation/WaterLevelRises
