@@ -50,5 +50,10 @@ namespace PersistentManager
         {
             return PersistentManager.Instance.UpcomingStops.Count > 0;
         }
+        
+        public static int GetRouteProgress()
+        {
+            return PersistentManager.Instance.RouteProgress;
+        }
     }
 }
