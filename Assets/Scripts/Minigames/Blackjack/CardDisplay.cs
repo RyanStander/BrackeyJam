@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,6 +56,38 @@ namespace Minigames.Blackjack
             _cardFrontImage.sprite = null;
             _cardRankImage.sprite = null;
             _cardSuitImage.sprite = null;
+        }
+        
+        public IEnumerator FadeInCard(float duration)
+        {
+            float elapsedTime = 0f;
+            Color frontColor = _cardFrontImage.color;
+            Color rankColor = _cardRankImage.color;
+            Color suitColor = _cardSuitImage.color;
+
+            while (elapsedTime < duration)
+            {
+                float alpha = Mathf.Lerp(0f, 1f, elapsedTime / duration);
+                frontColor.a = alpha;
+                rankColor.a = alpha;
+                suitColor.a = alpha;
+
+                _cardFrontImage.color = frontColor;
+                _cardRankImage.color = rankColor;
+                _cardSuitImage.color = suitColor;
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure final alpha is set to 1
+            frontColor.a = 1f;
+            rankColor.a = 1f;
+            suitColor.a = 1f;
+
+            _cardFrontImage.color = frontColor;
+            _cardRankImage.color = rankColor;
+            _cardSuitImage.color = suitColor;
         }
 
         public Card Card => _card;

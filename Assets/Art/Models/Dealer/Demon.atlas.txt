@@ -1,0 +1,72 @@
+Demon.png
+size:1983,989
+filter:Linear,Linear
+pma:true
+Back
+bounds:1197,141,350,500
+rotate:90
+BlackjackTable Zusammengeführt
+bounds:2,493,1716,494
+DemonArmBackL Zusammengeführt
+bounds:1105,292,90,199
+DemonArmBackR Zusammengeführt
+bounds:1148,2,137,85
+rotate:90
+DemonArmL Zusammengeführt
+bounds:763,11,383,264
+DemonArmR Zusammengeführt
+bounds:344,15,417,476
+DemonBody Zusammengeführt
+bounds:2,5,340,486
+DemonDeck Zusammengeführt
+bounds:1925,419,143,56
+offsets:1,1,144,57
+rotate:90
+DemonDeckShine
+bounds:763,284,21,201
+rotate:90
+DemonHand1L Zusammengeführt
+bounds:944,314,177,159
+rotate:90
+DemonHand1R Zusammengeführt
+bounds:763,307,184,179
+rotate:90
+DemonHand2L Zusammengeführt
+bounds:1614,19,120,158
+offsets:1,0,121,159
+rotate:90
+DemonHand2R Zusammengeführt
+bounds:1235,8,131,185
+rotate:90
+DemonHead
+bounds:1720,578,212,207
+DemonMaskHappyBig Zusammengeführt
+bounds:1720,787,200,260
+offsets:1,0,202,261
+rotate:90
+DemonMaskHappyBigBrow
+bounds:1934,564,109,37
+rotate:90
+DemonMaskHappyBigMouth Zusammengeführt
+bounds:1422,16,190,123
+offsets:1,0,191,123
+DemonMaskHappyBigPupils
+bounds:1925,277,140,54
+offsets:0,1,140,55
+rotate:90
+DemonMaskHappySmall Zusammengeführt
+bounds:1699,161,114,170
+offsets:0,0,114,172
+rotate:90
+DemonMaskSadBig Zusammengeführt
+bounds:1720,307,203,269
+DemonMaskSadBigMouth
+bounds:1871,187,88,103
+offsets:0,0,89,104
+rotate:90
+DemonMaskSadBigPupils
+bounds:1934,675,110,44
+rotate:90
+DemonMaskSadSmall Zusammengeführt
+bounds:1871,8,91,177
+offsets:0,0,91,178

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Spine.Unity;
 using UnityEngine;
 
 namespace Minigames.Blackjack
@@ -9,6 +11,7 @@ namespace Minigames.Blackjack
     /// </summary>
     public class BlackjackGameManager : MonoBehaviour
     {
+        [SerializeField] private DealerAnimationHandler _dealerAnimationHandler;
         [SerializeField] private int _playerMaxHealth = 3;
         [SerializeField] private int _dealerMaxHealth = 3;
         private Card[] _deck = new Card[52];
@@ -37,6 +40,8 @@ namespace Minigames.Blackjack
             _playerHand.SetCardData(_playerCardData);
             _dealerHand.SetCardData(_dealerCardData);
         }
+        
+        //TODO: when the game starts, dealer will explain the basics of blackjack
 
         private void StartNewRound()
         {
@@ -60,18 +65,37 @@ namespace Minigames.Blackjack
                 (_deck[i], _deck[randomIndex]) = (_deck[randomIndex], _deck[i]);
             }
 
-            StartGame();
+            StartCoroutine(StartGame());
         }
 
-        private void StartGame()
+        private IEnumerator StartGame()
         {
+            //TODO: Move health to the Centre of the board
             _playerBetThisRound = 1; //forced bet
 
-            //deal cards
-            DealPlayerCard(_deck[_cardIndex++]);
-            DealDealerCard(_deck[_cardIndex++], false);
+            yield return DealPlayerCardWithAnimation();
+
+            yield return new WaitForSeconds(1f);
+
+            yield return DealDealerCardWithAnimation(false);
 
             FinalBetting();
+        }
+        
+        private IEnumerator DealPlayerCardWithAnimation()
+        {
+            _dealerAnimationHandler.PlayDeal();
+            yield return new WaitUntil(() => _dealerAnimationHandler.AddCardToTable());
+            _dealerAnimationHandler.ResetAddCardToTable();
+            DealPlayerCard(_deck[_cardIndex++]);
+        }
+        
+        private IEnumerator DealDealerCardWithAnimation(bool faceUp)
+        {
+            _dealerAnimationHandler.PlayDeal();
+            yield return new WaitUntil(() => _dealerAnimationHandler.AddCardToTable());
+            _dealerAnimationHandler.ResetAddCardToTable();
+            DealDealerCard(_deck[_cardIndex++], faceUp);
         }
 
         private void FinalBetting()
@@ -82,14 +106,15 @@ namespace Minigames.Blackjack
         public void IncreaseBet(int amount)
         {
             _playerBetThisRound += amount;
-            SecondDeal();
+             StartCoroutine(SecondDeal());
             _bettingUI.SetActive(false);
         }
 
-        private void SecondDeal()
+        private IEnumerator SecondDeal()
         {
-            DealPlayerCard(_deck[_cardIndex++]);
-            DealDealerCard(_deck[_cardIndex++], true);
+            yield return DealPlayerCardWithAnimation();
+            yield return new WaitForSeconds(1f);
+            yield return DealDealerCardWithAnimation(true);
 
             PromptHitStay();
         }
@@ -101,31 +126,42 @@ namespace Minigames.Blackjack
 
         public void Hit()
         {
-            DealPlayerCard(_deck[_cardIndex++]);
+            StartCoroutine(HitCoroutine());
+        }
+        
+        private IEnumerator HitCoroutine()
+        {
             _hitStayUI.SetActive(false);
-
+            yield return DealPlayerCardWithAnimation();
+            
             if (_playerHand.GetHandValue() > 21)
             {
                 DealerWinsRound();
             }
             else
                 PromptHitStay();
+            
+            if(_playerHand.CardCount == 5)
+            {
+                PlayerWinsRound();
+            }
         }
 
         public void Stay()
         {
             _hitStayUI.SetActive(false);
-            StartDealerTurn();
+            StartCoroutine(StartDealerTurn());
         }
 
-        private void StartDealerTurn()
+        private IEnumerator StartDealerTurn()
         {
+            //TODO: Make a nice reveal anim
             _dealerHand.RevealHand();
             while (true)
             {
                 if (_dealerHand.GetHandValue() < 17)
                 {
-                    DealDealerCard(_deck[_cardIndex++], true);
+                    yield return DealDealerCardWithAnimation(true);
                     continue;
                 }
 

@@ -6,6 +6,7 @@ namespace Minigames.Blackjack
     public class Hand : MonoBehaviour
     {
         [SerializeField] private HandCard[] _handCards;
+        [SerializeField] private float _cardFadeInDuration = 0.5f;
         private int _cardCount;
         private CardData _cardData;
         
@@ -29,6 +30,7 @@ namespace Minigames.Blackjack
             HandCard handCard = _handCards[_cardCount];
             handCard.CardDisplay.SetCard(_cardData, card.Rank, card.Suit, reveal);
             handCard.CardDisplay.gameObject.SetActive(true);
+            StartCoroutine(handCard.CardDisplay.FadeInCard(_cardFadeInDuration));
             handCard.Revealed = reveal;
             _cardCount++;
         }
@@ -97,6 +99,8 @@ namespace Minigames.Blackjack
                 handCard.Revealed = true;
             }
         }
+        
+        public int CardCount => _cardCount;
         
         public void SetCardData(CardData cardData) => _cardData = cardData;
     }
