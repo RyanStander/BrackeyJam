@@ -418,7 +418,7 @@ Transform:
   m_GameObject: {fileID: 11589470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.108868, y: 0.08606741, z: -9.226728}
+  m_LocalPosition: {x: 8.105228, y: 0.12316782, z: -9.2267275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1536,7 +1536,7 @@ Transform:
   m_GameObject: {fileID: 438691710}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.108868, y: 0.08606741, z: -9.226728}
+  m_LocalPosition: {x: 8.105228, y: 0.12316782, z: -9.2267275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1900,7 +1900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 699821549}
-  m_PathPosition: 0.35069326
+  m_PathPosition: 0.35063624
   m_PositionUnits: 0
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 1
@@ -7018,22 +7018,22 @@ MonoBehaviour:
   - position: {x: 0, y: 0, z: -10}
     tangent: {x: 44.67984, y: 0.02929306, z: 0}
     roll: 0
-  - position: {x: 51.70427, y: 0.36837325, z: -10}
+  - position: {x: 51.70427, y: 0.4995454, z: -10}
     tangent: {x: 2.3199158, y: 1.0062494, z: 0}
     roll: 0
   - position: {x: 53.420647, y: 8.1784525, z: -10}
     tangent: {x: -1.2363777, y: 1.4348497, z: 0}
     roll: 0
-  - position: {x: 45.444176, y: 10.604427, z: -10}
-    tangent: {x: -5.773781, y: -0.25118732, z: 0}
+  - position: {x: 46.497063, y: 11.335413, z: -10}
+    tangent: {x: -1.89, y: 0, z: 0}
     roll: 0
-  - position: {x: -4.4077625, y: 11.945217, z: -10}
-    tangent: {x: -2.06, y: 0, z: 0}
+  - position: {x: -2.4264698, y: 11.266133, z: -10}
+    tangent: {x: -3.36, y: 0, z: 0}
     roll: 0
-  - position: {x: -4.4260654, y: 22.884447, z: -10}
-    tangent: {x: 1.8325748, y: 0.08532143, z: 0}
+  - position: {x: -3.568016, y: 21.456717, z: -10}
+    tangent: {x: 3.27, y: 0, z: 0}
     roll: 0
-  - position: {x: 54.378456, y: 22.922993, z: 5}
+  - position: {x: 54.378456, y: 21.34216, z: -10}
     tangent: {x: 1, y: 0, z: 0}
     roll: 0
 --- !u!4 &699821550
