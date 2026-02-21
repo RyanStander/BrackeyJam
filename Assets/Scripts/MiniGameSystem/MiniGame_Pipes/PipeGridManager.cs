@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class PipeGridManager : BaseMinigame
 {
     [Header("Grid Setup")]
-    public Transform pipeContainer;
+    public List<Transform> pipeContainers;
+    public Transform pipeContainerSelected;
+    public int currentContainerIndex = 0;
     public int columns;
     public int rows;
 
@@ -18,13 +20,37 @@ public class PipeGridManager : BaseMinigame
 
     void Start()
     {
+        GenerateRandomPuzzleNumb();
         InitializeGrid();
+        ScrambleBoard();
         CheckConnectivity();
+    }
+
+    public void GenerateRandomPuzzleNumb()
+    {
+        currentContainerIndex = Random.Range(0, pipeContainers.Count);
+        pipeContainerSelected = pipeContainers[currentContainerIndex];
+        pipeContainerSelected.gameObject.SetActive(true);
+    }
+
+    private void ScrambleBoard()
+    {
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                Pipe pipe = grid[x, y];
+                if (pipe != null)
+                {
+                    pipe.RandomizeRotation();
+                }
+            }
+        }
     }
 
     void InitializeGrid()
     {
-        if (pipeContainer == null)
+        if (pipeContainerSelected == null)
         {
             Debug.LogError("You forgot to assign the container that holds pipes");
             return;
@@ -32,25 +58,24 @@ public class PipeGridManager : BaseMinigame
 
         grid = new Pipe[columns, rows];
 
-        if (pipeContainer.childCount != columns * rows)
+        if (pipeContainerSelected.childCount != columns * rows)
         {
             Debug.LogError("make sure you have 36 total pipe tiles in the grid");
             return;
         }
 
-        for (int i = 0; i < pipeContainer.childCount; i++)
+        for (int i = 0; i < pipeContainerSelected.childCount; i++)
         {
             int x = i % columns;
             int y = i / columns;
 
-            Pipe pipe = pipeContainer.GetChild(i).GetComponent<Pipe>();
+            Pipe pipe = pipeContainerSelected.GetChild(i).GetComponent<Pipe>();
 
             if (pipe == null)
             {
                 Debug.LogError("missing pipe scirpt");
                 continue;
             }
-
             grid[x, y] = pipe;
 
             if (pipe.isStartNode)
@@ -87,7 +112,7 @@ public class PipeGridManager : BaseMinigame
 
             if (currentPipe == null) continue;
 
-            Debug.Log($"checking pipe at [{current.x}, {current.y}]...");
+            //Debug.Log($"checking pipe at [{current.x}, {current.y}]...");
 
             if (currentPipe.isEndNode)
             {
