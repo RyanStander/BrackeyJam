@@ -19,5 +19,12 @@ namespace Events
         }
     }
     
+    public class FuelChanged : EventData
+    {
+        public FuelChanged() : base(EventType.FuelChanged)
+        {
+        }
+    }
+    
     
 }

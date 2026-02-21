@@ -75,7 +75,7 @@ namespace MiniGameSystem.MiniGame_Wiring
                                                 _eyelidAnimator.GetCurrentAnimatorStateInfo(0).length);
 
                 if (_isConnected) break;
-                
+
                 yield return new WaitForSeconds(_blinkInterval + Random.Range(0f, _blinkInterval));
             }
         }
@@ -111,7 +111,8 @@ namespace MiniGameSystem.MiniGame_Wiring
             {
                 _wireGame.AttemptConnectionStart(this);
                 //open eye
-                _eyelidAnimator.Play("EyesOpen", 0, 1);
+                if (IsLeftSide)
+                    _eyelidAnimator.Play("EyesOpen", 0, 1);
             }
         }
     }

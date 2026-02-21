@@ -8,7 +8,10 @@ namespace Events
         #region Train Navigation
 
         OutOfFuel,
+        FuelChanged,
 
         #endregion
+
+        
     }
 }
