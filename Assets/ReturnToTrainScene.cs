@@ -10,6 +10,7 @@ public class ReturnToTrainScene : MonoBehaviour, IInteractable
     public bool Interact(Interaction Interaction)
     {
         AudioManager.StopMusic(true);
+        AudioManager.StopAmbience(true);
         SceneManager.LoadScene("TrainTravelScene");
         return true;
     }
