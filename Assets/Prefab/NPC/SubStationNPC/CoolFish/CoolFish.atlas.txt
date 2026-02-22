@@ -1,0 +1,14 @@
+CoolFish.png
+size:435,171
+filter:Linear,Linear
+pma:true
+Station1/body
+bounds:2,2,167,388
+rotate:90
+Station1/lid
+bounds:392,62,32,53
+Station1/pupil
+bounds:392,38,24,22
+offsets:0,1,24,24
+Station1/white
+bounds:392,117,41,52

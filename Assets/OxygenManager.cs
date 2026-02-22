@@ -5,16 +5,18 @@ using UnityEngine.UI;
 
 public class OxygenManager : MonoBehaviour
 {
-    public float OxygenDepletionRate = 5f;
-    public float OxygenMax = 100f;
+    public float OxygenDepletionRate = 3f;
+    public float OxygenMax = 500f;
     public float OxygenMin = 0f;
-    public float CurrentOxygen = 100f;
+    public float CurrentOxygen = 300f;
     public float OxygenReplenishRate = 0.2f;
 
     public Slider OxygenSlider;
     public Image fillImage;             
     public Color fullColor = Color.green;
     public Color emptyColor = Color.red;
+
+    public float OxygenTankRestoreAmount = 180f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +37,7 @@ public class OxygenManager : MonoBehaviour
             OxygenSlider.value = CurrentOxygen;
             fillImage.color = Color.Lerp(emptyColor, fullColor, CurrentOxygen / OxygenMax);
         }
-        Debug.Log(CurrentOxygen);
+        //Debug.Log(CurrentOxygen);
     }
 
     public void DepleteOxygen()
@@ -48,5 +50,11 @@ public class OxygenManager : MonoBehaviour
     {
         CurrentOxygen += OxygenReplenishRate * Time.deltaTime;
         CurrentOxygen = Mathf.Clamp(CurrentOxygen, OxygenMin, OxygenMax);
+    }
+
+    public void PickUpOxygenTank()
+    {
+        Debug.Log("picked up oxygen success");
+        CurrentOxygen += OxygenTankRestoreAmount;
     }
 }
