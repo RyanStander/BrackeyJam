@@ -16,44 +16,44 @@ MonoBehaviour:
   RankSprites:
     _serializedList:
     - Key: 14
-      Value: {fileID: 21300000, guid: 1c05d2356efa5b1498ecb154a7488c62, type: 3}
+      Value: {fileID: 21300000, guid: 38cd4d66f2371f44b9a739934c07ac8a, type: 3}
     - Key: 2
-      Value: {fileID: 21300000, guid: 8fafdde3ddbdd1247b47524f421a9fae, type: 3}
+      Value: {fileID: 21300000, guid: 4511eca472e4a3d4998a5529340d0d8c, type: 3}
     - Key: 3
-      Value: {fileID: 21300000, guid: 0c7fa27500dbcbd4983d30c31bcdbdda, type: 3}
+      Value: {fileID: 21300000, guid: 9b722c4da92417046ae79ff93421c9c8, type: 3}
     - Key: 4
-      Value: {fileID: 21300000, guid: 2ede2af4feebe9c449b65e8d57c1232d, type: 3}
+      Value: {fileID: 21300000, guid: 001b5a662e803b240ad07732df422554, type: 3}
     - Key: 5
-      Value: {fileID: 21300000, guid: 9616042aeb74f464f96fb081703ccc97, type: 3}
+      Value: {fileID: 21300000, guid: 5a48c07924ac0bc47a124d5a812ecee7, type: 3}
     - Key: 6
-      Value: {fileID: 21300000, guid: c675ff41080701445b9a45d6cf33fc5d, type: 3}
+      Value: {fileID: 21300000, guid: 1ba885f9a8433bf41a45c244f789cc63, type: 3}
     - Key: 7
-      Value: {fileID: 21300000, guid: af552d733b97cb748af4d1d989b97640, type: 3}
+      Value: {fileID: 21300000, guid: 5b9b7f60917f81143b599fc703230d22, type: 3}
     - Key: 8
-      Value: {fileID: 21300000, guid: 3b545682c3f29f045a7a2290481cfd6f, type: 3}
+      Value: {fileID: 21300000, guid: 46f54f754c486884690f23ab9cca5bb9, type: 3}
     - Key: 9
-      Value: {fileID: 21300000, guid: 91d6b404f1daf2f458bb809b29273846, type: 3}
+      Value: {fileID: 21300000, guid: 1d591478f685b0047ba50ca52e2ab75e, type: 3}
     - Key: 10
       Value: {fileID: 21300000, guid: 8602579d63031334d8ba4734819a495c, type: 3}
     - Key: 11
-      Value: {fileID: 21300000, guid: ba6723d132710384faa9e97c21e03657, type: 3}
+      Value: {fileID: 21300000, guid: c8277227af6b2be48b084b598933729a, type: 3}
     - Key: 12
-      Value: {fileID: 21300000, guid: 2d4e596097e842c4dbabc652509d2dfb, type: 3}
+      Value: {fileID: 21300000, guid: 0791e8de14d84ad48b50ecb265cb9ede, type: 3}
     - Key: 13
-      Value: {fileID: 21300000, guid: 03296dac0a3a7fa4f9ec0aea5bc76cd0, type: 3}
+      Value: {fileID: 21300000, guid: a2c9e539c1a360f43b452e28185f3196, type: 3}
   SuitSprites:
     _serializedList:
     - Key: 0
-      Value: {fileID: 21300000, guid: fceef5807e37a9c4e88987780033c001, type: 3}
+      Value: {fileID: 21300000, guid: 288d307a33b2b2448944ba631685d3ce, type: 3}
     - Key: 1
-      Value: {fileID: 21300000, guid: 39acf8c691dda444497738f54904a1be, type: 3}
+      Value: {fileID: 21300000, guid: f801e853009e2134ca5c6498edd6ee56, type: 3}
     - Key: 2
-      Value: {fileID: 21300000, guid: 11f52750d3ab3de47818dfab02bf3e03, type: 3}
+      Value: {fileID: 21300000, guid: e06ce010296c5f74781e60c40ae7c50b, type: 3}
     - Key: 3
-      Value: {fileID: 21300000, guid: 70c62b3a0b2cbe945911f94468a9105b, type: 3}
-  CardBackSprite: {fileID: 21300000, guid: 065a39e6335b8b34babf0e10db48006b, type: 3}
-  CardFrontSprite: {fileID: 21300000, guid: 7166066cc7648ec4cb72cfe6a314f683, type: 3}
-  JokerSprite: {fileID: 21300000, guid: 428beaf577516c04c94eeaa0df4c3716, type: 3}
-  CardColor: {r: 0.10980393, g: 0.10196079, b: 0.10588236, a: 1}
-  RankColor: {r: 0.7803922, g: 0.6156863, b: 0.32156864, a: 1}
-  SuitColor: {r: 0.7803922, g: 0.6156863, b: 0.32156864, a: 1}
+      Value: {fileID: 21300000, guid: ff1c4e129dc5a4447863a21fd93ed9ab, type: 3}
+  CardBackSprite: {fileID: 21300000, guid: adb2b734fa510124bb37f6d091f677a5, type: 3}
+  CardFrontSprite: {fileID: 21300000, guid: 435c8e39229880249b1a3a37144384aa, type: 3}
+  JokerSprite: {fileID: 21300000, guid: 80cbdd7156d720046b3ba593571e3785, type: 3}
+  CardColor: {r: 1, g: 1, b: 1, a: 1}
+  RankColor: {r: 1, g: 1, b: 1, a: 1}
+  SuitColor: {r: 1, g: 1, b: 1, a: 1}

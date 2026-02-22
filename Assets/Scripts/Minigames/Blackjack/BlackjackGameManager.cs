@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Minigames.Blackjack.Visuals;
+using Spine.Unity;
+using StationMgr;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Minigames.Blackjack
@@ -7,8 +12,9 @@ namespace Minigames.Blackjack
     /// <summary>
     /// The Blackjack manager handles the actions the player can input as well as running through the game logic
     /// </summary>
-    public class BlackjackGameManager : MonoBehaviour
+    public class BlackjackGameManager : BaseMinigame
     {
+        [SerializeField] private DealerAnimationHandler _dealerAnimationHandler;
         [SerializeField] private int _playerMaxHealth = 3;
         [SerializeField] private int _dealerMaxHealth = 3;
         private Card[] _deck = new Card[52];
@@ -21,11 +27,26 @@ namespace Minigames.Blackjack
         [SerializeField] private Hand _dealerHand;
         [SerializeField] private CardData _playerCardData;
         [SerializeField] private CardData _dealerCardData;
-        [SerializeField] private GameObject _bettingUI;
+        [SerializeField] private HeartDisplay _playerHealthDisplay;
+        [SerializeField] private HeartDisplay _dealerHealthDisplay;
         [SerializeField] private GameObject _hitStayUI;
+        [SerializeField] private Animator _hitStayUIAnimator;
 
-        private void Start()
+        [SerializeField] private OptionalBetDisplay _bettingUI;
+
+        private void OnValidate()
         {
+            if (_hitStayUIAnimator == null && _hitStayUI != null)
+                _hitStayUIAnimator = _hitStayUI.GetComponent<Animator>();
+
+            if (_bettingUI == null)
+                _bettingUI = FindObjectOfType<OptionalBetDisplay>();
+        }
+
+        public override void StartMinigame()
+        {
+            base.StartMinigame();
+
             Initialise();
             StartNewRound();
         }
@@ -37,6 +58,8 @@ namespace Minigames.Blackjack
             _playerHand.SetCardData(_playerCardData);
             _dealerHand.SetCardData(_dealerCardData);
         }
+
+        //TODO: when the game starts, dealer will explain the basics of blackjack
 
         private void StartNewRound()
         {
@@ -60,36 +83,68 @@ namespace Minigames.Blackjack
                 (_deck[i], _deck[randomIndex]) = (_deck[randomIndex], _deck[i]);
             }
 
-            StartGame();
+            StartCoroutine(StartGame());
         }
 
-        private void StartGame()
+        private IEnumerator StartGame()
         {
+            //TODO: Move health to the Centre of the board
             _playerBetThisRound = 1; //forced bet
+            _playerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
+            _dealerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
 
-            //deal cards
-            DealPlayerCard(_deck[_cardIndex++]);
-            DealDealerCard(_deck[_cardIndex++], false);
+            yield return DealPlayerCardWithAnimation();
+
+            yield return new WaitForSeconds(1f);
+
+            yield return DealDealerCardWithAnimation(false);
 
             FinalBetting();
         }
 
+        private IEnumerator DealPlayerCardWithAnimation()
+        {
+            _dealerAnimationHandler.PlayDeal();
+            yield return new WaitUntil(() => _dealerAnimationHandler.AddCardToTable());
+            _dealerAnimationHandler.ResetAddCardToTable();
+            DealPlayerCard(_deck[_cardIndex++]);
+        }
+
+        private IEnumerator DealDealerCardWithAnimation(bool faceUp)
+        {
+            _dealerAnimationHandler.PlayDeal();
+            yield return new WaitUntil(() => _dealerAnimationHandler.AddCardToTable());
+            _dealerAnimationHandler.ResetAddCardToTable();
+            DealDealerCard(_deck[_cardIndex++], faceUp);
+        }
+
         private void FinalBetting()
         {
-            _bettingUI.SetActive(true);
+            if (_playerCurrentHealth <= 1 || _dealerCurrentHealth <= 1)
+                StartCoroutine(SecondDeal());
+            else
+            {
+                _bettingUI.SetActive(true);
+                _bettingUI.PlayOptionalBetShowAnimation(_playerCurrentHealth, _dealerCurrentHealth);
+            }
         }
 
         public void IncreaseBet(int amount)
         {
             _playerBetThisRound += amount;
-            SecondDeal();
-            _bettingUI.SetActive(false);
+            _playerHealthDisplay.MoveHeartsToBetPositions(amount);
+            _dealerHealthDisplay.MoveHeartsToBetPositions(amount);
+            StartCoroutine(SecondDeal());
         }
 
-        private void SecondDeal()
+        private IEnumerator SecondDeal()
         {
-            DealPlayerCard(_deck[_cardIndex++]);
-            DealDealerCard(_deck[_cardIndex++], true);
+            if (_playerCurrentHealth > 1 && _dealerCurrentHealth > 1)
+                _bettingUI.PlayOptionalBetHideAnimation();
+            yield return DealPlayerCardWithAnimation();
+            _bettingUI.SetActive(false);
+            yield return new WaitForSeconds(1f);
+            yield return DealDealerCardWithAnimation(true);
 
             PromptHitStay();
         }
@@ -97,16 +152,32 @@ namespace Minigames.Blackjack
         private void PromptHitStay()
         {
             _hitStayUI.SetActive(true);
+            _hitStayUIAnimator.Play("HitStayShow");
         }
 
         public void Hit()
         {
-            DealPlayerCard(_deck[_cardIndex++]);
-            _hitStayUI.SetActive(false);
+            StartCoroutine(HitCoroutine());
+        }
 
+        private IEnumerator HitCoroutine()
+        {
+            _hitStayUIAnimator.Play("HitStayHide");
+
+
+            yield return DealPlayerCardWithAnimation();
+            //we dont wait to wait if this finishes after the animation.
+            yield return new WaitUntil(() => _hitStayUIAnimator.GetCurrentAnimatorStateInfo(0).IsName("HitStayHide") &&
+                                             _hitStayUIAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+            _hitStayUI.SetActive(false);
             if (_playerHand.GetHandValue() > 21)
             {
                 DealerWinsRound();
+            }
+            else if (_playerHand.CardCount == 5)
+            {
+                PlayerWinsRound();
             }
             else
                 PromptHitStay();
@@ -115,17 +186,17 @@ namespace Minigames.Blackjack
         public void Stay()
         {
             _hitStayUI.SetActive(false);
-            StartDealerTurn();
+            StartCoroutine(StartDealerTurn());
         }
 
-        private void StartDealerTurn()
+        private IEnumerator StartDealerTurn()
         {
             _dealerHand.RevealHand();
             while (true)
             {
-                if (_dealerHand.GetHandValue() < 17)
+                if (_dealerHand.GetHandValue() < 17 && _dealerHand.CardCount < 5)
                 {
-                    DealDealerCard(_deck[_cardIndex++], true);
+                    yield return DealDealerCardWithAnimation(true);
                     continue;
                 }
 
@@ -142,7 +213,7 @@ namespace Minigames.Blackjack
                 PlayerWinsRound();
                 return;
             }
-            
+
             bool playerHasBlackjack = _playerHand.HasBlackjack();
             bool dealerHasBlackjack = _dealerHand.HasBlackjack();
 
@@ -172,28 +243,105 @@ namespace Minigames.Blackjack
 
         private void PlayerWinsRound()
         {
-            _dealerCurrentHealth -= _playerBetThisRound;
-            if (_dealerCurrentHealth <= 0)
-            {
-                //player wins the game
-            }
-            else
-                StartNewRound();
+            StartCoroutine(PlayerWinsRoundWithAnimation());
 
             Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
         }
 
+        private IEnumerator PlayerWinsRoundWithAnimation()
+        {
+            yield return new WaitForSeconds(2);
+            _dealerCurrentHealth -= _playerBetThisRound;
+            if (_dealerCurrentHealth <= 0)
+            {
+                StartCoroutine(PlayerWonGame());
+                yield break;
+            }
+
+            _dealerAnimationHandler.PlaySad();
+            yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
+            _dealerAnimationHandler.ResetSlappedTable();
+            _dealerHealthDisplay.QuickRemoveHeart();
+            _playerHealthDisplay.QuickReturnHearts();
+            _playerHand.ClearHand();
+            _dealerHand.ClearHand();
+
+            yield return new WaitUntil(() => _dealerAnimationHandler.ChangeFace());
+            _dealerAnimationHandler.ResetChangeFace();
+
+            yield return new WaitForSeconds(2f);
+
+            StartNewRound();
+
+            Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+
+        private IEnumerator PlayerWonGame()
+        {
+            yield return new WaitForSeconds(2f);
+            _dealerAnimationHandler.PlayTableFlip();
+
+            yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
+            _dealerAnimationHandler.ResetSlappedTable();
+            _dealerHealthDisplay.QuickRemoveHeart();
+            _playerHealthDisplay.QuickReturnHearts();
+            _playerHand.ClearHand();
+            _dealerHand.ClearHand();
+
+            yield return new WaitUntil(() => _dealerAnimationHandler.FlipTable());
+            _dealerAnimationHandler.ResetFlipTable();
+
+            //remaining animation time
+            yield return new WaitForSeconds(1.3f);
+
+            FindObjectOfType<StationCasinoManager>().PlayerWon();
+        }
+
         private void DealerWinsRound()
         {
+            StartCoroutine(DealerWinsRoundWithAnimation());
+
+            Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+
+        private IEnumerator DealerWinsRoundWithAnimation()
+        {
+            yield return new WaitForSeconds(2);
             _playerCurrentHealth -= _playerBetThisRound;
             if (_playerCurrentHealth <= 0)
             {
-                //dealer wins the game
+                StartCoroutine(DealerWinsGame());
+                yield break;
             }
-            else
-                StartNewRound();
+
+            _dealerAnimationHandler.PlayHappy();
+            yield return new WaitUntil(() => _dealerAnimationHandler.HappyFace());
+            _dealerAnimationHandler.ResetHappyFace();
+            _dealerHealthDisplay.SlowReturnHearts();
+            _playerHealthDisplay.SlowShrinkHeart();
+
+            yield return new WaitForSeconds(2f);
+
+            StartNewRound();
 
             Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+
+        private IEnumerator DealerWinsGame()
+        {
+            yield return new WaitForSeconds(2f);
+            
+            _dealerAnimationHandler.PlayHappy();
+            
+            yield return new WaitUntil(() => _dealerAnimationHandler.HappyFace());
+            
+            _dealerAnimationHandler.ResetHappyFace();
+            _dealerHealthDisplay.SlowReturnHearts();
+            _playerHealthDisplay.SlowShrinkHeart();
+
+            yield return new WaitForSeconds(2f);
+
+            FindObjectOfType<StationCasinoManager>().PlayerLost();
         }
 
         private void PushRound()

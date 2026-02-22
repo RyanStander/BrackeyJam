@@ -1,0 +1,17 @@
+CasinoNPC1.png
+size:657,228
+filter:Linear,Linear
+pma:true
+NPC2
+bounds:2,2,224,493
+rotate:90
+NPC2Arm
+bounds:497,47,92,179
+NPC2EyeBG
+bounds:591,99,64,127
+NPC2Pupil
+bounds:591,84,13,14
+rotate:90
+NPCSlotEye3
+bounds:497,8,37,97
+rotate:90

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,11 +42,42 @@ namespace Minigames.Blackjack
 
             _cardFrontImage.sprite = _cardData.CardFrontSprite;
             _cardFrontImage.color = _cardData.CardColor;
-            Debug.Log(_card.Rank + " as " + (int)_card.Rank);
             _cardRankImage.sprite = _cardData.RankSprites[_card.Rank];
             _cardRankImage.color = _cardData.RankColor;
             _cardSuitImage.sprite = _cardData.SuitSprites[_card.Suit];
             _cardSuitImage.color = _cardData.SuitColor;
+        }
+
+        public void RevealCard()
+        {
+            StartCoroutine(FlipCard());
+        }
+        
+        private IEnumerator FlipCard(float duration = 0.5f)
+        {
+            float elapsedTime = 0f;
+            Vector3 initialScale = transform.localScale;
+            Vector3 targetScale = new Vector3(0f, initialScale.y, initialScale.z);
+
+            while (elapsedTime < duration / 2f)
+            {
+                transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / (duration / 2f));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localScale = targetScale;
+            ShowCard();
+
+            elapsedTime = 0f;
+            while (elapsedTime < duration / 2f)
+            {
+                transform.localScale = Vector3.Lerp(targetScale, initialScale, elapsedTime / (duration / 2f));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localScale = initialScale;
         }
 
         public void Reset()
@@ -55,6 +87,38 @@ namespace Minigames.Blackjack
             _cardFrontImage.sprite = null;
             _cardRankImage.sprite = null;
             _cardSuitImage.sprite = null;
+        }
+        
+        public IEnumerator FadeInCard(float duration)
+        {
+            float elapsedTime = 0f;
+            Color frontColor = _cardFrontImage.color;
+            Color rankColor = _cardRankImage.color;
+            Color suitColor = _cardSuitImage.color;
+
+            while (elapsedTime < duration)
+            {
+                float alpha = Mathf.Lerp(0f, 1f, elapsedTime / duration);
+                frontColor.a = alpha;
+                rankColor.a = alpha;
+                suitColor.a = alpha;
+
+                _cardFrontImage.color = frontColor;
+                _cardRankImage.color = rankColor;
+                _cardSuitImage.color = suitColor;
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure final alpha is set to 1
+            frontColor.a = 1f;
+            rankColor.a = 1f;
+            suitColor.a = 1f;
+
+            _cardFrontImage.color = frontColor;
+            _cardRankImage.color = rankColor;
+            _cardSuitImage.color = suitColor;
         }
 
         public Card Card => _card;

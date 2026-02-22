@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace Minigames.Blackjack
@@ -6,6 +7,8 @@ namespace Minigames.Blackjack
     public class Hand : MonoBehaviour
     {
         [SerializeField] private HandCard[] _handCards;
+        [SerializeField] private float _cardFadeInDuration = 0.5f;
+        [SerializeField] private TextMeshProUGUI _handValueText; 
         private int _cardCount;
         private CardData _cardData;
         
@@ -15,6 +18,8 @@ namespace Minigames.Blackjack
             {
                 handCard.CardDisplay.gameObject.SetActive(false);
             }
+            
+            _handValueText.text = "0";
         }
         
 
@@ -29,8 +34,11 @@ namespace Minigames.Blackjack
             HandCard handCard = _handCards[_cardCount];
             handCard.CardDisplay.SetCard(_cardData, card.Rank, card.Suit, reveal);
             handCard.CardDisplay.gameObject.SetActive(true);
+            StartCoroutine(handCard.CardDisplay.FadeInCard(_cardFadeInDuration));
             handCard.Revealed = reveal;
             _cardCount++;
+            
+            UpdateHandValueText();
         }
 
         public void ClearHand()
@@ -42,15 +50,18 @@ namespace Minigames.Blackjack
             }
 
             _cardCount = 0;
+            _handValueText.text = "0";
         }
 
-        public int GetHandValue()
+        public int GetHandValue(bool countHiddenCard = true)
         {
             int value = 0;
             int aceCount = 0;
             for (int index = 0; index < _cardCount; index++)
             {
                 HandCard card = _handCards[index];
+                if (!countHiddenCard && !card.Revealed)
+                    continue;
                 if (card.CardDisplay.Card.Rank == CardRank.Ace)
                     aceCount++;
                 else
@@ -93,10 +104,18 @@ namespace Minigames.Blackjack
                 if (handCard.Revealed)
                     continue;
 
-                handCard.CardDisplay.ShowCard();
+                handCard.CardDisplay.RevealCard();
                 handCard.Revealed = true;
             }
         }
+        
+        private void UpdateHandValueText()
+        {
+            int handValue = GetHandValue(false);
+            _handValueText.text = handValue.ToString();
+        }
+        
+        public int CardCount => _cardCount;
         
         public void SetCardData(CardData cardData) => _cardData = cardData;
     }
