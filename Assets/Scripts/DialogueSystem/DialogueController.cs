@@ -19,6 +19,12 @@ public class DialogueController : MonoBehaviour
 
     public bool IsTyping;
 
+    private void OnValidate()
+    {
+        if (_textComponent == null)
+            _textComponent = GetComponentInChildren<TMP_Text>();
+    }
+
     private void Awake()
     {
         if (_textComponent == null)

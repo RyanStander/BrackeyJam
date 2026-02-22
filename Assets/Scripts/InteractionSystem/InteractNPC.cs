@@ -36,8 +36,8 @@ public class InteractNPC : MonoBehaviour, IInteractable
 
     private void ShowCurrentDialogueLine()
     {
-        if (_dialogueLines.Length == 0) return;
-        _dialogueController.DisplayDialogue(new string[] { _dialogueLines[_currentLineIndex] });
+        StartCoroutine(_dialogueController.DisplayDialogue(
+            new string[] { _dialogueLines[_currentLineIndex] }));
     }
 
     public void ShowNextDialogueLine()
@@ -52,8 +52,8 @@ public class InteractNPC : MonoBehaviour, IInteractable
             return;
         }
         
-        _dialogueController.DisplayDialogue(
-            new string[] { _dialogueLines[_currentLineIndex] });
+        StartCoroutine(_dialogueController.DisplayDialogue(
+            new string[] { _dialogueLines[_currentLineIndex] }));
 
         _currentLineIndex++;
     }
