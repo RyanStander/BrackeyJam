@@ -95,13 +95,11 @@ namespace Minigames.Blackjack.Visuals
         private IEnumerator SlowShrinkRoutine()
         {
             int betCount = _currentBetHearts;
-
-            List<Coroutine> running = new List<Coroutine>();
-
+            
             for (int i = 0; i < betCount; i++)
             {
                 int heartIndex = _heartsLeft - 1 - i;
-                running.Add(StartCoroutine(ShrinkHeart(_hearts[heartIndex], 0.5f)));
+                StartCoroutine(ShrinkHeart(_hearts[heartIndex], 0.5f));
             }
 
             // Wait for duration (since all shrink coroutines run same time)
@@ -116,6 +114,8 @@ namespace Minigames.Blackjack.Visuals
             Vector3 originalScale = heart.transform.localScale;
             Vector3 targetScale = Vector3.zero;
             float elapsed = 0f;
+            
+            heart.GetComponent<Animator>().enabled = false;
 
             while (elapsed < duration)
             {
@@ -143,11 +143,9 @@ namespace Minigames.Blackjack.Visuals
                 int heartIndex = _heartsLeft - 1 - i;
                 int betIndex = betCount - 1 - i;
 
-                _hearts[heartIndex].SetActive(true);
-
                 StartCoroutine(SlowSlideHearts(
                     _hearts[heartIndex],
-                    _heartBetTransforms[betIndex].position,
+                    _heartOriginalPositions[heartIndex],
                     duration));
             }
 
@@ -158,19 +156,19 @@ namespace Minigames.Blackjack.Visuals
         
         private IEnumerator SlowSlideHearts(GameObject heart, Vector3 targetPosition, float duration)
         {
-            Vector3 startPosition = heart.transform.position;
+            Vector3 startPosition = heart.transform.localPosition;
             float elapsed = 0f;
 
             while (elapsed < duration)
             {
-                heart.transform.position =
+                heart.transform.localPosition =
                     Vector3.Lerp(startPosition, targetPosition, elapsed / duration);
 
                 elapsed += Time.deltaTime;
                 yield return null;
             }
 
-            heart.transform.position = targetPosition;
+            heart.transform.localPosition = targetPosition;
         }
 
         #endregion
