@@ -60,11 +60,7 @@ public class QteMiniGame : BaseMinigame
         currentPressure -= PressureDecreaseRate * Time.deltaTime;
         currentPressure = Mathf.Clamp(currentPressure, MinPressure, MaxPressure);
         //pressureBarImage.fillAmount = currentPressure / MaxPressure; fill this in later with some bar or something
-        if(currentPressure <= MinPressure)
-        {
-            Debug.Log("Pressure dropped to zero, you lose");
-            EndGame();
-        }
+        
     }
 
     private void MoveNeedle()
