@@ -1,3 +1,5 @@
+using AudioManagement;
+using PersistentManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +32,8 @@ public class StationSubmarineManager : BaseStationManager
         CurrentWaterLevel = 0;
         CurrentBlock = Block1;
         CurrentWall = BarrierWall1;
+        AudioManager.Play(AudioDataHandler.StationUnderwater.UnderwaterMusic());
+        AudioManager.Play(AudioDataHandler.StationUnderwater.UnderwaterAmbience());
     }
 
     public void CompleteFloor1Minigame()
@@ -87,6 +91,7 @@ public class StationSubmarineManager : BaseStationManager
             NpcHolder[4].gameObject.SetActive(false);
             NpcHolder[5].gameObject.SetActive(true);
             NpcHolder[6].gameObject.SetActive(true);
+            NpcHolder[7].gameObject.SetActive(true);
 
             OnMiniGameSetComplete?.Invoke();
             OnObjectiveUpdate();
