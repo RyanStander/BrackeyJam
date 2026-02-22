@@ -11,7 +11,7 @@ using System;
 
 public class DialogueController : MonoBehaviour
 {
-    private TMP_Text _textComponent;
+    [SerializeField] private TMP_Text _textComponent;
     [SerializeField] private float _typingSpeed = 0.05f;
     [SerializeField] private float _lineDisplayDuration = 4f;
     [SerializeField] private string[] dialogueLines;
@@ -21,7 +21,8 @@ public class DialogueController : MonoBehaviour
 
     private void Awake()
     {
-        _textComponent = GetComponentInChildren<TMP_Text>();
+        if (_textComponent == null)
+            _textComponent = GetComponentInChildren<TMP_Text>();
         _dialogueBox.SetActive(false);
     }
 
@@ -71,7 +72,7 @@ public class DialogueController : MonoBehaviour
         _textComponent.maxVisibleCharacters = _textComponent.textInfo.characterCount;
         IsTyping = false;
     }
-    
+
     public void CloseDialogue()
     {
         _dialogueBox.SetActive(false);

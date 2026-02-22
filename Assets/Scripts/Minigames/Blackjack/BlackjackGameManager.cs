@@ -101,6 +101,20 @@ namespace Minigames.Blackjack
         {
             AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",1);
             yield return _dealerDialogueController.DisplayLine("Welcome, welcome to the table! Don't look so nervous we're about to have some FUN!");
+            yield return _dealerDialogueController.DisplayLine(
+                "Here's the game: Blackjack! You know it? No? Even BETTER! I'll teach you");
+            yield return _dealerDialogueController.DisplayLine(
+                "The goal is simple—get as close to twenty-one as you can WITHOUT going over. Face cards are worth ten, aces are worth one OR eleven—your choice! Go over twenty-one, and you BUST. Automatic loss.");
+            yield return _dealerDialogueController.DisplayLine(
+                "But here's where it gets exciting. We BOTH start with three hearts. Each round, you bet at least one heart. Win the hand, and I lose whatever you wagered. I win, and YOU lose your bet. First heart to stop beating loses everything");
+            yield return _dealerDialogueController.DisplayLine(
+                "Oh, and a special house rule, just for you—draw FIVE cards without busting? Automatic win! Generous, aren't I");
+            yield return _dealerDialogueController.DisplayLine(
+                "After I deal your first card, you can raise your bet if you're feeling BRAVE. Bet two hearts, win the hand, I lose TWO hearts! Of course... lose, and YOU lose two. High risk, high reward!");
+            yield return _dealerDialogueController.DisplayLine(
+                "Beat me, and you are FREE! But if your heart runs dry first..");
+            yield return _dealerDialogueController.DisplayLine("...well. You'll stay here. With me. Forever");
+            yield return _dealerDialogueController.DisplayLine("So! Shall we begin?");
             AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",0);
             
             _playerBetThisRound = 1; //forced bet
