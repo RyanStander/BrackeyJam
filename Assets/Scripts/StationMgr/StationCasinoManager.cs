@@ -45,7 +45,8 @@ namespace StationMgr
         public void GoToWinScreen()
         {
             //todo: go to win screen
-            SceneManager.LoadScene("MainMenu");
+            //SceneManager.LoadScene("MainMenu");
+            Application.Quit();
         }
 
         public void PlayerLost()
