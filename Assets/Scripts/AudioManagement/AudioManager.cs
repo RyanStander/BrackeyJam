@@ -1,4 +1,5 @@
-﻿using FMOD.Studio;
+﻿using System.Collections.Generic;
+using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
@@ -13,6 +14,9 @@ namespace AudioManagement
         private EventInstance _currentAmbience;
         private EventReference _currentMusicReference;
         private EventReference _currentAmbienceReference;
+        
+        private Dictionary<int, EventInstance> _activeSounds = new();
+        private int _nextId = 0;
 
         private void Awake()
         {
@@ -89,11 +93,49 @@ namespace AudioManagement
          
             Instance.PlayInstance(sound, parameters);
         }
+        
+        /// <summary>
+        ///  Plays a looping sound effect and returns a handle to it.
+        /// Use this for sounds that need to be stopped or have parameters changed after being played.
+        /// Remember to stop the sound using the returned handle when it's no longer needed to free up resources.
+        /// </summary>
+        /// <param name="sound">Use AudioDataHandler.[LIBRARY].soundName</param>
+        /// <returns>A SoundHandle that can be used to set parameters or stop the sound.</returns>
+        public static SoundHandle PlayLoop(EventReference sound)
+        {
+            if (Instance == null) return default;
+            return Instance.PlayLoopInstance(sound);
+        }
+        
+        /// <summary>
+        ///  Sets a parameter on a currently playing sound instance identified by the handle.
+        /// This is used for sounds played with PlayLoop that need to have their parameters changed after being played.
+        /// </summary>
+        /// <param name="handle">The SoundHandle returned when the sound was played with PlayLoop.</param>
+        /// <param name="param">The name of the parameter to set. This should match the parameter name defined in FMOD for that sound.</param>
+        /// <param name="value">The value to set the parameter to. The valid range and meaning of this value depends on how the parameter is defined in FMOD.</param>
+        public static void SetParameter(SoundHandle handle, string param, float value)
+        {
+            if (Instance == null) return;
+            Instance.SetParameterInstance(handle, param, value);
+        }
+        
+        /// <summary>
+        ///  Stops a currently playing sound instance identified by the handle.
+        /// If fadeOut is true, the sound will fade out instead of stopping immediately.
+        /// </summary>
+        /// <param name="handle">The SoundHandle returned when the sound was played with PlayLoop.</param>
+        /// <param name="fadeOut">Whether to allow the sound to fade out or stop it immediately.</param>
+        public static void Stop(SoundHandle handle, bool fadeOut = true)
+        {
+            if (Instance == null) return;
+            Instance.StopInstance(handle, fadeOut);
+        }
 
         #endregion
 
         #region Instance Methods
-
+        
         private void PlayMusicInstance(EventReference music)
         {
             if (_currentMusicReference.Equals(music))
@@ -159,6 +201,35 @@ namespace AudioManagement
 
             instance.start();
             instance.release();
+        }
+        
+        private SoundHandle PlayLoopInstance(EventReference sound)
+        {
+            EventInstance instance = RuntimeManager.CreateInstance(sound);
+            instance.start();
+
+            int id = _nextId++;
+            _activeSounds.Add(id, instance);
+
+            return new SoundHandle { Id = id };
+        }
+        
+        private void SetParameterInstance(SoundHandle handle, string param, float value)
+        {
+            if (_activeSounds.TryGetValue(handle.Id, out var instance))
+            {
+                instance.setParameterByName(param, value);
+            }
+        }
+        
+        private void StopInstance(SoundHandle handle, bool fadeOut)
+        {
+            if (_activeSounds.TryGetValue(handle.Id, out var instance))
+            {
+                instance.stop(fadeOut ? STOP_MODE.ALLOWFADEOUT : STOP_MODE.IMMEDIATE);
+                instance.release();
+                _activeSounds.Remove(handle.Id);
+            }
         }
 
         #endregion
