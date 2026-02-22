@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using AudioManagement;
 using Minigames.Blackjack.Visuals;
+using PersistentManager;
 using Spine.Unity;
 using StationMgr;
 using Unity.VisualScripting;
@@ -46,7 +48,7 @@ namespace Minigames.Blackjack
         public override void StartMinigame()
         {
             base.StartMinigame();
-
+            
             Initialise();
             StartNewRound();
         }
@@ -57,6 +59,7 @@ namespace Minigames.Blackjack
             _dealerCurrentHealth = _dealerMaxHealth;
             _playerHand.SetCardData(_playerCardData);
             _dealerHand.SetCardData(_dealerCardData);
+            AudioManager.PlayMusic(AudioDataHandler.StationCasino.BlackjackMusic());
         }
 
         //TODO: when the game starts, dealer will explain the basics of blackjack
@@ -105,16 +108,28 @@ namespace Minigames.Blackjack
         private IEnumerator DealPlayerCardWithAnimation()
         {
             _dealerAnimationHandler.PlayDeal();
+
+            yield return new WaitUntil(() => _dealerAnimationHandler.DrawCard());
+            _dealerAnimationHandler.ResetDrawCard();
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameBlackjack.Deal());
+            
             yield return new WaitUntil(() => _dealerAnimationHandler.AddCardToTable());
             _dealerAnimationHandler.ResetAddCardToTable();
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameBlackjack.Hit());
             DealPlayerCard(_deck[_cardIndex++]);
         }
 
         private IEnumerator DealDealerCardWithAnimation(bool faceUp)
         {
             _dealerAnimationHandler.PlayDeal();
+            
+            yield return new WaitUntil(() => _dealerAnimationHandler.DrawCard());
+            _dealerAnimationHandler.ResetDrawCard();
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameBlackjack.Deal());
+            
             yield return new WaitUntil(() => _dealerAnimationHandler.AddCardToTable());
             _dealerAnimationHandler.ResetAddCardToTable();
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameBlackjack.Hit());
             DealDealerCard(_deck[_cardIndex++], faceUp);
         }
 
@@ -282,6 +297,7 @@ namespace Minigames.Blackjack
             _dealerAnimationHandler.PlayTableFlip();
 
             yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
+            AudioManager.PlayOneShot(AudioDataHandler.Character.HitsTable());
             _dealerAnimationHandler.ResetSlappedTable();
             _dealerHealthDisplay.QuickRemoveHeart();
             _playerHealthDisplay.QuickReturnHearts();
@@ -294,6 +310,7 @@ namespace Minigames.Blackjack
             //remaining animation time
             yield return new WaitForSeconds(1.3f);
 
+            AudioManager.PlayMusic(AudioDataHandler.StationCasino.CasinoMusic());
             FindObjectOfType<StationCasinoManager>().PlayerWon();
         }
 
@@ -319,6 +336,8 @@ namespace Minigames.Blackjack
             _dealerAnimationHandler.ResetHappyFace();
             _dealerHealthDisplay.SlowReturnHearts();
             _playerHealthDisplay.SlowShrinkHeart();
+            //TODO: add hurt image here
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameBlackjack.Stab());
 
             yield return new WaitForSeconds(2f);
 
@@ -334,6 +353,7 @@ namespace Minigames.Blackjack
             _dealerAnimationHandler.PlayHappy();
             
             yield return new WaitUntil(() => _dealerAnimationHandler.HappyFace());
+            AudioManager.PlayOneShot(AudioDataHandler.Character.TauntLaugh());
             
             _dealerAnimationHandler.ResetHappyFace();
             _dealerHealthDisplay.SlowReturnHearts();

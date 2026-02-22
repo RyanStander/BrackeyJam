@@ -1,0 +1,7 @@
+Prawns.png
+size:132,117
+filter:Linear,Linear
+pma:true
+prawn
+bounds:2,2,128,113
+offsets:1,1,129,114

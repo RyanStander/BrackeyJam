@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using AudioManagement;
+using PersistentManager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,8 @@ namespace Stations.Audio
         private void Start()
         {
             StartCoroutine(PlayMonsterSounds());
+            AudioManager.PlayMusic(AudioDataHandler.StationMonster.MonsterMusic());
+            AudioManager.PlayAmbience(AudioDataHandler.StationMonster.MonsterAmbience());
         }
 
         private IEnumerator PlayMonsterSounds()
@@ -20,7 +23,7 @@ namespace Stations.Audio
             yield return new WaitForSeconds(3f);
             while (true)
             {
-                AudioManager.PlayOneShot(PersistentManager.AudioDataHandler.StationMonster.Idle());
+                AudioManager.PlayOneShot(AudioDataHandler.StationMonster.Idle());
 
                 yield return new WaitForSeconds(_monsterSoundInterval+Random.Range(-_monsterSoundInterval*0.5f, _monsterSoundInterval*0.5f));
             }
@@ -28,7 +31,7 @@ namespace Stations.Audio
         
         public void SteppedOn()
         {
-            AudioManager.PlayOneShot(PersistentManager.AudioDataHandler.StationMonster.Squish());
+            AudioManager.PlayOneShot(AudioDataHandler.StationMonster.SquishStep());
         }
     }
 }

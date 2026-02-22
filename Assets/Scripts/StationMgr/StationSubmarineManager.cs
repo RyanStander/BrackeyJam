@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StationSubmarineManager : BaseStationManager
 {
-    public bool HasFixedPipes = false;
-    public bool isLevelComplete = false;
+    public int Floor1MinigamesCompleted = 0;
+    public int Floor2MinigamesCompleted = 0;
+    public int Floor3MinigamesCompleted = 0;
 
+    public bool isLevelComplete = false;
     public int CurrentWaterLevel = 0;
 
     public GameObject Block1;
@@ -18,6 +21,10 @@ public class StationSubmarineManager : BaseStationManager
     public GameObject BarrierWall3;
     public GameObject CurrentWall;
 
+    public UnityEvent OnMiniGameSetComplete;
+
+    public Transform[] NpcHolder;
+
     private void Awake()
     {
         CurrentWaterLevel = 0;
@@ -25,46 +32,77 @@ public class StationSubmarineManager : BaseStationManager
         CurrentWall = BarrierWall1;
     }
 
-    public void CompleteFirstFloorPuzzle()
+    public void CompleteFloor1Minigame()
     {
-        HasFixedPipes = true;
-        CurrentWaterLevel = 1;
+        Floor1MinigamesCompleted++;
 
-        CurrentWall.SetActive(false);
-        CurrentWall = BarrierWall2;
+        if (Floor1MinigamesCompleted >= 1 && CurrentWaterLevel == 0)
+        {
+            CurrentWaterLevel = 1;
 
-        CurrentBlock.gameObject.SetActive(false);
-        CurrentBlock = Block2;
+            if (CurrentWall != null) CurrentWall.SetActive(false);
+            CurrentWall = BarrierWall2;
 
-        Debug.Log("Water Raised!");
-        OnObjectiveUpdate();
+            if (CurrentBlock != null) CurrentBlock.SetActive(false);
+            CurrentBlock = Block2;
+
+            Debug.Log("Water Raised!");
+            NpcHolder[0].gameObject.SetActive(false); //puz1
+            NpcHolder[1].gameObject.SetActive(true);//puz1 solved
+            OnMiniGameSetComplete?.Invoke();
+            OnObjectiveUpdate();
+        }
     }
 
-    public void CompleteSecondFloorPuzzle()
+    public void CompleteFloor2Minigame()
     {
-        CurrentWaterLevel = 1;
+        Floor2MinigamesCompleted++;
 
-        CurrentWall.SetActive(false);
-        CurrentWall = BarrierWall3;
-        CurrentWall.SetActive(false);
+        if (Floor2MinigamesCompleted >= 2 && CurrentWaterLevel == 1)
+        {
+            CurrentWaterLevel = 2;
 
-        CurrentBlock.gameObject.SetActive(false);
+            if (CurrentWall != null) CurrentWall.SetActive(false);
+            CurrentWall = BarrierWall3;
 
-        OnObjectiveUpdate();
+            if (CurrentBlock != null) CurrentBlock.SetActive(false);
+
+            Debug.Log("Water Raised!");
+            NpcHolder[1].gameObject.SetActive(false);
+            NpcHolder[2].gameObject.SetActive(false);
+            OnMiniGameSetComplete?.Invoke();
+            OnObjectiveUpdate();
+        }
     }
 
-    public void RemoveCurrentBlock()
+    public void CompleteFloor3Minigame()
     {
+        Floor3MinigamesCompleted++;
 
+        if (Floor3MinigamesCompleted >= 1 && CurrentWaterLevel == 2)
+        {
+            CurrentWaterLevel = 3;
+
+            if (CurrentWall != null) CurrentWall.SetActive(false);
+            NpcHolder[4].gameObject.SetActive(false);
+            NpcHolder[5].gameObject.SetActive(true);
+            NpcHolder[6].gameObject.SetActive(true);
+
+            OnMiniGameSetComplete?.Invoke();
+            OnObjectiveUpdate();
+        }
     }
 
     protected override void CheckObjectives()
     {
-        if(HasFixedPipes)
+        if (Floor1MinigamesCompleted >= 1 && Floor2MinigamesCompleted >= 2 && Floor3MinigamesCompleted >= 1)
         {
-            isLevelComplete = true;
-            Debug.Log("Submarine Station complete!");
-            OnStationComplete.Invoke();
+            if (!isLevelComplete)
+            {
+                isLevelComplete = true;
+                Debug.Log("Submarine Station complete!");
+                OnStationComplete?.Invoke();
+            }
         }
     }
 }

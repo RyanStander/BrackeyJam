@@ -1,0 +1,10 @@
+Seahorse.png
+size:616,162
+filter:Linear,Linear
+pma:true
+head
+bounds:410,4,156,204
+rotate:90
+nohead
+bounds:2,2,158,406
+rotate:90

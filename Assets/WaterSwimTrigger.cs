@@ -20,7 +20,7 @@ public class WaterSwimTrigger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            _controller.IsWaterLevel = false;
+            //_controller.IsWaterLevel = false;
             Debug.Log("Player exited water.");
         }
     }

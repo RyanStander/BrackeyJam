@@ -78,6 +78,8 @@ namespace MiniGameSystem.MiniGame_Wiring
                 node.Setup(this, id, _availableColors[id], _nodeBlinkInterval, _nodeBlinkSpeedMultiplier);
                 node.IsLeftSide = false;
             }
+            
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameWiring.WireCabinetOpen());
         }
 
         //called during onpointerdown from WiringNode, spawn a wire, grab it's node color
@@ -90,7 +92,6 @@ namespace MiniGameSystem.MiniGame_Wiring
                 return;
             
             _currentStartNode = node;
-            AudioManager.Play(AudioDataHandler.MinigameWiring.WireCircuit(),("OpenOrClose",0f));
             AudioManager.PlayOneShot(AudioDataHandler.MinigameWiring.EyeStretchLong());
 
             GameObject newLine = Instantiate(WirePrefab, _wireParent);
@@ -110,7 +111,6 @@ namespace MiniGameSystem.MiniGame_Wiring
 
             if (_currentStartNode.ColorID == endNode.ColorID)
             {
-                AudioManager.Play(AudioDataHandler.MinigameWiring.WireCircuit(),("OpenOrClose",1f));
                 FinishConnection(endNode);
             }
         }
@@ -204,6 +204,7 @@ namespace MiniGameSystem.MiniGame_Wiring
         IEnumerator WinSequence()
         {
             yield return new WaitForSeconds(2f);
+            AudioManager.PlayOneShot(AudioDataHandler.MinigameWiring.WireCabinetClose());
             FinishGame(true);
         }
     }

@@ -8,6 +8,7 @@ namespace AudioManagement
     {
         public EventReference EyeStretchLong;
         public EventReference EyeStretchShort;
-        public EventReference WireCircuit;
+        public EventReference WireCabinetClose;
+        public EventReference WireCabinetOpen;
     }
 }
