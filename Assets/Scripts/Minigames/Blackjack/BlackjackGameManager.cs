@@ -67,14 +67,21 @@ namespace Minigames.Blackjack
             _dealerHand.SetCardData(_dealerCardData);
             AudioManager.PlayMusic(AudioDataHandler.StationCasino.BlackjackMusic());
             _dialogueSoundHandle = AudioManager.PlayLoop(AudioDataHandler.Character.DealerDialogue());
-            AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling", 0);
+            StartCoroutine(TextRoll());
         }
 
         //TODO: when the game starts, dealer will explain the basics of blackjack
 
+        private IEnumerator TextRoll()
+        {
+            while (true)
+            {
+                AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling", _dealerDialogueController.IsTyping ? 1 : 0);
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
         private IEnumerator Tutorial()
         {
-            AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling", 1);
             yield return _dealerDialogueController.DisplayLine(
                 "Welcome, welcome to the table! Don't look so nervous we're about to have some FUN!");
             yield return _dealerDialogueController.DisplayLine(
@@ -91,7 +98,6 @@ namespace Minigames.Blackjack
                 "Beat me, and you are FREE! But if your heart runs dry first...");
             yield return _dealerDialogueController.DisplayLine("...well. You'll stay here. With me. Forever.");
             yield return _dealerDialogueController.DisplayLine("So! Shall we begin?");
-            AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling", 0);
 
             StartNewRound();
         }

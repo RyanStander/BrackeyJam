@@ -24778,18 +24778,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 777694745830910835, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 777694745830910835, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 777694745830910835, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 777694745830910835, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -24837,39 +24825,74 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1787012722293686542, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
-      propertyPath: m_MaxValue
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 1912333650323181982, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
       propertyPath: m_Name
       value: OxygenUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1912333650323181982, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3301251252451373356, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3422061412379123911, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422061412379123911, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422061412379123911, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422061412379123911, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422061412379123911, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 853
+      value: -48.6
       objectReference: {fileID: 0}
     - target: {fileID: 3422061412379123911, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 324
-      objectReference: {fileID: 0}
-    - target: {fileID: 7630864506081488021, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
-      propertyPath: m_RenderMode
-      value: 0
+      value: -179.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1912333650323181982, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 379450412015780835}
   m_SourcePrefab: {fileID: 100100000, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
+--- !u!1 &379450412015780834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1912333650323181982, guid: f99b7f2ba8ba34748ab25bbedb5bb973, type: 3}
+  m_PrefabInstance: {fileID: 379450412015780833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &379450412015780835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379450412015780834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!1 &466161945813858089
 GameObject:
   m_ObjectHideFlags: 0

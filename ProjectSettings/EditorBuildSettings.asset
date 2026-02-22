@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TrainTravelScene.unity
     guid: 04244c4e0205d9843bd3b490da68b4e5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StationGhost.unity
     guid: 9821acc777a4acd4ab55b07aeaeb4d4f
   - enabled: 1
@@ -20,9 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StationCasino.unity
     guid: 3850eea1423ff9c4893bf678bb99bb73
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestStation.unity
     guid: d4ac1bd6a521f0b44a41805941cc7244
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 8a368f0f1875e614f919b1763277525f
   - enabled: 1
     path: Assets/Scenes/FailureScene.unity
     guid: dd3f919b417f796419ab0a2cc7be43eb

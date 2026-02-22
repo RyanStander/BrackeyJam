@@ -7,8 +7,9 @@ namespace Minigames.Blackjack
 {
     public class DealerDialogueController : DialogueController
     {
-        public IEnumerator DisplayLine(string line)
+        public IEnumerator DisplayLine(string line, float displayDuration = 2f)
         {
+            _lineDisplayDuration = displayDuration;
             yield return DisplayDialogue(new[] { line });
         }
     }
