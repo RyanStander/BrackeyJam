@@ -19,3 +19,31 @@ MonoBehaviour:
       Data3: 397405375
       Data4: 1807082522
     Path: event:/SFX/Minigames/ValveQTE/HandleTurn
+  GaugeTick:
+    Guid:
+      Data1: 112393624
+      Data2: 1189906228
+      Data3: -2116699733
+      Data4: 147969107
+    Path: event:/SFX/Minigames/ValveQTE/GaugeTick
+  QteHit:
+    Guid:
+      Data1: 897792954
+      Data2: 1080992346
+      Data3: 432599186
+      Data4: 755501395
+    Path: event:/SFX/Minigames/ValveQTE/QteHit
+  QteMiss:
+    Guid:
+      Data1: 1859176436
+      Data2: 1217108678
+      Data3: -362599549
+      Data4: -1279845005
+    Path: event:/SFX/Minigames/ValveQTE/QteMiss
+  QteSuccess:
+    Guid:
+      Data1: -757717652
+      Data2: 1309532258
+      Data3: -976831823
+      Data4: -2141543837
+    Path: event:/SFX/Minigames/ValveQTE/QteSuccess

@@ -12,6 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464dc83434f24abea757316d56e100ca, type: 3}
   m_Name: StationMonsterSoundLibrary
   m_EditorClassIdentifier: 
+  MonsterMusic:
+    Guid:
+      Data1: 1717270534
+      Data2: 1162926065
+      Data3: -1954480998
+      Data4: -833473765
+    Path: event:/Music/MonsterStation/MonsterStation
+  MonsterAmbience:
+    Guid:
+      Data1: -1531884375
+      Data2: 1235774043
+      Data3: 547187115
+      Data4: 703588802
+    Path: event:/SFX/Environment/MonsterStation/MonsterAmbience
   Growl:
     Guid:
       Data1: -358195297

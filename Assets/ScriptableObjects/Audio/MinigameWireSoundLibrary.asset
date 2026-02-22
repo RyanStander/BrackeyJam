@@ -26,10 +26,17 @@ MonoBehaviour:
       Data3: 1816725169
       Data4: -638965961
     Path: event:/SFX/Minigames/Wires/EyeStretchShort
-  WireCircuit:
+  WireCabinetClose:
+    Guid:
+      Data1: -1845031732
+      Data2: 1199928694
+      Data3: 789079953
+      Data4: 977216369
+    Path: event:/SFX/Minigames/Wires/WireCabinetClose
+  WireCabinetOpen:
     Guid:
       Data1: -446588086
       Data2: 1160743999
       Data3: -2060620914
       Data4: 2034492179
-    Path: event:/SFX/Minigames/Wires/WireCircuit
+    Path: event:/SFX/Minigames/Wires/WireCabinetOpen

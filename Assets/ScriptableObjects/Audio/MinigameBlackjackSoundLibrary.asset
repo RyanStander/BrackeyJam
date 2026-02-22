@@ -12,6 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d31b80c43b14b888dfd6e2ea36c5404, type: 3}
   m_Name: MinigameBlackjackSoundLibrary
   m_EditorClassIdentifier: 
+  CasinoMusic:
+    Guid:
+      Data1: 2094538971
+      Data2: 1249518817
+      Data3: -846664526
+      Data4: 1349188034
+    Path: event:/Music/CasinoStation/Casino
+  BlackjackMusic:
+    Guid:
+      Data1: -1490185335
+      Data2: 1078430033
+      Data3: -2141515375
+      Data4: 1820181552
+    Path: event:/Music/CasinoStation/Boss
   Deal:
     Guid:
       Data1: 1224054591

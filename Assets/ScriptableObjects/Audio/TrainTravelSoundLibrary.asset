@@ -26,3 +26,10 @@ MonoBehaviour:
       Data3: -1025645637
       Data4: -1218174657
     Path: event:/SFX/Train/FuelSpend
+  FuelPickup:
+    Guid:
+      Data1: 764433761
+      Data2: 1251591776
+      Data3: -1054547792
+      Data4: -666632501
+    Path: event:/SFX/Train/FuelPickup
