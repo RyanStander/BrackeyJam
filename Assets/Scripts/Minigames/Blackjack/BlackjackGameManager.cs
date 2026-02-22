@@ -94,10 +94,10 @@ namespace Minigames.Blackjack
                 (_deck[i], _deck[randomIndex]) = (_deck[randomIndex], _deck[i]);
             }
 
-            StartCoroutine(StartGame());
+            StartCoroutine(Tutorial());
         }
 
-        private IEnumerator StartGame()
+        private IEnumerator Tutorial()
         {
             AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",1);
             yield return _dealerDialogueController.DisplayLine("Welcome, welcome to the table! Don't look so nervous we're about to have some FUN!");
@@ -117,6 +117,11 @@ namespace Minigames.Blackjack
             yield return _dealerDialogueController.DisplayLine("So! Shall we begin?");
             AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",0);
             
+            StartCoroutine(StartGame());
+        }
+
+        private IEnumerator StartGame()
+        {
             _playerBetThisRound = 1; //forced bet
             _playerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
             _dealerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
@@ -297,9 +302,9 @@ namespace Minigames.Blackjack
                 StartCoroutine(PlayerWonGame());
                 yield break;
             }
-            
+            yield return StartCoroutine(_dealerDialogueController.DisplayLine("WHAT?"));
             _dealerAnimationHandler.PlaySad();
-            StartCoroutine(_dealerDialogueController.DisplayLine("WHAT?"));
+            
             yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
             yield return _dealerDialogueController.DisplayLine("Again!");
             
