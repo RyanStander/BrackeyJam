@@ -108,12 +108,12 @@ namespace Minigames.Blackjack
             yield return _dealerDialogueController.DisplayLine(
                 "But here's where it gets exciting. We BOTH start with three hearts. Each round, you bet at least one heart. Win the hand, and I lose whatever you wagered. I win, and YOU lose your bet. First heart to stop beating loses everything");
             yield return _dealerDialogueController.DisplayLine(
-                "Oh, and a special house rule, just for you, draw FIVE cards without busting? Automatic win! Generous, aren't I");
+                "Oh, and a special house rule, just for you, draw FIVE cards without busting? Automatic win! Generous, aren't I?");
             yield return _dealerDialogueController.DisplayLine(
                 "After I deal your first card, you can raise your bet if you're feeling BRAVE. Bet two hearts, win the hand, I lose TWO hearts! Of course... lose, and YOU lose two. High risk, high reward!");
             yield return _dealerDialogueController.DisplayLine(
-                "Beat me, and you are FREE! But if your heart runs dry first..");
-            yield return _dealerDialogueController.DisplayLine("...well. You'll stay here. With me. Forever");
+                "Beat me, and you are FREE! But if your heart runs dry first...");
+            yield return _dealerDialogueController.DisplayLine("...well. You'll stay here. With me. Forever.");
             yield return _dealerDialogueController.DisplayLine("So! Shall we begin?");
             AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",0);
             
@@ -297,9 +297,12 @@ namespace Minigames.Blackjack
                 StartCoroutine(PlayerWonGame());
                 yield break;
             }
-
+            
             _dealerAnimationHandler.PlaySad();
+            StartCoroutine(_dealerDialogueController.DisplayLine("WHAT?"));
             yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
+            yield return _dealerDialogueController.DisplayLine("Again!");
+            
             _dealerAnimationHandler.ResetSlappedTable();
             _dealerHealthDisplay.QuickRemoveHeart();
             _playerHealthDisplay.QuickReturnHearts();
@@ -307,8 +310,9 @@ namespace Minigames.Blackjack
             _dealerHand.ClearHand();
 
             yield return new WaitUntil(() => _dealerAnimationHandler.ChangeFace());
+            
             _dealerAnimationHandler.ResetChangeFace();
-
+            yield return _dealerDialogueController.DisplayLine("Your luck has run out.");
             yield return new WaitForSeconds(2f);
 
             StartNewRound();
