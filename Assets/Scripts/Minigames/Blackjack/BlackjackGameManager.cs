@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Minigames.Blackjack.Visuals;
 using Spine.Unity;
 using UnityEngine;
 
@@ -24,6 +25,8 @@ namespace Minigames.Blackjack
         [SerializeField] private Hand _dealerHand;
         [SerializeField] private CardData _playerCardData;
         [SerializeField] private CardData _dealerCardData;
+        [SerializeField] private HeartDisplay _playerHealthDisplay;
+        [SerializeField] private HeartDisplay _dealerHealthDisplay;
         [SerializeField] private GameObject _bettingUI;
         [SerializeField] private GameObject _hitStayUI;
 
@@ -72,6 +75,8 @@ namespace Minigames.Blackjack
         {
             //TODO: Move health to the Centre of the board
             _playerBetThisRound = 1; //forced bet
+            _playerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
+            _dealerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
 
             yield return DealPlayerCardWithAnimation();
 
@@ -106,6 +111,8 @@ namespace Minigames.Blackjack
         public void IncreaseBet(int amount)
         {
             _playerBetThisRound += amount;
+            _playerHealthDisplay.MoveHeartsToBetPositions(amount);
+            _dealerHealthDisplay.MoveHeartsToBetPositions(amount);
              StartCoroutine(SecondDeal());
             _bettingUI.SetActive(false);
         }
@@ -138,13 +145,12 @@ namespace Minigames.Blackjack
             {
                 DealerWinsRound();
             }
-            else
-                PromptHitStay();
-            
-            if(_playerHand.CardCount == 5)
+            else if(_playerHand.CardCount == 5)
             {
                 PlayerWinsRound();
             }
+            else
+                PromptHitStay();
         }
 
         public void Stay()
@@ -208,7 +214,27 @@ namespace Minigames.Blackjack
 
         private void PlayerWinsRound()
         {
+            StartCoroutine(PlayerWinsRoundWithAnimation());
+
+            Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+        
+        private IEnumerator PlayerWinsRoundWithAnimation()
+        {
+            _dealerAnimationHandler.PlaySad();
+            yield return new WaitUntil(()=>_dealerAnimationHandler.SlappedTable());
+            _dealerAnimationHandler.ResetSlappedTable();
+            _dealerHealthDisplay.QuickRemoveHeart();
+            _playerHealthDisplay.QuickReturnHearts();
+            _playerHand.ClearHand();
+            _dealerHand.ClearHand();
             _dealerCurrentHealth -= _playerBetThisRound;
+
+            yield return new WaitUntil(() => _dealerAnimationHandler.ChangeFace());
+                _dealerAnimationHandler.ResetChangeFace();
+
+                yield return new WaitForSeconds(2f);
+            
             if (_dealerCurrentHealth <= 0)
             {
                 //player wins the game
@@ -221,6 +247,9 @@ namespace Minigames.Blackjack
 
         private void DealerWinsRound()
         {
+            _dealerAnimationHandler.PlayHappy();
+            _dealerHealthDisplay.SlowReturnHearts();
+            _playerHealthDisplay.SlowShrinkHeart();
             _playerCurrentHealth -= _playerBetThisRound;
             if (_playerCurrentHealth <= 0)
             {
