@@ -1,0 +1,27 @@
+Jelly.png
+size:308,403
+filter:Linear,Linear
+pma:true
+Jelly/JellyArms
+bounds:189,207,115,89
+Jelly/JellyBody
+bounds:189,94,111,112
+rotate:90
+Jelly/JellyBottom
+bounds:2,99,184,68
+Jelly/JellyEyes
+bounds:2,6,89,31
+Jelly/JellyFace
+bounds:191,298,103,115
+rotate:90
+Jelly/JellyHair
+bounds:2,169,185,140
+Jelly/JellyLegs
+bounds:167,2,90,137
+rotate:90
+Jelly/JellyPupils
+bounds:93,5,70,32
+Jelly/JellyTop
+bounds:2,311,187,90
+Jelly/Malebene 89
+bounds:2,39,163,58

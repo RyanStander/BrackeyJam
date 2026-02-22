@@ -23,6 +23,8 @@ public class StationSubmarineManager : BaseStationManager
 
     public UnityEvent OnMiniGameSetComplete;
 
+    public Transform[] NpcHolder;
+
     private void Awake()
     {
         CurrentWaterLevel = 0;
@@ -45,6 +47,8 @@ public class StationSubmarineManager : BaseStationManager
             CurrentBlock = Block2;
 
             Debug.Log("Water Raised!");
+            NpcHolder[0].gameObject.SetActive(false); //puz1
+            NpcHolder[1].gameObject.SetActive(true);//puz1 solved
             OnMiniGameSetComplete?.Invoke();
             OnObjectiveUpdate();
         }
@@ -64,6 +68,8 @@ public class StationSubmarineManager : BaseStationManager
             if (CurrentBlock != null) CurrentBlock.SetActive(false);
 
             Debug.Log("Water Raised!");
+            NpcHolder[1].gameObject.SetActive(false);
+            NpcHolder[2].gameObject.SetActive(false);
             OnMiniGameSetComplete?.Invoke();
             OnObjectiveUpdate();
         }
@@ -78,10 +84,18 @@ public class StationSubmarineManager : BaseStationManager
             CurrentWaterLevel = 3;
 
             if (CurrentWall != null) CurrentWall.SetActive(false);
+            NpcHolder[4].gameObject.SetActive(false);
+            NpcHolder[5].gameObject.SetActive(true);
+            NpcHolder[6].gameObject.SetActive(true);
 
             OnMiniGameSetComplete?.Invoke();
             OnObjectiveUpdate();
         }
+    }
+
+    public void DisableNpcCurrentFloor()
+    {
+
     }
 
     protected override void CheckObjectives()
