@@ -42,11 +42,42 @@ namespace Minigames.Blackjack
 
             _cardFrontImage.sprite = _cardData.CardFrontSprite;
             _cardFrontImage.color = _cardData.CardColor;
-            Debug.Log(_card.Rank + " as " + (int)_card.Rank);
             _cardRankImage.sprite = _cardData.RankSprites[_card.Rank];
             _cardRankImage.color = _cardData.RankColor;
             _cardSuitImage.sprite = _cardData.SuitSprites[_card.Suit];
             _cardSuitImage.color = _cardData.SuitColor;
+        }
+
+        public void RevealCard()
+        {
+            StartCoroutine(FlipCard());
+        }
+        
+        private IEnumerator FlipCard(float duration = 0.5f)
+        {
+            float elapsedTime = 0f;
+            Vector3 initialScale = transform.localScale;
+            Vector3 targetScale = new Vector3(0f, initialScale.y, initialScale.z);
+
+            while (elapsedTime < duration / 2f)
+            {
+                transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / (duration / 2f));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localScale = targetScale;
+            ShowCard();
+
+            elapsedTime = 0f;
+            while (elapsedTime < duration / 2f)
+            {
+                transform.localScale = Vector3.Lerp(targetScale, initialScale, elapsedTime / (duration / 2f));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localScale = initialScale;
         }
 
         public void Reset()

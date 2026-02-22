@@ -95,7 +95,7 @@ namespace Minigames.Blackjack
                 if (handCard.Revealed)
                     continue;
 
-                handCard.CardDisplay.ShowCard();
+                handCard.CardDisplay.RevealCard();
                 handCard.Revealed = true;
             }
         }
