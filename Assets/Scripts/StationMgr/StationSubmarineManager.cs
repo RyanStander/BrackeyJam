@@ -32,8 +32,8 @@ public class StationSubmarineManager : BaseStationManager
         CurrentWaterLevel = 0;
         CurrentBlock = Block1;
         CurrentWall = BarrierWall1;
-        AudioManager.Play(AudioDataHandler.StationUnderwater.UnderwaterMusic());
-        AudioManager.Play(AudioDataHandler.StationUnderwater.UnderwaterAmbience());
+        AudioManager.PlayMusic(AudioDataHandler.StationUnderwater.UnderwaterMusic());
+        AudioManager.PlayAmbience(AudioDataHandler.StationUnderwater.UnderwaterAmbience());
     }
 
     public void CompleteFloor1Minigame()
