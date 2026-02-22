@@ -8,5 +8,6 @@ namespace AudioManagement
     {
         public EventReference Departure;
         public EventReference FuelSpend;
+        public EventReference FuelPickup;
     }
 }

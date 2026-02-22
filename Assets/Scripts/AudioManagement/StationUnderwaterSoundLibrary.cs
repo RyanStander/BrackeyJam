@@ -9,6 +9,7 @@ namespace AudioManagement
         public EventReference UnderwaterMusic;
         public EventReference UnderwaterAmbience;
         public EventReference MiscWaterMove;
+        public EventReference OxygenPickup;
         public EventReference PrawnsScatter;
         public EventReference WaterLevelRises;
     }

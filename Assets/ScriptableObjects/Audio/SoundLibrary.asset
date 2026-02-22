@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e891e39c81149bca6af16d2384033b3, type: 3}
   m_Name: SoundLibrary
   m_EditorClassIdentifier: 
-  PlayerSoundLibrary: {fileID: 11400000, guid: c5513a67b703d51489bc6136e226de8a, type: 2}
+  CharacterSoundLibrary: {fileID: 11400000, guid: c5513a67b703d51489bc6136e226de8a, type: 2}
   UISoundLibrary: {fileID: 11400000, guid: f12744621498d454c834cbd7cb0e16fd, type: 2}
   StationMonsterSoundLibrary: {fileID: 11400000, guid: c0c7f83be3bc4ee43b466506fd41dd3f, type: 2}
   StationUnderwaterSoundLibrary: {fileID: 11400000, guid: f57f5368cf36fa247ac89d904b9ed365, type: 2}

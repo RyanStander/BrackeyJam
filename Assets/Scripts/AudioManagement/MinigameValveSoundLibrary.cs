@@ -7,5 +7,9 @@ namespace AudioManagement
     public class MinigameValveSoundLibrary : ScriptableObject
     {
         public EventReference HandleTurn;
+        public EventReference GaugeTick;
+        public EventReference QteHit;
+        public EventReference QteMiss;
+        public EventReference QteSuccess;
     }
 }

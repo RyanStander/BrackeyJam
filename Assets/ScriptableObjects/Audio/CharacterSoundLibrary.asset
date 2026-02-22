@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b80504fc714fa7913e010c3bdf33d5, type: 3}
+  m_Name: CharacterSoundLibrary
+  m_EditorClassIdentifier: 
+  PlayerSwimStrong:
+    Guid:
+      Data1: -1770111418
+      Data2: 1214526392
+      Data3: 868010125
+      Data4: 2016525140
+    Path: event:/SFX/Char/PlayerSwim/PlayerSwimStrong
+  PlayerSwimWeak:
+    Guid:
+      Data1: -1904950583
+      Data2: 1195718430
+      Data3: 1572753569
+      Data4: 385528833
+    Path: event:/SFX/Char/PlayerSwim/PlayerSwimWeak
+  PlayerStep:
+    Guid:
+      Data1: -469838161
+      Data2: 1199719055
+      Data3: -833739084
+      Data4: -1126506173
+    Path: event:/SFX/Char/PlayerStep
+  DealerDialogue:
+    Guid:
+      Data1: -699793015
+      Data2: 1134083155
+      Data3: -129148490
+      Data4: 1685452623
+    Path: event:/SFX/Char/Demon/Dialogue
+  DrawsCard:
+    Guid:
+      Data1: 85871167
+      Data2: 1324694191
+      Data3: 2115950015
+      Data4: -1998884785
+    Path: event:/SFX/Char/Demon/DrawsCard
+  HitsTable:
+    Guid:
+      Data1: -416285724
+      Data2: 1292210127
+      Data3: 1502685057
+      Data4: -1581883333
+    Path: event:/SFX/Char/Demon/HitsTable
+  TauntLaugh:
+    Guid:
+      Data1: 1021914514
+      Data2: 1248640957
+      Data3: -1482413129
+      Data4: 1331823379
+    Path: event:/SFX/Char/Demon/TauntLaugh
+  BigSquidDialogue:
+    Guid:
+      Data1: -361884347
+      Data2: 1158791679
+      Data3: 1554500024
+      Data4: 1602667637
+    Path: event:/SFX/Char/NPCs/DialogueBigSquid
+  GeneralHighDialogue:
+    Guid:
+      Data1: 102775225
+      Data2: 1084594258
+      Data3: 554093501
+      Data4: -1748594817
+    Path: event:/SFX/Char/NPCs/DialogueGeneralHigh
+  GeneralLowDialogue:
+    Guid:
+      Data1: -470215834
+      Data2: 1148442074
+      Data3: -1802430538
+      Data4: 1438141062
+    Path: event:/SFX/Char/NPCs/DialogueGeneralLow

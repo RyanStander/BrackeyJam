@@ -66,7 +66,7 @@ namespace StationMgr
                 obj.SetActive(true);
             }
 
-            AudioManager.Play(AudioDataHandler.StationMonster.Growl());
+            AudioManager.Play(AudioDataHandler.StationMonster.Squish());
             StartCoroutine(WaitForTentacleToLeave());
         }
 
@@ -114,7 +114,9 @@ namespace StationMgr
         public void PlayerTookReward()
         {
             TrainDataHandler.Refuel(1);
+            AudioManager.PlayOneShot(AudioDataHandler.TrainTravel.FuelPickup());
             _rewardAnimator.Play("RewardTentacleLeave");
+            AudioManager.Play(AudioDataHandler.StationMonster.Squish());
         }
 
         public void ReturnToSpace()

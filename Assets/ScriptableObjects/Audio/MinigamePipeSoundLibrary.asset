@@ -19,3 +19,10 @@ MonoBehaviour:
       Data3: 583775884
       Data4: -257765773
     Path: event:/SFX/Minigames/Pipes/PipeRotate
+  PipesDone:
+    Guid:
+      Data1: 717325136
+      Data2: 1136713320
+      Data3: -1406760266
+      Data4: 1049109954
+    Path: event:/SFX/Minigames/Pipes/PipesDone

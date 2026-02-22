@@ -5,7 +5,7 @@ namespace AudioManagement
     [CreateAssetMenu(fileName = "SoundLibrary", menuName = "Audio/Sound Library", order = 0)]
     public class SoundLibrary : ScriptableObject
     {
-        public PlayerSoundLibrary PlayerSoundLibrary;
+        public CharacterSoundLibrary CharacterSoundLibrary;
         public UISoundLibrary UISoundLibrary;
         
         public StationMonsterSoundLibrary StationMonsterSoundLibrary;

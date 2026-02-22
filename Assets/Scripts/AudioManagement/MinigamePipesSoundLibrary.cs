@@ -7,5 +7,6 @@ namespace AudioManagement
     public class MinigamePipesSoundLibrary : ScriptableObject
     {
         public EventReference PipeRotate;
+        public EventReference PipesDone;
     }
 }

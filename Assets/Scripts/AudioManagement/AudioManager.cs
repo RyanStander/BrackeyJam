@@ -10,7 +10,9 @@ namespace AudioManagement
         public static AudioManager Instance;
 
         private EventInstance _currentMusic;
+        private EventInstance _currentAmbience;
         private EventReference _currentMusicReference;
+        private EventReference _currentAmbienceReference;
 
         private void Awake()
         {
@@ -56,6 +58,26 @@ namespace AudioManagement
         }
         
         /// <summary>
+        ///  Plays ambience. If the same ambience is already playing, it won't restart. If different ambience is playing, it will stop the current ambience and start the new one.
+        /// </summary>
+        /// <param name="ambience">Use AudioDataHandler.[LIBRARY].ambienceName</param>
+        public static void PlayAmbience(EventReference ambience)
+        {
+            if (Instance == null) return;
+            Instance.PlayAmbienceInstance(ambience);
+        }
+        
+        /// <summary>
+        ///  Stops the currently playing ambience. If fadeOut is true, the ambience will fade out instead of stopping immediately.
+        /// </summary>
+        /// <param name="fadeOut"> Whether to allow the ambience to fade out or stop it immediately.</param>
+        public static void StopAmbience(bool fadeOut = true)
+        {
+            if (Instance == null) return;
+            Instance.StopAmbienceInstance(fadeOut);
+        }
+        
+        /// <summary>
         /// Plays a sound effect with optional parameters. Use this for sounds that need to have parameters set or changed after being played. Parameters should be passed as tuples of (parameterName, parameterValue).
         /// You can view parameters by opening FMOD top left where the File button is in unity editor->event browser->events and then you can navigate through there, if you click on sounds, some may have params at the bottom, you can change it to preview the effect.
         /// </summary>
@@ -97,6 +119,33 @@ namespace AudioManagement
             );
 
             _currentMusic.release();
+        }
+        
+        private void PlayAmbienceInstance(EventReference ambience)
+        {
+            if (_currentAmbienceReference.Equals(ambience))
+                return;
+
+            StopAmbienceInstance();
+
+            _currentAmbience = RuntimeManager.CreateInstance(ambience);
+            _currentAmbience.start();
+
+            _currentAmbienceReference = ambience;
+        }
+
+        private void StopAmbienceInstance(bool fadeOut = true)
+        {
+            if (!_currentAmbience.isValid())
+                return;
+
+            _currentAmbience.stop(
+                fadeOut
+                    ? STOP_MODE.ALLOWFADEOUT
+                    : STOP_MODE.IMMEDIATE
+            );
+
+            _currentAmbience.release();
         }
 
         private void PlayInstance(EventReference sound, params (string name, float value)[] parameters)

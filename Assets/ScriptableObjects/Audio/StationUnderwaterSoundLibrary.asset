@@ -33,6 +33,13 @@ MonoBehaviour:
       Data3: 594578080
       Data4: -1112724621
     Path: event:/SFX/Environment/UnderwaterStation/MiscWaterMove
+  OxygenPickup:
+    Guid:
+      Data1: 939334250
+      Data2: 1087513579
+      Data3: -1495001981
+      Data4: -699017685
+    Path: event:/SFX/Environment/UnderwaterStation/OxygenPickUp
   PrawnsScatter:
     Guid:
       Data1: 738953233
