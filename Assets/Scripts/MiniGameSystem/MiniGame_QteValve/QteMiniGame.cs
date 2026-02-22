@@ -1,3 +1,5 @@
+using AudioManagement;
+using PersistentManager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,6 +40,7 @@ public class QteMiniGame : BaseMinigame
         CurrentNeedleAngle = TargetMinAngle;
         currentPressure = 20f;
         isGameActive = true;
+        InvokeRepeating("PressureSoundMethod", 0.5f, .5f);      
     }
 
     // Update is called once per frame
@@ -57,6 +60,7 @@ public class QteMiniGame : BaseMinigame
 
     private void DrainPressure()
     {
+        //AudioManager.PlayOneShot(AudioDataHandler.MinigameValve.GaugeTick());
         currentPressure -= PressureDecreaseRate * Time.deltaTime;
         currentPressure = Mathf.Clamp(currentPressure, MinPressure, MaxPressure);
         //pressureBarImage.fillAmount = currentPressure / MaxPressure; fill this in later with some bar or something
@@ -101,6 +105,7 @@ public class QteMiniGame : BaseMinigame
 
     public void OnPress()
     {
+        AudioManager.PlayOneShot(AudioDataHandler.MinigameValve.QteHit());
         if (CurrentNeedleAngle >= TargetMinAngle && CurrentNeedleAngle <= TargetMaxAngle)
         {
             SuccessfulPress();
@@ -127,6 +132,7 @@ public class QteMiniGame : BaseMinigame
             StopCoroutine(activeRotationCoroutine);
         }
         activeRotationCoroutine = StartCoroutine(RotateWheelOverTime(amountToAdd, time));
+        AudioManager.PlayOneShot(AudioDataHandler.MinigameValve.HandleTurn());
     }
 
     private IEnumerator RotateWheelOverTime(float amountToAdd, float duration)
@@ -158,6 +164,7 @@ public class QteMiniGame : BaseMinigame
 
     private void FailedPress()
     {
+        AudioManager.PlayOneShot(AudioDataHandler.MinigameValve.QteMiss());
         currentPressure -= 10f;
         currentPressure = Mathf.Clamp(currentPressure, MinPressure, MaxPressure);
         SpinValveWheel(180f, 1.5f);
@@ -165,6 +172,7 @@ public class QteMiniGame : BaseMinigame
 
     private void SuccessfulPress()
     {
+        AudioManager.PlayOneShot(AudioDataHandler.MinigameValve.QteSuccess());
         currentPressure += 10f;
         currentPressure = Mathf.Clamp(currentPressure, MinPressure, MaxPressure);
     }
@@ -172,6 +180,15 @@ public class QteMiniGame : BaseMinigame
     {
         yield return new WaitForSeconds(2f);
         FinishGame(true);
+    }
+    public void PressureSoundMethod()
+    {
+        AudioManager.PlayOneShot(AudioDataHandler.MinigameValve.GaugeTick());
+    }
+    IEnumerator PressureSound()
+    {
+        yield return new WaitForSeconds(1f);
+        AudioManager.PlayOneShot(AudioDataHandler.MinigameValve.GaugeTick());
     }
 
     public void EndGame()

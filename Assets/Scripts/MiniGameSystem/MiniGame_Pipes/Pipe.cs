@@ -1,6 +1,8 @@
+using AudioManagement;
+using PersistentManager;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Pipe : MonoBehaviour, IPointerClickHandler
 {
@@ -114,6 +116,7 @@ public class Pipe : MonoBehaviour, IPointerClickHandler
     private void RotatePipe()
     {
         transform.Rotate(0, 0, -90f);
+        AudioManager.PlayOneShot(AudioDataHandler.MinigamePipes.PipeRotate());
 
         bool temp = up;
         up = left;
