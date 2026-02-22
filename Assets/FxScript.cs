@@ -1,3 +1,5 @@
+using AudioManagement;
+using PersistentManager;
 using Spine;
 using Spine.Unity;
 using System.Collections;
@@ -25,8 +27,8 @@ public class FxScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("entered");
             this.GetComponentInChildren<SkeletonAnimation>().timeScale = 1;
+            AudioManager.Play(AudioDataHandler.StationUnderwater.PrawnsScatter());
             StartCoroutine(DestroyPrawns());
         }
   

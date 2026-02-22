@@ -1,3 +1,5 @@
+using AudioManagement;
+using PersistentManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +33,7 @@ public class WaterRaise : MonoBehaviour
             return;
 
         StartCoroutine(RaiseCoroutine());
+        //AudioManager.Play(AudioDataHandler.StationUnderwater.WaterLevelRises());
         CurrentWaterRaisePoint = this.transform.position;
     }
 
