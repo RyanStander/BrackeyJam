@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UI;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace StationMgr
@@ -7,7 +10,14 @@ namespace StationMgr
     {
         [SerializeField] private GameObject[] _objectsToDisableOnCompletion;
         [SerializeField] private GameObject[] _objectsToEnableOnCompletion;
-        
+        [SerializeField] private FadeToBlack _fadeToBlack;
+
+        private void OnValidate()
+        {
+            if (_fadeToBlack==null)
+                _fadeToBlack = FindObjectOfType<FadeToBlack>();
+        }
+
         protected override void CheckObjectives()
         {
         }
@@ -33,7 +43,14 @@ namespace StationMgr
 
         public void PlayerLost()
         {
+            StartCoroutine(PlayerLostCoroutine());
+        }
         
+        private IEnumerator PlayerLostCoroutine()
+        {
+            _fadeToBlack.StartFadeToBlack();
+            yield return new WaitUntil(()=>!_fadeToBlack.IsFading());
+            SceneManager.LoadScene("FailureScene");
         }
     }
 }

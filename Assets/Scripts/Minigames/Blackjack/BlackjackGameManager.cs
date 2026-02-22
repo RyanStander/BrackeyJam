@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Minigames.Blackjack.Visuals;
 using Spine.Unity;
 using StationMgr;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Minigames.Blackjack
@@ -45,7 +46,7 @@ namespace Minigames.Blackjack
         public override void StartMinigame()
         {
             base.StartMinigame();
-            
+
             Initialise();
             StartNewRound();
         }
@@ -279,7 +280,7 @@ namespace Minigames.Blackjack
         {
             yield return new WaitForSeconds(2f);
             _dealerAnimationHandler.PlayTableFlip();
-            
+
             yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
             _dealerAnimationHandler.ResetSlappedTable();
             _dealerHealthDisplay.QuickRemoveHeart();
@@ -292,7 +293,7 @@ namespace Minigames.Blackjack
 
             //remaining animation time
             yield return new WaitForSeconds(1.3f);
-            
+
             FindObjectOfType<StationCasinoManager>().PlayerWon();
         }
 
@@ -306,23 +307,41 @@ namespace Minigames.Blackjack
         private IEnumerator DealerWinsRoundWithAnimation()
         {
             yield return new WaitForSeconds(2);
+            _playerCurrentHealth -= _playerBetThisRound;
+            if (_playerCurrentHealth <= 0)
+            {
+                StartCoroutine(DealerWinsGame());
+                yield break;
+            }
+
             _dealerAnimationHandler.PlayHappy();
             yield return new WaitUntil(() => _dealerAnimationHandler.HappyFace());
             _dealerAnimationHandler.ResetHappyFace();
             _dealerHealthDisplay.SlowReturnHearts();
             _playerHealthDisplay.SlowShrinkHeart();
-            _playerCurrentHealth -= _playerBetThisRound;
 
             yield return new WaitForSeconds(2f);
 
-            if (_playerCurrentHealth <= 0)
-            {
-                //dealer wins the game
-            }
-            else
-                StartNewRound();
+            StartNewRound();
 
             Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+
+        private IEnumerator DealerWinsGame()
+        {
+            yield return new WaitForSeconds(2f);
+            
+            _dealerAnimationHandler.PlayHappy();
+            
+            yield return new WaitUntil(() => _dealerAnimationHandler.HappyFace());
+            
+            _dealerAnimationHandler.ResetHappyFace();
+            _dealerHealthDisplay.SlowReturnHearts();
+            _playerHealthDisplay.SlowShrinkHeart();
+
+            yield return new WaitForSeconds(2f);
+
+            FindObjectOfType<StationCasinoManager>().PlayerLost();
         }
 
         private void PushRound()

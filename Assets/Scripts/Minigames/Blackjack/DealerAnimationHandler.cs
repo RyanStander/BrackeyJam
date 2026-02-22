@@ -95,6 +95,8 @@ namespace Minigames.Blackjack
                 _happyFace = true;
             else if (_drawEventData == e.Data)
                 _drawCard = true;
+            else if (_flipTableEventData == e.Data)
+                _flipTable = true;
         }
 
         public bool AddCardToTable() => _addCardToTable;
