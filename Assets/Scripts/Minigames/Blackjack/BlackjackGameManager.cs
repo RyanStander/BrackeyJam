@@ -221,6 +221,7 @@ namespace Minigames.Blackjack
         
         private IEnumerator PlayerWinsRoundWithAnimation()
         {
+            yield return new WaitForSeconds(2);
             _dealerAnimationHandler.PlaySad();
             yield return new WaitUntil(()=>_dealerAnimationHandler.SlappedTable());
             _dealerAnimationHandler.ResetSlappedTable();
@@ -247,10 +248,23 @@ namespace Minigames.Blackjack
 
         private void DealerWinsRound()
         {
+            StartCoroutine(DealerWinsRoundWithAnimation());
+
+            Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+        
+        private IEnumerator DealerWinsRoundWithAnimation()
+        {
+            yield return new WaitForSeconds(2);
             _dealerAnimationHandler.PlayHappy();
+            yield return new WaitUntil(() => _dealerAnimationHandler.HappyFace());
+            _dealerAnimationHandler.ResetHappyFace();
             _dealerHealthDisplay.SlowReturnHearts();
             _playerHealthDisplay.SlowShrinkHeart();
             _playerCurrentHealth -= _playerBetThisRound;
+
+            yield return new WaitForSeconds(2f);
+            
             if (_playerCurrentHealth <= 0)
             {
                 //dealer wins the game

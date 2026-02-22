@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Minigames.Blackjack.Visuals
@@ -88,12 +89,25 @@ namespace Minigames.Blackjack.Visuals
 
         public void SlowShrinkHeart()
         {
-            for (int i = 0; i < _currentBetHearts; i++)
+            StartCoroutine(SlowShrinkRoutine());
+        }
+
+        private IEnumerator SlowShrinkRoutine()
+        {
+            int betCount = _currentBetHearts;
+
+            List<Coroutine> running = new List<Coroutine>();
+
+            for (int i = 0; i < betCount; i++)
             {
-                StartCoroutine(ShrinkHeart(_hearts[_heartsLeft - 1 - i], 0.5f));
+                int heartIndex = _heartsLeft - 1 - i;
+                running.Add(StartCoroutine(ShrinkHeart(_hearts[heartIndex], 0.5f)));
             }
-            
-            _heartsLeft -= _currentBetHearts;
+
+            // Wait for duration (since all shrink coroutines run same time)
+            yield return new WaitForSeconds(0.5f);
+
+            _heartsLeft -= betCount;
             _currentBetHearts = 0;
         }
 
@@ -116,7 +130,13 @@ namespace Minigames.Blackjack.Visuals
         
         public void SlowReturnHearts()
         {
+            StartCoroutine(SlowReturnRoutine());
+        }
+
+        private IEnumerator SlowReturnRoutine()
+        {
             int betCount = _currentBetHearts;
+            float duration = 0.5f;
 
             for (int i = 0; i < betCount; i++)
             {
@@ -128,8 +148,10 @@ namespace Minigames.Blackjack.Visuals
                 StartCoroutine(SlowSlideHearts(
                     _hearts[heartIndex],
                     _heartBetTransforms[betIndex].position,
-                    0.5f));
+                    duration));
             }
+
+            yield return new WaitForSeconds(duration);
 
             _currentBetHearts = 0;
         }
