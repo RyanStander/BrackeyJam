@@ -22,6 +22,7 @@ namespace Minigames.Blackjack
         private Card[] _deck = new Card[52];
         private int _cardIndex = 0;
         private int _playerBetThisRound;
+        private SoundHandle _dialogueSoundHandle;
 
         private int _playerCurrentHealth;
         private int _dealerCurrentHealth;
@@ -33,6 +34,8 @@ namespace Minigames.Blackjack
         [SerializeField] private HeartDisplay _dealerHealthDisplay;
         [SerializeField] private GameObject _hitStayUI;
         [SerializeField] private Animator _hitStayUIAnimator;
+        [SerializeField] private Animator _hurtUIAnimator;
+        [SerializeField] private DealerDialogueController _dealerDialogueController;
 
         [SerializeField] private OptionalBetDisplay _bettingUI;
 
@@ -40,6 +43,9 @@ namespace Minigames.Blackjack
         {
             if (_hitStayUIAnimator == null && _hitStayUI != null)
                 _hitStayUIAnimator = _hitStayUI.GetComponent<Animator>();
+            
+            if(_dealerDialogueController == null)
+                _dealerDialogueController = FindObjectOfType<DealerDialogueController>();
 
             if (_bettingUI == null)
                 _bettingUI = FindObjectOfType<OptionalBetDisplay>();
@@ -60,6 +66,8 @@ namespace Minigames.Blackjack
             _playerHand.SetCardData(_playerCardData);
             _dealerHand.SetCardData(_dealerCardData);
             AudioManager.PlayMusic(AudioDataHandler.StationCasino.BlackjackMusic());
+            _dialogueSoundHandle = AudioManager.PlayLoop(AudioDataHandler.Character.DealerDialogue());
+            AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",0);
         }
 
         //TODO: when the game starts, dealer will explain the basics of blackjack
@@ -91,7 +99,11 @@ namespace Minigames.Blackjack
 
         private IEnumerator StartGame()
         {
-            //TODO: Move health to the Centre of the board
+            //_dealerDialogueController.DisplayLine("Welcome, welcome to the table! Don't look so nervous we're about to have some FUN!");
+            AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",1);
+            //yield return new WaitUntil(() => !_dealerDialogueController.IsTyping);
+            AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",0);
+            
             _playerBetThisRound = 1; //forced bet
             _playerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
             _dealerHealthDisplay.MoveHeartsToBetPositions(_playerBetThisRound);
@@ -338,6 +350,7 @@ namespace Minigames.Blackjack
             _playerHealthDisplay.SlowShrinkHeart();
             //TODO: add hurt image here
             AudioManager.PlayOneShot(AudioDataHandler.MinigameBlackjack.Stab());
+            _hurtUIAnimator.Play("HurtAnim");
 
             yield return new WaitForSeconds(2f);
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using AudioManagement;
+using PersistentManager;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +18,11 @@ namespace StationMgr
         {
             if (_fadeToBlack==null)
                 _fadeToBlack = FindObjectOfType<FadeToBlack>();
+        }
+
+        private void Start()
+        {
+            AudioManager.PlayMusic(AudioDataHandler.StationCasino.CasinoMusic());
         }
 
         protected override void CheckObjectives()
@@ -38,7 +45,8 @@ namespace StationMgr
         public void GoToWinScreen()
         {
             //todo: go to win screen
-            SceneManager.LoadScene("MainMenu");
+            //SceneManager.LoadScene("MainMenu");
+            Application.Quit();
         }
 
         public void PlayerLost()
