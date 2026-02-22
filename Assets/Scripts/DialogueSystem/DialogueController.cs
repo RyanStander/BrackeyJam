@@ -13,7 +13,7 @@ public class DialogueController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textComponent;
     [SerializeField] private float _typingSpeed = 0.05f;
-    [SerializeField] private float _lineDisplayDuration = 4f;
+    [SerializeField] protected float _lineDisplayDuration = 4f;
     [SerializeField] private string[] dialogueLines;
     [SerializeField] private GameObject _dialogueBox;
 
