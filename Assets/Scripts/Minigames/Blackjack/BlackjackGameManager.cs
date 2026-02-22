@@ -33,6 +33,7 @@ namespace Minigames.Blackjack
         [SerializeField] private HeartDisplay _dealerHealthDisplay;
         [SerializeField] private GameObject _hitStayUI;
         [SerializeField] private Animator _hitStayUIAnimator;
+        [SerializeField] private Animator _hurtUIAnimator;
 
         [SerializeField] private OptionalBetDisplay _bettingUI;
 
@@ -338,6 +339,7 @@ namespace Minigames.Blackjack
             _playerHealthDisplay.SlowShrinkHeart();
             //TODO: add hurt image here
             AudioManager.PlayOneShot(AudioDataHandler.MinigameBlackjack.Stab());
+            _hurtUIAnimator.Play("HurtAnim");
 
             yield return new WaitForSeconds(2f);
 
