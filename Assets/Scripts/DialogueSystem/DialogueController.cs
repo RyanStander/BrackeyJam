@@ -19,20 +19,20 @@ public class DialogueController : MonoBehaviour
 
     public bool IsTyping;
 
-    void Start()
+    private void Awake()
     {
         _textComponent = GetComponentInChildren<TMP_Text>();
         _dialogueBox.SetActive(false);
     }
 
-    public void DisplayDialogue(string[] lines)
+    public IEnumerator DisplayDialogue(string[] lines)
     {
         StopAllCoroutines();
         dialogueLines = lines;
 
         _dialogueBox.SetActive(true);
 
-        StartCoroutine(StartDialogue());
+        yield return StartCoroutine(StartDialogue());
     }
 
     private IEnumerator StartDialogue()

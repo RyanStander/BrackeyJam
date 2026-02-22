@@ -1,4 +1,5 @@
-﻿using AudioManagement;
+﻿using System.Collections;
+using AudioManagement;
 using PersistentManager;
 using Unity.VisualScripting;
 
@@ -6,9 +7,9 @@ namespace Minigames.Blackjack
 {
     public class DealerDialogueController : DialogueController
     {
-        public void DisplayLine(string line)
+        public IEnumerator DisplayLine(string line)
         {
-            DisplayDialogue(new[] { line });
+            yield return DisplayDialogue(new[] { line });
         }
     }
 }

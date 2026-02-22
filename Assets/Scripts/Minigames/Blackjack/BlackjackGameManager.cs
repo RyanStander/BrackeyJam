@@ -99,9 +99,8 @@ namespace Minigames.Blackjack
 
         private IEnumerator StartGame()
         {
-            //_dealerDialogueController.DisplayLine("Welcome, welcome to the table! Don't look so nervous we're about to have some FUN!");
             AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",1);
-            //yield return new WaitUntil(() => !_dealerDialogueController.IsTyping);
+            yield return _dealerDialogueController.DisplayLine("Welcome, welcome to the table! Don't look so nervous we're about to have some FUN!");
             AudioManager.SetParameter(_dialogueSoundHandle, "TextRolling",0);
             
             _playerBetThisRound = 1; //forced bet
