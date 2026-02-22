@@ -19245,6 +19245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14fd08b44a9422a8ee25326a2fc0b78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textComponent: {fileID: 1029796543}
   _typingSpeed: 0.05
   _lineDisplayDuration: 4
   dialogueLines: []
@@ -20625,6 +20626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9212bf6bc9f417a45b14fae9babf5bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textComponent: {fileID: 0}
   _typingSpeed: 0.05
   _lineDisplayDuration: 4
   dialogueLines: []
