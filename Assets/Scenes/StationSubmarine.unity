@@ -1625,7 +1625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4593963196141757622, guid: 2b3f82b0892432343b7878c4a27735c5, type: 3}
       propertyPath: OnMiniGameComplete.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: CompleteFloor1Minigame
+      value: DisableMinigameObject
       objectReference: {fileID: 0}
     - target: {fileID: 4593963196141757622, guid: 2b3f82b0892432343b7878c4a27735c5, type: 3}
       propertyPath: OnMiniGameComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -21460,7 +21460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5448424055515693590, guid: d3ce01020941a6c49851b3be0eeacba7, type: 3}
       propertyPath: _dialogueLines.Array.data[4]
-      value: You look like you hang around that loser, SeaHorse...
+      value: You look like you hang around that ol' crybaby, SeaHorse...
       objectReference: {fileID: 0}
     - target: {fileID: 5448424055515693590, guid: d3ce01020941a6c49851b3be0eeacba7, type: 3}
       propertyPath: _dialogueLines.Array.data[5]

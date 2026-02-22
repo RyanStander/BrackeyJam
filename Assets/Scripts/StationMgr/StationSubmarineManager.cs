@@ -93,11 +93,6 @@ public class StationSubmarineManager : BaseStationManager
         }
     }
 
-    public void DisableNpcCurrentFloor()
-    {
-
-    }
-
     protected override void CheckObjectives()
     {
         if (Floor1MinigamesCompleted >= 1 && Floor2MinigamesCompleted >= 2 && Floor3MinigamesCompleted >= 1)

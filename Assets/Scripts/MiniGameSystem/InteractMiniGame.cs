@@ -50,6 +50,8 @@ public class InteractMiniGame : MonoBehaviour, IInteractable
             OnMiniGameComplete?.Invoke();
             Debug.Log("Minigame completed successfully!");
             Destroy(_minigamePrefab.gameObject);
+            this.gameObject.SetActive(false);
+
             _currentMinigameInstance = null;
             // TODO reward the player???
             // also, mark minigame object as completed so they can't try it again
