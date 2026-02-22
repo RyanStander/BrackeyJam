@@ -1,3 +1,5 @@
+using AudioManagement;
+using PersistentManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +26,9 @@ public class PipeGridManager : BaseMinigame
         InitializeGrid();
         ScrambleBoard();
         CheckConnectivity();
+        
+
+
     }
 
     public void GenerateRandomPuzzleNumb()
@@ -213,6 +218,7 @@ public class PipeGridManager : BaseMinigame
                     pipe.GetComponent<Image>().color = new Color32(26, 255, 0, 255);
                 }
             }
+            AudioManager.PlayOneShot(AudioDataHandler.MinigamePipes.PipesDone());
             StartCoroutine(WinSequence());
             Debug.Log("YOU WIN! The pipes are connected.");
         }
