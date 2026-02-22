@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Minigames.Blackjack.Visuals;
 using Spine.Unity;
+using StationMgr;
 using UnityEngine;
 
 namespace Minigames.Blackjack
@@ -10,7 +11,7 @@ namespace Minigames.Blackjack
     /// <summary>
     /// The Blackjack manager handles the actions the player can input as well as running through the game logic
     /// </summary>
-    public class BlackjackGameManager : MonoBehaviour
+    public class BlackjackGameManager : BaseMinigame
     {
         [SerializeField] private DealerAnimationHandler _dealerAnimationHandler;
         [SerializeField] private int _playerMaxHealth = 3;
@@ -31,17 +32,20 @@ namespace Minigames.Blackjack
         [SerializeField] private Animator _hitStayUIAnimator;
 
         [SerializeField] private OptionalBetDisplay _bettingUI;
+
         private void OnValidate()
         {
             if (_hitStayUIAnimator == null && _hitStayUI != null)
                 _hitStayUIAnimator = _hitStayUI.GetComponent<Animator>();
-            
-            if(_bettingUI == null)
+
+            if (_bettingUI == null)
                 _bettingUI = FindObjectOfType<OptionalBetDisplay>();
         }
 
-        private void Start()
+        public override void StartMinigame()
         {
+            base.StartMinigame();
+            
             Initialise();
             StartNewRound();
         }
@@ -120,9 +124,8 @@ namespace Minigames.Blackjack
             else
             {
                 _bettingUI.SetActive(true);
-                _bettingUI.PlayOptionalBetShowAnimation(_playerCurrentHealth,_dealerCurrentHealth);
+                _bettingUI.PlayOptionalBetShowAnimation(_playerCurrentHealth, _dealerCurrentHealth);
             }
-            
         }
 
         public void IncreaseBet(int amount)
@@ -187,11 +190,10 @@ namespace Minigames.Blackjack
 
         private IEnumerator StartDealerTurn()
         {
-            //TODO: Make a nice reveal anim
             _dealerHand.RevealHand();
             while (true)
             {
-                if (_dealerHand.GetHandValue() < 17)
+                if (_dealerHand.GetHandValue() < 17 && _dealerHand.CardCount < 5)
                 {
                     yield return DealDealerCardWithAnimation(true);
                     continue;
@@ -248,6 +250,13 @@ namespace Minigames.Blackjack
         private IEnumerator PlayerWinsRoundWithAnimation()
         {
             yield return new WaitForSeconds(2);
+            _dealerCurrentHealth -= _playerBetThisRound;
+            if (_dealerCurrentHealth <= 0)
+            {
+                StartCoroutine(PlayerWonGame());
+                yield break;
+            }
+
             _dealerAnimationHandler.PlaySad();
             yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
             _dealerAnimationHandler.ResetSlappedTable();
@@ -255,21 +264,36 @@ namespace Minigames.Blackjack
             _playerHealthDisplay.QuickReturnHearts();
             _playerHand.ClearHand();
             _dealerHand.ClearHand();
-            _dealerCurrentHealth -= _playerBetThisRound;
 
             yield return new WaitUntil(() => _dealerAnimationHandler.ChangeFace());
             _dealerAnimationHandler.ResetChangeFace();
 
             yield return new WaitForSeconds(2f);
 
-            if (_dealerCurrentHealth <= 0)
-            {
-                //player wins the game
-            }
-            else
-                StartNewRound();
+            StartNewRound();
 
             Debug.Log($"Player Health: {_playerCurrentHealth}, Dealer Health: {_dealerCurrentHealth}");
+        }
+
+        private IEnumerator PlayerWonGame()
+        {
+            yield return new WaitForSeconds(2f);
+            _dealerAnimationHandler.PlayTableFlip();
+            
+            yield return new WaitUntil(() => _dealerAnimationHandler.SlappedTable());
+            _dealerAnimationHandler.ResetSlappedTable();
+            _dealerHealthDisplay.QuickRemoveHeart();
+            _playerHealthDisplay.QuickReturnHearts();
+            _playerHand.ClearHand();
+            _dealerHand.ClearHand();
+
+            yield return new WaitUntil(() => _dealerAnimationHandler.FlipTable());
+            _dealerAnimationHandler.ResetFlipTable();
+
+            //remaining animation time
+            yield return new WaitForSeconds(1.3f);
+            
+            FindObjectOfType<StationCasinoManager>().PlayerWon();
         }
 
         private void DealerWinsRound()

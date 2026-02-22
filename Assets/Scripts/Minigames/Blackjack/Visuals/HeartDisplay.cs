@@ -33,7 +33,7 @@ namespace Minigames.Blackjack.Visuals
 
                 StartCoroutine(MoveHeart(
                     _hearts[heartIndex],
-                    _heartBetTransforms[betIndex].position,
+                    _heartBetTransforms[heartIndex].position,
                     0.5f));
             }
 

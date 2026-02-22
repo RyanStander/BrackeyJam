@@ -17,6 +17,7 @@ namespace Minigames.Blackjack
         [SerializeField] private string _idle = "DemonIdle";
         [SerializeField] private string _sad = "DemonSad";
         [SerializeField] private string _happy = "DemonHappy";
+        [SerializeField] private string _tableFlip = "DemonTableflip";
 
         //for when a card is placed on the table
         private EventData _cardTableEventData;
@@ -33,6 +34,9 @@ namespace Minigames.Blackjack
 
         private EventData _drawEventData;
         private bool _drawCard;
+        
+        private EventData _flipTableEventData;
+        private bool _flipTable;
 
         private void OnValidate()
         {
@@ -47,6 +51,7 @@ namespace Minigames.Blackjack
             _happyEventData = _skeletonGraphic.Skeleton.Data.FindEvent(DealerEventNames.Happy);
             _drawEventData = _skeletonGraphic.Skeleton.Data.FindEvent(DealerEventNames.Draw);
             _changeFaceEventData = _skeletonGraphic.Skeleton.Data.FindEvent(DealerEventNames.ChangeFace);
+            _flipTableEventData = _skeletonGraphic.Skeleton.Data.FindEvent(DealerEventNames.Flip);
             _skeletonGraphic.AnimationState.Event += HandleAnimationStateEvent;
         }
 
@@ -71,6 +76,11 @@ namespace Minigames.Blackjack
         {
             _skeletonGraphic.AnimationState.SetAnimation(0, _happy, false);
             _skeletonGraphic.AnimationState.AddAnimation(0, _idle, true, 0f);
+        }
+        
+        public void PlayTableFlip()
+        {
+            _skeletonGraphic.AnimationState.SetAnimation(0, _tableFlip, false);
         }
 
         private void HandleAnimationStateEvent(TrackEntry trackEntry, Event e)
@@ -101,5 +111,8 @@ namespace Minigames.Blackjack
         
         public bool DrawCard() => _drawCard;
         public void ResetDrawCard() => _drawCard = false;
+        
+        public bool FlipTable() => _flipTable;
+        public void ResetFlipTable() => _flipTable = false;
     }
 }
