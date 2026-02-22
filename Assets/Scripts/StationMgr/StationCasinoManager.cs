@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace StationMgr
 {
@@ -27,6 +28,7 @@ namespace StationMgr
         public void GoToWinScreen()
         {
             //todo: go to win screen
+            SceneManager.LoadScene("MainMenu");
         }
 
         public void PlayerLost()
