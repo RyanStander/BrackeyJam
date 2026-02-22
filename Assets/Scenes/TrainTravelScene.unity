@@ -2129,6 +2129,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5116146545375986315, guid: 3c8766a6d9e0e8a4b843ae2dc33e8172, type: 3}
+      propertyPath: RouteProgress
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5520346943976119942, guid: 3c8766a6d9e0e8a4b843ae2dc33e8172, type: 3}
       propertyPath: m_Name
       value: PersistentData
