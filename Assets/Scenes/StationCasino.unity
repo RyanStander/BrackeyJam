@@ -20177,6 +20177,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.79
       objectReference: {fileID: 0}
+    - target: {fileID: 5431263474316398367, guid: cb4e10b1e2a6caa478669adb6e6de606, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8505264432380726547, guid: cb4e10b1e2a6caa478669adb6e6de606, type: 3}
       propertyPath: m_Name
       value: Npc_Generic (1)
@@ -20626,7 +20630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9212bf6bc9f417a45b14fae9babf5bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textComponent: {fileID: 0}
+  _textComponent: {fileID: 1277254848371575559}
   _typingSpeed: 0.05
   _lineDisplayDuration: 4
   dialogueLines: []
