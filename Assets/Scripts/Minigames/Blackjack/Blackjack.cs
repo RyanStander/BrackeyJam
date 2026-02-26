@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Minigames.Blackjack
 {
-    public class BlackjackGameState
+    public class Blackjack
     {
         private int _playerMaxHealth = 3;
         private int _playerCurrentHealth;
@@ -12,12 +13,17 @@ namespace Minigames.Blackjack
         private int _playerBetThisRound;
 
         private int _deckCount = 1;
-        private List<Card> _deck = new();
+        private List<Card> _deck;
         private int _cardIndex = 0;
 
         private List<Card> _playerHand = new();
-        private List<Card> _dealerHand = new();
+        private List<(Card card, bool faceUp)> _dealerHand = new();
         private bool _dealerCardFaceUp;
+
+        public Blackjack(List<Card> deck)
+        {
+            _deck = deck;
+        }
 
         public void ResetAndShuffleDeck()
         {
@@ -28,16 +34,21 @@ namespace Minigames.Blackjack
 
             for (int deckCountNum = 0; deckCountNum < _deckCount; deckCountNum++)
             {
-                foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))
-                {
-                    foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
-                    {
-                        _deck.Add(new Card { Suit = suit, Rank = rank });
-                    }
-                }
+                _deck.AddRange(CreateDeck());
             }
 
-            //shuffle
+            ShuffleDeck();
+        }
+
+        private IEnumerable<Card> CreateDeck()
+        {
+            return (from CardSuit suit in Enum.GetValues(typeof(CardSuit))
+                from CardRank rank in Enum.GetValues(typeof(CardRank))
+                select new Card { Suit = suit, Rank = rank }).ToList();
+        }
+
+        private void ShuffleDeck()
+        {
             for (int i = 0; i < _deck.Count; i++)
             {
                 int randomIndex = UnityEngine.Random.Range(0, _deck.Count);
@@ -45,9 +56,21 @@ namespace Minigames.Blackjack
             }
         }
 
-        public Card DealCardToPlayer() => _deck[_cardIndex++];
+        public Card DealCardToPlayer()
+        {
+            Card cardDraw = _deck[_cardIndex++];
 
-        public Card DealCardToDealer(bool faceUp) => _deck[_cardIndex++];
+            _playerHand.Add(cardDraw);
+            return cardDraw;
+        }
+
+        public Card DealCardToDealer()
+        {
+            Card cardDraw = _deck[_cardIndex++];
+
+            _dealerHand.Add((cardDraw, _dealerHand.Count != 0));
+            return cardDraw;
+        }
 
         public void IncreaseBet(int amount) =>
             _playerBetThisRound = Math.Min(_playerBetThisRound + amount, _playerCurrentHealth);
@@ -105,8 +128,7 @@ namespace Minigames.Blackjack
             return RoundResult.Push;
         }
 
-
-        private int GetHandValue(List<Card> hand, bool countHiddenCard = true)
+        private int GetHandValue(List<Card> hand)
         {
             int value = 0;
             int aceCount = 0;
@@ -127,11 +149,20 @@ namespace Minigames.Blackjack
 
             return value;
         }
-        
+
+        private int GetHandValue(List<(Card card, bool faceUp)> handWithHiddenCards, bool countHiddenCard = true)
+        {
+            List<Card> pureCards = handWithHiddenCards.Where(x => countHiddenCard || x.faceUp).Select(x => x.card)
+                .ToList();
+
+            return GetHandValue(pureCards);
+        }
+
         public bool CanPlayerHit() => _playerHand.Count < 5 && GetPlayerHandValue() < 21;
-        
-        public bool ShouldDealerHit() => GetDealerHandValue() < 17 || (GetDealerHandValue() == 17 && _dealerHand.Count < 5);
-        
+
+        public bool ShouldDealerHit() =>
+            GetDealerHandValue() < 17 || (GetDealerHandValue() == 17 && _dealerHand.Count < 5);
+
         bool IsGameOver() => _playerCurrentHealth <= 0 || _dealerCurrentHealth <= 0;
     }
 }
