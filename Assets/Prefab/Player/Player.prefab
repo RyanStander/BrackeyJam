@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 263410356421034857}
   - component: {fileID: 3972952901666220583}
   - component: {fileID: 8080676620410366004}
+  - component: {fileID: 9157420405019142413}
   - component: {fileID: 1243604317690353300}
   m_Layer: 0
   m_Name: PlayerModelSpline
@@ -428,6 +429,18 @@ MonoBehaviour:
   _animationName: Player_Idle
   loop: 1
   timeScale: 1
+--- !u!114 &9157420405019142413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3236383172600705989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f760e8d10e115a140905a3dd9cb45e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &1243604317690353300
 MeshFilter:
   m_ObjectHideFlags: 0
