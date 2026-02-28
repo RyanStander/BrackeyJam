@@ -23,6 +23,8 @@ namespace Minigames.Blackjack
         public Blackjack(List<Card> deck)
         {
             _deck = deck;
+            _playerCurrentHealth = _playerMaxHealth;
+            _dealerCurrentHealth = _dealerMaxHealth;
         }
 
         public void ResetAndShuffleDeck()
@@ -30,6 +32,8 @@ namespace Minigames.Blackjack
             _deck.Clear();
             _playerHand.Clear();
             _dealerHand.Clear();
+            _playerCurrentHealth = _playerMaxHealth;
+            _dealerCurrentHealth = _dealerMaxHealth;
             _cardIndex = 0;
 
             for (int deckCountNum = 0; deckCountNum < _deckCount; deckCountNum++)
@@ -72,15 +76,22 @@ namespace Minigames.Blackjack
             return cardDraw;
         }
 
-        public void IncreaseBet(int amount) =>
+        public void IncreaseBet(int amount)
+        {
+            if(amount<1)
+                return;
+            
             _playerBetThisRound = Math.Min(_playerBetThisRound + amount, _playerCurrentHealth);
+        }
 
-        public void ApplyDamage(int damage, bool toPlayer)
+        public int GetCurrentBet() => _playerBetThisRound;
+
+        public void ApplyDamage(bool toPlayer)
         {
             if (toPlayer)
-                _playerCurrentHealth = Math.Max(0, _playerCurrentHealth - damage);
+                _playerCurrentHealth = Math.Max(0, _playerCurrentHealth - _playerBetThisRound);
             else
-                _dealerCurrentHealth = Math.Max(0, _dealerCurrentHealth - damage);
+                _dealerCurrentHealth = Math.Max(0, _dealerCurrentHealth - _playerBetThisRound);
 
             _playerBetThisRound = 0;
         }
@@ -107,11 +118,15 @@ namespace Minigames.Blackjack
 
         public RoundResult DetermineRoundResult()
         {
+            if (GetPlayerHandValue() > 21)
+                return RoundResult.DealerWin;
+            
             if (GetDealerHandValue() > 21)
-            {
                 return RoundResult.PlayerWin;
-            }
 
+            if (_playerHand.Count == 5)
+                return RoundResult.PlayerWin;
+            
             bool playerHasBlackjack = DoesPlayerHaveBlackjack();
             bool dealerHasBlackjack = DoesDealerHaveBlackjack();
 
@@ -161,8 +176,11 @@ namespace Minigames.Blackjack
         public bool CanPlayerHit() => _playerHand.Count < 5 && GetPlayerHandValue() < 21;
 
         public bool ShouldDealerHit() =>
-            GetDealerHandValue() < 17 || (GetDealerHandValue() == 17 && _dealerHand.Count < 5);
+            (GetDealerHandValue() < 17 || DoesDealerHaveSoft17()) && _dealerHand.Count < 5;
 
-        bool IsGameOver() => _playerCurrentHealth <= 0 || _dealerCurrentHealth <= 0;
+        private bool DoesDealerHaveSoft17() => GetDealerHandValue() == 17 &&
+                                               _dealerHand.Any(dealerCard => dealerCard.card.Rank == CardRank.Ace);
+
+        public bool IsGameOver() => _playerCurrentHealth <= 0 || _dealerCurrentHealth <= 0;
     }
 }
